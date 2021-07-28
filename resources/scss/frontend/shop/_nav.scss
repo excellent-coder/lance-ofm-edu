@@ -1,0 +1,126 @@
+.nav-search {
+    width: 650px;
+    height: 40px;
+    position: relative;
+}
+
+.nav-search .left-icon {
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    cursor: pointer;
+    color: rgba(75, 74, 74, 0.787);
+}
+
+.nav-search .nav-search-input {
+    border-bottom: 2px solid rgb(59, 42, 211);
+    border-top: 0px solid transparent;
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    padding: 7px 20px 7px 30px;
+    transition: all 1s linear;
+    width: 500px;
+    outline: none;
+}
+
+.nav-search .nav-search-input:focus {
+    border-bottom: 2px solid rgb(42, 211, 112);
+    transition: all 1s linear;
+}
+
+.navbar a {
+    height: 40px;
+    line-height: 40px;
+}
+
+.navbar {
+
+    a *,
+    button * {
+        line-height: 2.5;
+    }
+
+    .logo {
+        line-height: 40px;
+    }
+
+    .box,
+    .sub-cat,
+    .nav-sub {
+        box-shadow: 0 0 10px 0 rgb(0 0 0 / 15%);
+    }
+}
+
+.box::before,
+.nav-sub::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: -19px;
+    border: 10px solid;
+    border-color: transparent transparent white;
+    transform: translate3d(-10px, 0, 0);
+    filter: drop-shadow(0 -2px 1px rgba(0, 0, 0, 0.07));
+}
+
+
+#side-box {
+    width: 0;
+    display: none;
+    transition: all 1s linear;
+}
+
+.sub-cat {
+    top: 20px;
+    display: none;
+    transition: all 1s linear;
+    width: 600px;
+    left: 215px;
+    height: 800px;
+}
+
+#side-box:hover {
+    display: block;
+}
+
+#sidebar {
+    &:hover {
+        #side-box {
+            display: block;
+            width: 215px;
+            transition: all 1s linear;
+            z-index: 9999;
+        }
+    }
+
+    .main-cat:hover {
+        .sub-cat {
+            display: block;
+            transition: all 1s linear;
+        }
+    }
+}
+
+.nav-item {
+    .nav-sub {
+        display: none;
+    }
+    .fa-angle-down{
+        display: inline;
+    }
+    .fa-angle-up{
+        display: none;
+    }
+
+    &:hover {
+        .nav-sub {
+            display: block;
+        }
+          .fa-angle-down{
+        display: none;
+    }
+    .fa-angle-up{
+        display: inline;
+    }
+    }
+}

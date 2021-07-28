@@ -1,0 +1,23 @@
+.home-bg-video {
+    height: 500px;
+    position: relative;
+    width: 100vw;
+    object-fit: unset;
+}
+@media (min-width: 768px) {
+    .home-bg-video {
+        height: calc(100vh - 40px);
+    }
+}
+
+.home .card-circle {
+    width: 280px;
+    height: 280px;
+    border-radius: 100%;
+
+    border-top: 16px solid #1041c7;
+    border-right: 16px solid green;
+    border-bottom: 16px solid red;
+    border-left: 16px solid #aa0894;
+    margin: 10px auto;
+}

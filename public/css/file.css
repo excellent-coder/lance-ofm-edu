@@ -1,0 +1,91 @@
+ /* input type of file */
+
+input[type="file"] {
+    border: 0;
+    clip-path: rect(0, 0, 0, 0);
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    white-space: nowrap;
+    width: 0;
+}
+
+input[type="file"]+label {
+    background-color: rgba(173, 148, 148, 0.849);
+    border-radius: 4rem;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 2rem 4rem;
+    width: 100%;
+
+}
+
+[type="file"]:focus+label,
+[type="file"]+label:hover {
+    outline: 1px dotted transparent;
+    background-color: violet;
+    transition: all 0.3s ease-out;
+}
+
+input[type="file"]+label {
+  background: #c2bdbb;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: inherit;
+  font-weight: 600;
+  margin-bottom: 0;
+  outline: none;
+  padding: 1rem 50px;
+  position: relative;
+  transition: all 0.5s;
+  vertical-align: middle;
+}
+
+/* preview */
+.preview-img{
+    height: 100px !important;
+    width: 100%;
+
+}
+
+.featured-photo{
+    box-shadow: -1px 7px 4px -1px blueviolet;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.select-cover-photo, .preview-file{
+    /* height: 100px; */
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.select-cover-photo .delete,
+.preview-file .remove-image{
+    position: absolute;
+    cursor: pointer;
+    border-radius: 999px;
+    height: 20px;
+    width: 20px;
+    top: 0;
+    right: 0;
+    background-color: #80808088;
+    color: #fff;
+    z-index: 3;
+    text-align: center;
+    display: block;
+    /* padding: 10px; */
+
+}
+
+@media only screen and (min-width:768px){
+  .preview-img{
+    height: 150px !important;
+    width: 100%;
+}
+}

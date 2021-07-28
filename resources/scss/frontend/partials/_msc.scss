@@ -1,0 +1,11 @@
+.top-point {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 22px solid #1d4ed8;
+    position: absolute;
+    top: -18px;
+    left: -1px;
+    transform: rotate(180deg);
+}

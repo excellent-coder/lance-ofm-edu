@@ -1,0 +1,112 @@
+.sidebar {
+    transition: all 0.6s linear;
+    .profile-img {
+        border-radius: 999px;
+        height: 80px;
+        width: 80px;
+    }
+    a {
+        color: #fff;
+    }
+
+    .sidebar-item {
+        position: relative;
+        display: block;
+        width: 100%;
+        background: black;
+        padding: 4px 2px;
+        border: 1px solid #fff;
+        height: 40px;
+        &.has-children {
+            &::after {
+                content: "+";
+                position: absolute;
+                right: 3px;
+                font-weight: 400;
+                top: 21px;
+                font-size: 28px;
+                line-height: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                cursor: pointer;
+                // top: 0;
+            }
+            &.open {
+                padding: 4px 0px 0px 2px;
+                &::after {
+                    content: "-";
+                    top: 17px;
+                    color: greenyellow;
+                }
+            }
+        }
+    }
+    .sidebar-link {
+        display: inline;
+        flex-wrap: nowrap;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        height: 100%;
+        justify-content: space-between;
+        p {
+            display: inline;
+            margin-left: 10px;
+        }
+    }
+}
+
+#portal-sidebar {
+    margin-left: -300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.5s linear;
+    &.show {
+        margin-left: 0;
+        transition: all 0.5s linear;
+        z-index: 999;
+    }
+    .push {
+        margin-left: 90%;
+    }
+}
+.sidebar-item.has-children {
+    cursor: pointer;
+
+    .nav-children {
+        display: none;
+        // transition: all 1s linear;
+        // z-index: -1;
+        // margin-top: -200px;
+    }
+    &.open {
+        height: auto;
+        .nav-children {
+            cursor: default;
+            display: block;
+            margin-top: 8px;
+            padding: 5px 8px;
+            background-color: rgb(73, 73, 10);
+        }
+    }
+}
+@media (min-width: 768px) {
+    .sidebar {
+        .profile-img {
+            height: 100px;
+            width: 100px;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        .profile-img {
+            height: 120px;
+            width: 120px;
+        }
+    }
+    #portal-sidebar {
+        margin-left: 0;
+        // position: relative;
+    }
+}

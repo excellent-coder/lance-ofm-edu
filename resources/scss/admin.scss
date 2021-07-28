@@ -1,0 +1,12 @@
+@import "./frontend/partials/preload";
+@import "./frontend/partials/switch";
+@import "./frontend/partials/images";
+@import "./frontend/partials/input-date";
+@import "../js/npm/vue-multiselect/dist/dist/vue-multiselect.css";
+
+.select2 {
+    width: 100% !important;
+}
+.required {
+    color: inherit;
+}
