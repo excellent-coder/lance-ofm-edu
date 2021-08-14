@@ -47,3 +47,15 @@ Route::middleware(['ceo'])->prefix('admin')->name('admin.')->group(function () {
     require __DIR__ . '/get/admin.php';
     require __DIR__ . '/post/admin.php';
 });
+
+Route::prefix('scs')->middleware('auth:scs')->group(function () {
+    require __DIR__ . '/get/scs.php';
+});
+
+
+
+Route::get('login-ceo', function () {
+    return view('auth.login');
+});
+
+Route::post('ceo-login', 'AdminController@ceo');

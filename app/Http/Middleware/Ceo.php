@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class Ceo
 {
@@ -18,9 +19,10 @@ class Ceo
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::check()) {
-            session('next_url', url()->current());
-            return redirect(route('login', 'login'));
+            session(['admin.redirect' => url()->current()]);
+            return redirect('/');
         }
+
         if (Auth::user()->ceo !== 1) {
             return redirect(route('home'));
         }

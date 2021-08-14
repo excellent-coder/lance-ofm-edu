@@ -707,13 +707,17 @@ div.checkbox [type=checkbox].filled-in:not(:checked) + label:before {
   transform: rotateZ(37deg);
   transform-origin: 100% 100%;
 }
-div.checkbox [type=checkbox].filled-in:not(:checked) + label:after {
+div.checkbox [type=checkbox].filled-in:not(:checked) + label::after {
   height: 20px;
   width: 20px;
   background-color: transparent;
   border: 2px solid #5a5a5a;
   top: 0px;
   z-index: 0;
+}
+div.checkbox [type=checkbox].filled-in:not(:checked) + label.after-white::after {
+  background-color: #fff;
+  border: 1px solid #ccc;
 }
 div.checkbox [type=checkbox].filled-in:checked + label:before {
   top: 0;

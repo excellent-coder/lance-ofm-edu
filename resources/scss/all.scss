@@ -1,5 +1,26 @@
 // This is required in all files for the frontend aside admin area
 
+// general
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i");
+
+body {
+    color: #333333;
+    font-size: 14px;
+    font-family: "Rubik", sans-serif;
+    line-height: 1.80857;
+}
+$yellow: #e9ae0a;
+
+input,
+textarea {
+    display: block;
+    width: 100%;
+    &:focus {
+        outline: none;
+    }
+}
+// general
+
 @import "@splidejs/splide/dist/css/splide.min.css";
 @import "@splidejs/splide/dist/css/splide.min.css";
 @import "pace-js/pace-theme-default.min.css";

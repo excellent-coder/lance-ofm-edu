@@ -31,7 +31,7 @@
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-12 my-3 text-white pl-3" style="background-color: indigo;">
+                    <div class="pl-3 my-3 text-white col-12" style="background-color: indigo;">
                         <div class="row justify-content-between">
                             <h5>Editing: {{$product->title}}</h5>
                             <a href="{{route('admin.products')}}" target="_blank" class="btn btn-primary btn-success">
@@ -116,7 +116,7 @@
                                                     @{{ `${ perDiscount }%`}}</span>
                                             </button>
                                         </label>
-                                        <input id="discount" class="form-control-range cursor-pointer" type="range"
+                                        <input id="discount" class="cursor-pointer form-control-range" type="range"
                                             name="discount" readonly min="0" max="100" v-model="perDiscount">
                                         <small class="form-text text-muted">
                                             This can be calculated from the high price
@@ -185,7 +185,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12 mt-4">
+                                <div class="mt-4 form-group col-12">
                                     <h5 class="mb-3">Product Photos</h5>
                                     <div class="form-group position-relative">
                                         <input
@@ -198,7 +198,7 @@
                                     </div>
                                     <div class="row">
                                         <div v-for="(file, index) in {{$product->images}}"
-                                            class="col-6 col-md-4 col-lg-3 preview-file position-relative p-2"
+                                            class="p-2 col-6 col-md-4 col-lg-3 preview-file position-relative"
                                             :class="[{'featured-photo':file.featured}]" :key="index">
 
                                             <img class="cursor-pointer preview-img" :src="'/storage/'+file.image"
@@ -246,7 +246,8 @@
     </div>
 </div>
  <button id="form-updater" class="d-none" @click.prevent="updateForm($event)"
-        data-items='{{$items}}' data-mains="{{$mains}}"></button>
+        data-items='{{$items}}' data-mains="{{$mains}}">
+</button>
 @endsection
 @section('js')
 <script src="/vendor/tinymce/tinymce.min.js"></script>

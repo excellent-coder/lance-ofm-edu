@@ -10,7 +10,7 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.extract();
+// mix.extract();
 
 /**
  * Mix all the core css required in every page together
@@ -42,8 +42,8 @@ mix.extract();
      * Here we will build all the files needed for the user shop to function
      *
      */
-mix.js("resources/js/build/shop.js", "public/js/shop/shop.js").vue()
-    .sass("resources/scss/shop.scss", "public/css/shop/shop.css");
+// mix.js("resources/js/build/shop.js", "public/js/shop/shop.js").vue()
+//     .sass("resources/scss/shop.scss", "public/css/shop/shop.css");
 
 
     /**
@@ -54,6 +54,6 @@ mix.js("resources/js/build/shop.js", "public/js/shop/shop.js").vue()
      |
      */
 
-    // mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
-    // .sass('resources/scss/admin.scss', 'public/css/admin/app.css');
+    mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
+    .sass('resources/scss/admin.scss', 'public/css/admin/app.css');
 

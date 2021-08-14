@@ -632,23 +632,18 @@ video {
 }
 
 h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+h2 {
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
-h2 {
+h3 {
   font-size: 1.25rem;
   line-height: 1.75rem;
-}
-
-h3 {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-a {
-  --tw-text-opacity: 1;
-  color: rgba(37, 99, 235, var(--tw-text-opacity));
 }
 
 .container {

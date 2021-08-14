@@ -39,7 +39,7 @@
     <div class="col-md-12">
         <div class="card">
             <x-admin-card-tool title="User Categories" :links="$cardLinks">
-                <button class="btn btn-success btn-tool dropdown-toggle btn-sm text-white" data-target="#general-modal"
+                <button class="text-white btn btn-success btn-tool dropdown-toggle btn-sm" data-target="#general-modal"
                     @click="modalEdit($event.target, true)" data-form="general-modal-form"
                     data-store_route="{{route('admin.subjects.store')}}">
                     new Subject
@@ -47,7 +47,7 @@
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-12 my-3" style="background-color: indigo;">
+                    <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
                             <button class="btn btn-success" data-target="#general-modal"
                                 @click="modalEdit($event.target, true)" data-form="general-modal-form"
@@ -161,7 +161,7 @@
                 <input class="form-control required" placeholder="subject code" type="text" name="code"
                     id="editing-code">
             </div>
-            <div class="form-group text-right my-2">
+            <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>
             </div>
         </form>
@@ -176,9 +176,7 @@
 <script src="/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="/vendor/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/vendor/jszip/jszip.min.js"></script>
-<script src="/vendor/pdfmake/pdfmake.min.js"></script>
-<script src="/vendor/pdfmake/vfs_fonts.js"></script>
+
 <script src="/vendor/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.colVis.min.js"></script>

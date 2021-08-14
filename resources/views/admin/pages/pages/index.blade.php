@@ -1,82 +1,134 @@
 @extends('layouts.admin')
 
 @section('css')
-<!-- DataTables -->
-  <link rel="stylesheet" href="/vendor/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="/vendor/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="/vendor/datatables-buttons/css/buttons.bootstrap4.min.css">
-
+{{-- DataTables --}}
+<link rel="stylesheet" href="/vendor/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/vendor/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/vendor/datatables-buttons/css/buttons.bootstrap4.min.css">
 @endsection
 
 @section('content')
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         <div class="card">
-            <x-admin-card-tool title="All Pages" :links="$cardLinks">
-            </x-admin-card-tool>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                <table id="dataTable" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                      <th>
-                      <input type="checkbox" name="" id="checkbox">
-                      </th>
-                      @foreach ($thead as $th)
-                        <th>{{$th}}</th>
-                      @endforeach
-                  </tr>
-                  </thead>
-                  <tbody>
-                      @php
-                          $i=1;
-                      @endphp
-                      @foreach ($pages as $page)
-                        <tr>
-                          <td><input type="checkbox" class="checking"></td>
-                          <td>{{$i}}</td>
-                          <td>
-                              <a href="{{route('page.show', $page->slug)}}" target="_blank">
-                              {{$page->title}}
-                              </a>
-                              </td>
-                          <td>{{$page->slug}}</td>
-                          <td>
-                              <img src="/storage/{{$page->image}}" alt="">
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{route('admin.pages.edit', $page->id)}}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                    <button class="btn">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @php
-                            $i++;
-                        @endphp
-                      @endforeach
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>
-                        <i class="fa fa-check-square" aria-hidden="true"></i>
-                    </th>
-                      @foreach ($thead as $th)
-                    <th>{{$th}}</th>
-                      @endforeach
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6 text-md-left">
+                            <h4 class="m-0 text-dark">
+                                <span class="badge bg-pink"><?=$pages->count()?></span>
+                               Pages
+                            </h4>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-danger bulk-action"
+                                title="Delete all selected posts"
+                                @click.prevent="destroy($event.target)"
+                                data-action="{{route('admin.pages.destroy')}}"
+                                data-id=""
+                                >
+                                <i class="fas fa-trash-alt"></i> Bulk
+                                 (<span class="total-selected">0</span>)
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-md-12">
+        <div class="card">
+            <x-admin-card-tool title="Pages">
+                <a href="{{route('admin.pages.create')}}" class="text-white btn btn-success btn-sm">
+                    New Post
+                </a>
+            </x-admin-card-tool>
+            <div class="card-body ">
+                <div class="row">
+                    <div class="my-3 col-12" style="background-color: indigo;">
+                        <div class="row justify-content-end">
+                            <a href="{{route('admin.pages.create')}}" class="btn btn-success">
+                                New Post
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <table id="dataTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="checkbox">
+                                    </th>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>image</th>
+                                    <th>views</th>
+                                    <th>created</th>
+                                    <th>updated</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i=1;?>
+                                @php
+                                $action = [
+                                    'destroy'=> route('admin.pages.destroy'),
+                                ];
+                                @endphp
+                                @foreach ($pages as $p)
+                                <?php
+                                $action['id'] = $p->id;
+                                $action['route'] = route('admin.pages.edit', $p->id);
+                                $action['rowid'] = "#tr-post-$p->id";
+                                ?>
+                                <tr id="tr-post-{{$p->id}}">
+                                    <td><input type="checkbox" value="{{$p->id}}" class="checking"></td>
+                                    <td>{{$i++}}</td>
+                                    <td>
+                                        <a href="{{route('pages.show', $p->slug)}}" target="_blank" rel="noopener noreferrer">
+                                            {{ Str::limit($p->title, 100, '...')}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if ($p->image)
+                                         <img src="/storage/{{$p->image}}" alt="">
+                                         @else
+                                         N/A
+                                        @endif
+                                    </td>
+                                    <td>{{$p->created_at}}</td>
+                                    <td>{{$p->updated_at}}</td>
+                                    <td>{{'views'}}</td>
+                                    <td>
+                                        <x-data-table-action :action="$action"></x-data-table-action>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                                    </th>
+                                   <th>#</th>
+                                    <th>Title</th>
+                                    <th>image</th>
+                                    <th>views</th>
+                                    <th>created</th>
+                                    <th>updated</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <x-admin-modal title="Managing subjects">
+    </x-admin-modal>
 </div>
 @endsection
 
@@ -87,19 +139,20 @@
 <script src="/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="/vendor/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/vendor/jszip/jszip.min.js"></script>
-<script src="/vendor/pdfmake/pdfmake.min.js"></script>
-<script src="/vendor/pdfmake/vfs_fonts.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <script>
     $("#dataTable").DataTable({
-          "responsive": true,
-          "lengthChange": false,
-           "autoWidth": false,
-          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+        "responsive": true,
+        "autoWidth": false,
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [0, -1]
+        }],
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+
 </script>
 @endsection

@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        // custom auth
+        'ceo' => [
+            'driver' => 'session',
+            'provider' => 'ceos'
+        ],
+        'scs' => [
+            'driver' => 'session',
+            'provider' => 'scs',
+        ],
     ],
 
     /*
@@ -69,6 +79,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'ceos' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Ceo::class,
+        ],
+        'scs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SCStudent::class,
         ],
 
         // 'users' => [

@@ -118,7 +118,7 @@ class SettingController extends Controller
             $request->all(),
             [
                 'title' => "required|max:80",
-                'file' => 'nullable|mimes:png,jpg,svg,mp4,3gp,gif|max:10000'
+                'file' => 'nullable|mimetypes:image/*,video/*|max:10000'
             ]
         );
 
@@ -147,9 +147,16 @@ class SettingController extends Controller
 
             if ($file->isValid()) {
                 $type = explode('/', $file->getMimeType())[0];
-                $name = $slug . time()
-                    . '.' . $file->extension();
-                $value = $file->storeAs("settings/$tag->slug", $name);
+
+                if ($request->title == 'favicon') {
+                    $name = 'favicon.' . $file->getClientOriginalExtension();
+                    $file->move(public_path(), $name);
+                    $value = $name;
+                } else {
+                    $name = $slug . time()
+                        . '.' . $file->getClientOriginalExtension();
+                    $value = $file->storeAs("settings/$tag->slug", $name);
+                }
             }
         }
 

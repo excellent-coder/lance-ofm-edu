@@ -66,7 +66,7 @@ const handleModal = (id, show) => {
 
     let modals = document.querySelectorAll('.main-modal');
 
-    console.log([id, show]);
+    // console.log([id, show]);
 
     let modal = document.getElementById(id);
     let newClass = "fadeIn";
@@ -74,7 +74,6 @@ const handleModal = (id, show) => {
     if (show) {
         modal.classList.remove(oldClass);
         modal.classList.add(newClass);
-        modal.style.display = "flex";
 
         modals.forEach(item => {
             if (item.id != id) {

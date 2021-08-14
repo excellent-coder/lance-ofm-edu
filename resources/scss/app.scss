@@ -1,3 +1,113 @@
+// general
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i");
+
+body {
+    color: #333333;
+    font-size: 14px;
+    font-family: "Rubik", sans-serif;
+    line-height: 1.80857;
+}
+$yellow: #e9ae0a;
+
+input,
+textarea {
+    display: block;
+    width: 100%;
+    &:focus {
+        outline: none;
+    }
+}
+// general
+
 @import "./frontend/pages/home";
 @import "./frontend/pages/shop";
 @import "./frontend/partials/nav";
+@import "./frontend/partials/switch";
+@import "./frontend/partials/input-date";
+
+.times-new-romans {
+    font-family: "Times New Roman", Times, serif;
+}
+
+.nunito {
+    font-family: Nunito;
+}
+
+.bg-scale-in::after,
+.bg-scale-in::before {
+    transition: all 0.3s;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.bg-scale-in::before {
+    background-color: $yellow;
+}
+
+.bg-scale-in::after {
+    background-color: #242223;
+}
+
+.bg-scale-in:hover::after {
+    height: 0;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    transition: all 0.3s;
+}
+
+.img-inline img {
+    display: inline;
+}
+
+.timeline__content {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #443e3e;
+}
+
+.border-1 {
+    border-width: 1px;
+}
+
+.border-r-1 {
+    border-right-width: 1px;
+}
+.border-l-1 {
+    border-left-width: 1px;
+}
+.border-b-1 {
+    border-bottom-width: 1px;
+}
+
+.member-card {
+    p {
+        padding: 6px 0;
+    }
+    &:hover {
+        img {
+            opacity: 0.8;
+        }
+        .title {
+            color: $yellow;
+        }
+    }
+}
+
+.scroll-in {
+    animation: scroll-in 1s linear;
+}
+
+@keyframes scroll-in {
+    from {
+        top: 100px;
+    }
+    to {
+        top: 0;
+    }
+}

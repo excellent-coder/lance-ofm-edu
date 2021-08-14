@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full max-w-xs md:max-w-none" style="width: 400px">
+    <div class="w-full max-w-xs md:max-w-none">
         <div>
             <h2
                 v-if="msg"
@@ -11,28 +11,17 @@
         </div>
         <form
             @submit.prevent="submit('/login')"
-            class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            class="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
         >
             <div class="mb-4">
                 <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
+                    class="block mb-2 text-sm font-bold text-gray-700"
                     for="email"
                 >
                     Email
                 </label>
                 <input
-                    class="
-                        shadow
-                        appearance-none
-                        border
-                        rounded
-                        w-full
-                        py-2
-                        px-3
-                        text-gray-700
-                        leading-tight
-                        focus:outline-none focus:shadow-outline
-                    "
+                    class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none  focus:outline-none focus:shadow-outline"
                     type="text"
                     placeholder="Email"
                     v-model="email"
@@ -40,38 +29,26 @@
             </div>
             <div class="mb-6">
                 <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
+                    class="block mb-2 text-sm font-bold text-gray-700"
                     for="password"
                 >
                     Password
                 </label>
                 <input
-                    class="
-                        shadow
-                        appearance-none
-                        border border-red-500
-                        rounded
-                        w-full
-                        py-2
-                        px-3
-                        text-gray-700
-                        mb-3
-                        leading-tight
-                        focus:outline-none focus:shadow-outline
-                    "
+                    class="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none  focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
                     placeholder="******************"
                     v-model="password"
                 />
-                <p class="text-red-500 text-xs italic">
+                <p class="text-xs italic text-red-500">
                     Please choose a password.
                 </p>
             </div>
-            <div class="mb-6 flex justify-between">
+            <div class="flex justify-between mb-6">
                 <input type="checkbox" v-model="remember" />
                 <label
-                    class="text-gray-700 text-sm font-bold mb-2"
+                    class="mb-2 text-sm font-bold text-gray-700"
                     for="password"
                 >
                     Remember me
@@ -79,44 +56,23 @@
             </div>
             <div class="flex items-center justify-between">
                 <button
-                    class="
-                        bg-blue-500
-                        hover:bg-blue-700
-                        text-white
-                        font-bold
-                        py-2
-                        px-4
-                        rounded
-                        focus:outline-none focus:shadow-outline
-                    "
+                    class="px-4 py-2 font-bold text-white bg-blue-500 rounded  hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                     type="submit"
                 >
                     Sign In
                 </button>
                 <button
-                    class="
-                        inline-block
-                        align-baseline
-                        font-bold
-                        text-sm text-blue-500
-                        hover:text-blue-800
-                    "
+                    class="inline-block text-sm font-bold text-blue-500 align-baseline  hover:text-blue-800"
                     @click.prevent="$store.commit('modal', 'reset-password')"
                 >
                     Forgot Password?
                 </button>
             </div>
-            <div class="w-full text-center my-3">
+            <div class="w-full my-3 text-center">
                 <span
                     >Don't Have an account
                     <button
-                        class="
-                            btn
-                            text-blue-500
-                            font-bold
-                            text-lg
-                            cursor-pointer
-                        "
+                        class="text-lg font-bold text-blue-500 cursor-pointer  btn"
                         @click.prevent="$store.commit('modal', 'register')"
                     >
                         Register
@@ -124,7 +80,7 @@
                 >
             </div>
         </form>
-        <p class="text-center text-gray-500 text-xs">
+        <p class="text-xs text-center text-gray-500">
             &copy;2020 Acme Corp. All rights reserved.
         </p>
     </div>

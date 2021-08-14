@@ -5,14 +5,13 @@ import { createApp } from 'vue';
 import router from '../routes';
 import {store }from '../store/apps/user';
 
-
 // impoering componenets
 import App from '../components/App.vue';
 import Modal from "../components/Auth/Modal.vue";
 import Login from "../components/Auth/Login.vue";
 import SignUp from '../components/Auth/Signup.vue';
 import ResetPassword from '../components/Auth/ResetPassword.vue';
-import axios from 'axios';
+import CarouselSlide from '../components/utils/CarouselSlide.vue';
 
 const app = createApp({
     components: {
@@ -24,108 +23,143 @@ const app = createApp({
     },
     data() {
         return {
-            bid:""
         }
     },
     methods: {
-       toggleNav(id) {
-            let nav = document.getElementById(id);
+        toggleNav(id) {
+                let nav = document.getElementById(id);
             if(nav.classList.contains('show')){
                 nav.classList.remove('show');
-                // nav.classList.add('block');
             } else{
                 nav.classList.add('show');
-                // nav.classList.remove('block');
             }
         },
 
-        submit(event, files=[]) {
+        submit(event) {
             let form = event.target;
             let url = form.getAttribute('action');
+             isLoading();
 
-            //validate all required fields
-            // if(!requiredFilled(form)){
-            //     return;
-            // }
-            // start loading animation
-            isLoading();
+            // generate form data
             let formData = new FormData(form);
-
             // upload formdata using axios
             // show upload progress
-              this.axiosSubmit(url, formData);
+            axios.post(url, formData).then(res => {
+                if (res.data.type == 'success') {
+                    form.reset();
+                }
+                return this.processResponse(res.data);
+            }).catch(err => {
+               console.log(err);
+                if (err.response && err.response.status<500) {
+                  return  this.processResponse(err.response.data);
+                }
+                isLoading(false);
+                notify({ title: 'something went wrong' }, { 'type': 'danger' });
+            });
+
         },
 
-        axiosSubmit(url, formData) {
-             isLoading();
-            axios.post(url, formData).then(res => {
-                let { data } = res;
-                if (data.status == 200) {
-                    showToast(data.message, 'success', data.desc?data.desc:'');
-                    isLoading(false);
-                    if(data.to){
-                        window.location.href = data.to;
-                        return;
-                    }
-                    window.location.reload();
-                    return;
-                }
-                if(data.to){
+        processResponse(data) {
+            isLoading(false);
+            let type = data.type;
+            let title = data.message;
+            let description = data.desc;
+            let timeout = data.timeout;
+
+            if (data.status == 200) {
+
+                notify({
+                    title,
+                    description
+                }, {
+                    type,
+                    timeout
+                });
+
+                if (data.to) {
                     window.location.href = data.to;
                 }
-                isLoading(false);
-                // return console.log(data);
-                // let desc =
-                if (data.errors) {
-                    let errors = Object.values(data.errors);
-                    let desc = '';
-                    errors.forEach(item => {
-                        desc += `* ${item}`;
-                    });
-                    // ret
-                    showToast(data.message?data.message:'You have some errors',
-                        'error',
-                        desc
-                    );
+
+                if (data.reload) {
+                    window.location.reload()
                 }
 
-            }).catch(err => {
-                console.log(err);
-                isLoading(false);
-                showToast('Something went wrong', 'error');
-            });
+                return;
+            }
+
+            if (data.errors) {
+                let errors;
+                title = title ? title : 'You have some errors';
+                type = 'danger';
+
+                switch (typeof data.errors) {
+                    case 'object':
+                        errors = Object.values(data.errors);
+                        description = '';
+                        errors.forEach(e => {
+                            description += `* ${e}`;
+                        });
+                        break
+                    default:
+                        description = data.errors;
+                        break;
+                }
+
+                notify({
+                    title,
+                    description
+                }, {
+                    type,
+                    timeout
+                });
+                return;
+            }
+
+            if (data.message) {
+                notify(
+                    { title: data.message },
+                    {
+                        type: data.type ? data.type : 'info',
+                        timeout: data.timeout?data.timeout: 60* 60 * 60
+                    }
+                );
+            }
+
+            return
         },
 
-        placeBid(amount, url) {
-            let formData = new FormData();
-            formData.append('amount', amount);
-            return this.axiosSubmit(url, formData);
+        showPass($event, id) {
+            let btn = $event.currentTarget;
+            let pass = document.getElementById(id + '-password');
+            if (!pass) {
+                return;
+            }
+            console.log(pass.type)
+            if (pass.type == 'password') {
+                btn.querySelector('.fa-eye').style.display = 'inline';
+                btn.querySelector('.fa-eye-slash').style.display = 'none';
+                pass.type = 'text';
+            } else {
+                pass.type = 'password'
+                btn.querySelector('.fa-eye').style.display = 'none';
+                btn.querySelector('.fa-eye-slash').style.display = 'inline';
+            }
         }
+
     }
 });
 app.use(store);
 app.use(router);
+// register global components
+app.component('CarouselSlide', CarouselSlide)
 
-// router.afterEach((to, from, failure) => {
-//     store.dispatch('bindJQPkgs');
-// })
-// app.use()
-
-// store.commit('increment');
 const vm = app.mount('#app')
 isLoading(false);
 
 var prevScrollpos = window.pageYOffset;
-window.addEventListener('scroll', () => {
-  var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById("main-nav").classList.remove('hide');
-  } else {
-      document.getElementById("main-nav").classList.add('hide');
-      document.getElementById("navbar").classList.add('hide');
-  }
-  prevScrollpos = currentScrollPos;
-});
+var cdtop = document.getElementById('scroll-to-top');
+
 
 // new Splide("#splide", {
 //     type: "loop",
@@ -133,3 +167,27 @@ window.addEventListener('scroll', () => {
 //     autoplay: true,
 //     pauseOnHover: false,
 // }).mount();
+
+if(cdtop){
+
+    window.addEventListener('scroll', () => {
+        var currentScrollPos = window.pageYOffset;
+        cdtop.style.display = 'none';
+
+        if (window.pageYOffset > 300) {
+            cdtop.style.display = 'block';
+        }
+
+    if (prevScrollpos < currentScrollPos) {
+        document.getElementById("main-nav").classList.add('hide');
+        document.getElementById("navbar").classList.add('hide');
+    } else {
+        document.getElementById("main-nav").classList.remove('hide');
+    }
+    prevScrollpos = currentScrollPos;
+    });
+
+    cdtop.addEventListener('click', () => {
+        return window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    });
+}

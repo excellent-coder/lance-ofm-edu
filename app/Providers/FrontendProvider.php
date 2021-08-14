@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Application;
+use App\Models\Course;
 use App\Models\ProductCat;
+use App\Models\Program;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\UserCategory;
@@ -47,6 +49,16 @@ class FrontendProvider extends ServiceProvider
         view()->composer('includes.shop.sidebar', function ($view) {
             $superShopCats = ProductCat::whereNull('super_parent_id')->get();
             $view->with(compact('superShopCats'));
+        });
+
+        view()->composer('frontend.scs.includes.sidebar', function ($view) {
+            $programs = Program::where('active', 1)
+                ->where('is_program', 1)
+                ->where('visibility', '<>', 2)
+                ->get();
+
+            $userPrograms = auth('scs')->user()->programs;
+            $view->with(compact('programs', 'userPrograms'));
         });
     }
 }

@@ -1,77 +1,54 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 @section('content')
-<div class="grid grid-cols-8 px-4 md:px-0">
-    <div class="md:col-span-3 md:col-start-3 col-span-8 col-start-1">
-    <form @submit.prevent="submit($event)"
-    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{route('user.login')}}">
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                Email
-            </label>
-            <input class="
-                        shadow
-                        appearance-none
-                        border
-                        rounded
-                        w-full
-                        py-2
-                        px-3
-                        text-gray-700
-                        leading-tight
-                        focus:outline-none
-                        focus:shadow-outline
-                    " id="email" type="text" name="email" placeholder="Email" />
+<div class="flex flex-wrap justify-center w-full h-screen bg-yellow-100">
+    <div class="items-center self-center w-full text-white bg-red-400 md:w-1/3 sm:w-3/4">
+        <div class="p-4 bg-indigo-800 shadow-2xl">
+            <h1 class="text-lg font-black text-center">
+                ADMIN LOGIN <br>
+                <i class="block text-center fas fa-lock "></i>
+            </h1>
+
+            <form action="{{route('admin.login')}}" method="POST" @submit.prevent="submit($event)"
+                class="mt-8 text-gray-800">
+                @csrf
+                <div class="relative mb-4">
+                    <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-user bottom-2"></i>
+                    <div class="block ml-5 md:ml-9">
+                        <input placeholder="Username" type="text" required name="username" class="h-12 max-w-full p-4">
+                    </div>
+                </div>
+                <div class="relative mb-4 password">
+                    <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-lock bottom-3"></i>
+                    <div class="ml-5 md:ml-9">
+                        <input id="admin-login-password" placeholder="password" type="password" required name="password"
+                            class="h-12 max-w-full p-4 password">
+                        <span class="absolute right-0 text-lg text-gray-500 cursor-pointer opacity-70 bottom-2"
+                            @click.prevent="showPass($event, 'admin-login')">
+                            <i class="fas fa-eye" style="display: none"></i>
+                            <i class="fas fa-eye-slash"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="grid w-full grid-cols-2 mb-8 font-extrabold">
+                <div class="ml-5 text-white checkbox md:ml-9">
+                    <input id="remember" type="checkbox" class="form-check-input form-control filled-in" name="remember"
+                        value="1">
+                    <label for="remember" class="after-white hover:text-green-500">
+                        Remember Me
+                    </label>
+                </div>
+                <div class="text-right text-green-200 hover:text-yellow-300">
+                    <a href="{{route('admin.password')}}">Forgot Password</a>
+                </div>
+                </div>
+                <div class="text-center ">
+                    <button type="submit"
+                        class="w-32 px-4 py-3 antialiased font-semibold text-center text-white transition-all border-2 border-gray-100 rounded-lg shadow-xl hover:bg-yellow-500">
+                        GO <i class="fas fa-forward "></i>
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                Password
-            </label>
-            <input class="
-                        shadow
-                        appearance-none
-                        rounded
-                        w-full
-                        py-2
-                        px-3
-                        text-gray-700
-                        mb-3
-                        leading-tight
-                        focus:outline-none
-                        focus:shadow-outline
-                    " id="password" type="password" placeholder="******************" name="password" />
-            <p class="text-red-500 text-xs italic">
-                Please choose a password.
-            </p>
-        </div>
-        <div class="flex items-center justify-between">
-            <button class="
-                        bg-blue-500
-                        hover:bg-blue-700
-                        text-white
-                        font-bold
-                        py-2
-                        px-4
-                        rounded
-                        focus:outline-none
-                        focus:shadow-outline
-                    " type="submit">
-                Sign In
-            </button>
-            <a
-                    class="
-                        inline-block
-                        align-baseline
-                        font-bold
-                        text-sm text-blue-500
-                        hover:text-blue-800
-                    "
-                    href="#"
-                >
-                    Forgot Password?
-                </a>
-        </div>
-    </form>
     </div>
 </div>
-
 @endsection

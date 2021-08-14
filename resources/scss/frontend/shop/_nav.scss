@@ -34,7 +34,6 @@
 }
 
 .navbar {
-
     a *,
     button * {
         line-height: 2.5;
@@ -63,7 +62,6 @@
     filter: drop-shadow(0 -2px 1px rgba(0, 0, 0, 0.07));
 }
 
-
 #side-box {
     width: 0;
     display: none;
@@ -76,7 +74,7 @@
     transition: all 1s linear;
     width: 600px;
     left: 215px;
-    height: 800px;
+    max-height: (100vw - 300px);
 }
 
 #side-box:hover {
@@ -105,10 +103,10 @@
     .nav-sub {
         display: none;
     }
-    .fa-angle-down{
+    .fa-angle-down {
         display: inline;
     }
-    .fa-angle-up{
+    .fa-angle-up {
         display: none;
     }
 
@@ -116,11 +114,11 @@
         .nav-sub {
             display: block;
         }
-          .fa-angle-down{
-        display: none;
-    }
-    .fa-angle-up{
-        display: inline;
-    }
+        .fa-angle-down {
+            display: none;
+        }
+        .fa-angle-up {
+            display: inline;
+        }
     }
 }

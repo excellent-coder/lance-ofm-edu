@@ -2,6 +2,8 @@
 
 namespace App\Http\ViewComposers;
 
+use App\Models\Course;
+use App\Models\ImagePart;
 use App\Models\Setting;
 use App\Models\SettingTag;
 use Illuminate\View\View;
@@ -20,6 +22,8 @@ class LayoutAdminComposer
         $route = empty($matches[2]) ? '' : $matches[2];
         $admin_theme = 'light-mode';
         $settingTags = SettingTag::all();
+        $imageParts = ImagePart::all();
+        $navCourses = Course::all();
         // $admin_theme = 'dark-mode';
 
         $view
@@ -27,7 +31,9 @@ class LayoutAdminComposer
                 'web_title',
                 'route',
                 'admin_theme',
-                'settingTags'
+                'settingTags',
+                'imageParts',
+                'navCourses'
             ));
     }
 }

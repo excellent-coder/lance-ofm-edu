@@ -23,6 +23,7 @@
     {!! $btn !!}
     @endforeach
     @endisset
+    {{$slot}}
     {{-- load extra buttons --}}
     <button class="btn action-btn" data-action="{{$item->destroy}}"
     data-id="{{$item->id}}" data-rowid="{{$item->rowid}}">

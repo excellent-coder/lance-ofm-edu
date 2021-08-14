@@ -15,6 +15,7 @@ import productTag from '../components/shop/productTag.vue';
 import AddCartBtn from '../components/shop/AddCartBtn.vue';
 import ImageTag from '../components/utils/ImageTag.vue';
 import Modal from "../components/Auth/Modal.vue";
+import CarouselSlide from '../components/utils/CarouselSlide.vue';
 import {
     onMounted,
     ref,
@@ -163,6 +164,7 @@ app.component('productTag',productTag)
 app.component('AddCartBtn', AddCartBtn);
 app.component('ImageTag', ImageTag);
 app.component('Modal', Modal);
+app.component('CarouselSlide', CarouselSlide)
 
 app.use(store);
 app.use(router);

@@ -24,6 +24,9 @@ const oldValues = (form)=>{
         if (e.hasClass('select2')) {
             e.trigger('change');
         }
+        if (e.data('checked')) {
+            item.checked = true;
+        }
     })
 }
 

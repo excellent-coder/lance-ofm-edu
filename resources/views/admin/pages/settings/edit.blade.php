@@ -34,7 +34,11 @@
                                     placeholder="{{Str::ucfirst($s->name)}}" rows="3">{{$s->value}}</textarea>
                             @break
                             @case('image')
+                            @if ($s->title == 'favicon')
+                            <img class="my-1 img img-fluid img-sm d-block" src="/{{$s->value}}" alt="preview {{$s->name}}">
+                            @else
                             <img class="my-1 img img-fluid img-sm d-block" src="/storage/{{$s->value}}" alt="preview {{$s->name}}">
+                            @endif
                             @case('video')
                                 <input id="{{$s->title}}" class="form-control-file" type="file" name="{{$s->title}}">
                             @break

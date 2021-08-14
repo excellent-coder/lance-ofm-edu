@@ -3,21 +3,82 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\SCStudent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
+
 
 class AuthController extends Controller
 {
-    public $redirect_url = '/portal';
+    public $redirect = '/scs';
 
-    public function   __construct()
+    public function registerPage()
     {
-        if (!empty(session('login.redirect'))) {
-            $this->redirect_url =  session('login.redirect');
+        return view('auth.register');
+    }
+
+    public function loginPage()
+    {
+        return view('auth.login');
+    }
+
+    public function register(Request $request)
+    {
+        $valid = Validator::make(
+            $request->all(),
+            [
+                'username' => 'required|unique:s_c_students,username',
+                'email' => 'required|unique:s_c_students,email',
+
+                'first_name' => 'required',
+                'last_name' => 'required',
+
+                'dob' => 'required',
+                'terms' => 'required',
+                'phone' => 'required',
+                'password' => 'required|min:8|max:16',
+            ],
+            ['terms.required' => 'You must agree to our terms']
+        );
+
+        if ($valid->fails()) {
+            return [
+                'message' => 'You have some Errors',
+                'errors' => $valid->errors()->all()
+            ];
         }
+
+        $s = new SCStudent();
+
+        $s->username = $request->username;
+        $s->email = $request->email;
+
+        $s->first_name = $request->first_name;
+        $s->last_name = $request->last_name;
+        $s->middle_name = $request->middle_name;
+
+        $s->phone = $request->phone;
+        $s->dob = $request->dob;
+
+        $s->password = bcrypt($request->password);
+
+        $s->save();
+
+        if (session('scs.redirect')) {
+            $this->redirect = session('scs.redirect');
+            Session::forget('scs.redirect');
+        }
+        Auth::guard('scs')->login($s);
+        return [
+            'message' => "You have successfully registered",
+            'type' => 'success',
+            'status' => 200,
+            'to' => $this->redirect
+        ];
     }
 
     public function signup(Request $request)
@@ -54,10 +115,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // return $request->all();
+        // return auth('scs')->user();
         $valid = Validator::make(
             $request->all(),
             [
-                'email' => 'required',
+                'username' => 'required',
                 'password' => 'required',
             ]
         );
@@ -69,29 +131,58 @@ class AuthController extends Controller
             ];
         }
 
-        $email = $request->email;
+        $username = $request->username;
         $password = $request->password;
-        $remember = !empty($request->remember);
+        $remember = $request->filled('remember');
 
-        $user = User::where('email', $email)->first();
-        if (!$user) {
-            return [
-                'message' => "This Email address $email is not registered on our school",
-                'errors' => ['Email not found']
-            ];
+        $user = false;
+        $auth = User::where('email', $username)->first();
+        if ($user) {
+            if (password_verify($password, $user->password)) {
+                $user = $auth;
+                auth('scs')->login($user, $remember);
+            }
+        } else if ($user = $this->loginUsername($username, $password)) {
+            auth('scs')->login($user, $remember);
+        } else if ($user = $this->loginMatric($username, $password)) {
+            auth('scs')->login($user, $remember);
         }
 
-        if (!password_verify($password, $user->password)) {
+        if ($user) {
             return [
-                'message' => 'Invalid Email or passwor',
-                'errors' => []
+                'message' => "Successfully Logged",
+                'type' => 'success',
+                'status' => 200,
+                'to' => $this->redirect
             ];
         }
+        return [
+            'message' => 'invalid credentials',
+            'type' => 'error',
+            'status' => 200
+        ];
+    }
 
-        Auth::login($user, $remember);
-        return $this->redirect_url;
+    protected function loginUsername($username, $password)
+    {
+        $user = SCStudent::where('username', $username)->first();
+        if ($user) {
+            if (password_verify($password, $user->password)) {
+                return $user;
+            }
+        }
+        return false;
+    }
 
-        return $request->all();
+    protected function loginMatric($no, $password)
+    {
+        $user = SCStudent::where('matric_no', $no)->first();
+        if ($user) {
+            if (password_verify($password, $user->password)) {
+                return $user;
+            }
+        }
+        return false;
     }
 
 

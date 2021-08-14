@@ -7,7 +7,7 @@
         </div>
     </template>
 </modal>
-<modal title="desc" btn-txt="Donate" id="shop-imgs-modal">
+<modal id="shop-imgs-modal">
     <template v-slot:body>
         <div>
            <img src="" alt="" id="shop-modal-img">

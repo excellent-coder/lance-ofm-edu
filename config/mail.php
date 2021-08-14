@@ -82,10 +82,21 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
+    'reply_to' => [
+        'address' => env('MAIL_REPLY_ADDRESS', 'info@isam.org'),
+        'name' => env('MAIL_REPLY_NAME', env('APP_NAME', 'Isam')),
+    ],
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+    'receivers' => [
+        'contact' => [
+            'email' => env('CONTACT_FROM_ADDRESS'),
+            'name' => env('CONTACT_FROM_NAME')
+        ],
     ],
 
     /*

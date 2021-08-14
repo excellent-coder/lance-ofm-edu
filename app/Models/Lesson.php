@@ -24,8 +24,18 @@ class Lesson extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function subject()
+    public function course()
     {
-        return $this->belongsTo(Subject::class, 'subject_id', 'id');
+        return $this->belongsTo(Course::class, 'course_id', 'id');
+    }
+
+    /**
+     * Get the session that owns the Lesson
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function session()
+    {
+        return $this->belongsTo(Session::class, 'session_id', 'id');
     }
 }

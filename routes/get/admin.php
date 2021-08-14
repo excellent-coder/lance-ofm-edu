@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', 'AdminController@dashboard')->name('dashboard');
 
 Route::prefix('pages')->name('pages')->group(function () {
@@ -50,4 +49,48 @@ Route::prefix('product-cats')->name('product-cats')->group(function () {
 Route::prefix('settings')->name('settings')->group(function () {
     Route::get('/', 'SettingController@index');
     Route::get('/{slug}', 'SettingController@tag')->name('.edit');
+});
+
+Route::prefix('posts')->name('posts')->group(function () {
+    Route::get('/', 'PostController@index');
+    Route::get('create', 'PostController@create')->name('.create');
+    Route::get('edit/{post}', 'PostController@edit')->name('.edit');
+    Route::get('categories', 'PostCatController@index')->name('.categories');
+    Route::get('tags', 'TagController@index')->name('.tags');
+});
+
+Route::prefix('post-cats')->name('post-cats')->group(function () {
+    Route::get('children', 'PostCatController@children')->name('.children');
+});
+
+Route::prefix('images')->name('images')->group(function () {
+    Route::get('/', 'ImageController@index');
+    Route::get('edit/{image}', 'ImageController@edit')->name('.edit');
+    Route::get('{part}', 'ImageController@part')->name('.part');
+});
+
+
+Route::prefix('courses')->name('courses')->group(function () {
+    Route::get('/', 'CourseController@index');
+    Route::get('create', 'CourseController@create')->name('.create');
+    Route::get('edit/{course}', 'CourseController@edit')->name('.edit');
+
+    Route::get('{slug}/program', 'CourseController@program')->name('.program');
+
+    Route::get('json/{program}/{level}', 'CourseController@pl')->name('.pl.json');
+});
+
+Route::prefix('programs')->name('programs')->group(function () {
+    Route::get('/', 'ProgramController@index');
+    Route::get('create', 'ProgramController@create')->name('.create');
+    Route::get('edit/{program}', 'ProgramController@edit')->name('.edit');
+});
+
+Route::prefix('levels')->name('levels')->group(function () {
+    Route::get('/', 'LevelController@index');
+});
+
+Route::prefix('memberships')->name('memberships')->group(function () {
+    Route::get('/', 'MembershipController@index');
+    Route::get('{members}', 'MembershipController@members')->name('.members');
 });

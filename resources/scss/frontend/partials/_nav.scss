@@ -1,14 +1,68 @@
 .main-nav {
     position: fixed;
     width: 100vw;
-    height: 50px;
+    height: 65px;
     opacity: 1;
-    transition: all 1s linear;
+    transition: all 0.4s linear;
     top: 0;
     &.hide {
-        transition: all 1s linear;
+        transition: all 0.4s linear;
         opacity: 0;
-        height: 0;
+        top: -100px;
+    }
+}
+
+.nav-item {
+    display: block;
+    position: relative;
+    padding: 0.5rem;
+    font-size: 1.15rem;
+    font-weight: 300;
+    a {
+        display: inline;
+        text-transform: uppercase;
+        color: #fff;
+        &:hover {
+            color: $yellow;
+        }
+    }
+    .sub-menu {
+        display: none;
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            right: 5px;
+            top: -19px;
+            border: 10px solid;
+            border-color: transparent transparent white;
+            transform: translate3d(-10px, 0, 0);
+            filter: drop-shadow(0 -2px 1px rgba(0, 0, 0, 0.07));
+        }
+    }
+
+    .dropdown-item {
+        display: block;
+        text-transform: capitalize;
+        width: 100%;
+        padding: 0.25rem 1.5rem;
+        clear: both;
+        font-weight: 600;
+        color: #212529;
+        text-align: left;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+        &:hover {
+            background-color: rgb(214, 166, 9);
+            color: #fff;
+        }
+    }
+    &:focus,
+    &:hover {
+        .sub-menu {
+            display: block;
+        }
     }
 }
 
@@ -40,23 +94,59 @@
             right: 0;
             opacity: 1;
         }
-        a {
-            display: inline;
-        }
     }
 }
 
-.nav-item {
-    display: block;
-    a {
-        display: inline;
-    }
-}
-
-@media (min-width: 769px) {
+@media (min-width: 768px) {
     .nav-item {
         display: inline-block;
         margin-top: 0;
         margin-right: 1rem;
+    }
+}
+
+@media (min-width: 991px) {
+    .nav-item {
+        position: relative;
+        padding: 0.5rem;
+        font-size: 1.15rem;
+        font-weight: 300;
+        a {
+            display: inline;
+            text-transform: uppercase;
+        }
+        .sub-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            &::before {
+                left: 15px;
+                right: unset;
+            }
+        }
+
+        .dropdown-item {
+            display: block;
+            text-transform: capitalize;
+            width: 100%;
+            padding: 0.25rem 1.5rem;
+            clear: both;
+            font-weight: 600;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+            &:hover {
+                background-color: rgb(214, 166, 9);
+                color: #fff;
+            }
+        }
+        &:focus,
+        &:hover {
+            .sub-menu {
+                display: block;
+            }
+        }
     }
 }

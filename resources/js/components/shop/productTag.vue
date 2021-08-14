@@ -53,9 +53,7 @@ export default {
             return JSON.parse(this.product);
         },
     },
-    mounted() {
-        console.log(this.item.id);
-    },
+    mounted() {},
 };
 </script>
 

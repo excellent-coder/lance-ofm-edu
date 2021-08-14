@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
-use App\Models\Subject;
+use App\Models\Level;
+use App\Models\Program;
+use App\Models\Course;
+use App\Models\Material;
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PHPUnit\Framework\Constraint\Count;
 
 class LessonController extends Controller
 {
@@ -21,6 +26,7 @@ class LessonController extends Controller
         $cardLinks = [];
         $lessons = Lesson::all();
 
+        // return $lessons;
         return view(
             'admin.pages.lessons.index',
             compact(
@@ -37,8 +43,18 @@ class LessonController extends Controller
      */
     public function create()
     {
-        $subjects = Subject::all(['id', 'name']);
-        return view('admin.pages.lessons.create', compact('subjects'));
+        $programs = Program::all();
+        $levels = Level::all();
+        $sessions = Session::latest('year')->get();
+        // return $sessions;
+        return view('admin.pages.lessons.create', compact('programs', 'levels', 'sessions'));
+    }
+
+    public function createCourse($course)
+    {
+        $programs = Program::all();
+        $levels = Level::all();
+        return view('admin.pages.lessons.create', compact('programs', 'levels', 'course'));
     }
 
     /**
@@ -49,17 +65,20 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
 
         $valid = Validator::make(
             $request->all(),
             [
-                'subject_id' => 'required|integer',
-                'photo' => 'required|image',
+                'course_id' => 'required|integer',
+                'session_id' => 'required|integer',
+                'image' => 'required|image',
                 'topic' => 'required|max:1000',
                 'description' => 'required'
             ],
             [
-                'subject_id.required' => 'Please choose subject'
+                'course_id.required' => 'Please choose the course that this lesson belongs to',
+                'session_id.required' => 'Please choose the session that this lesson belongs to'
             ]
         );
 
@@ -79,18 +98,19 @@ class LessonController extends Controller
         }
 
         $l->slug = $slug;
-        $l->subject_id = $request->subject_id;
+        $l->course_id = $request->course_id;
         $l->description = $request->description;
+        $l->session_id = $request->session_id;
         $l->active = intval($request->active);
 
-        // saving photo;
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
+        // saving image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
             if ($file->isValid()) {
 
                 $name = Str::slug(Str::random(10)) . time()
                     . '.' . $file->extension();
-                $l->photo = $file->storeAs('materials/previews', $name);
+                $l->image = $file->storeAs('materials/previews', $name);
             }
         }
 
@@ -127,8 +147,39 @@ class LessonController extends Controller
      */
     public function edit(Lesson $lesson)
     {
-        $subjects = Subject::all(['id', 'name']);
-        return view('admin.pages.lessons.edit', compact('lesson', 'subjects'));
+        $courses = Course::all();
+        $levels = Level::all();
+        $programs = Program::all();
+        $sessions = Session::latest('year')->get();
+
+        $course = $lesson->course;
+        $program = $course ? $course->program : null;
+        $level = $course ? $course->level : null;
+
+        $items = [
+            'course' => $course,
+        ];
+
+        $items['program'] = $program;
+        $items['level'] = $level;
+
+
+        $courses = [];
+        if ($program && $level) {
+            $courses = Course::where('program_id', $program->id)
+                ->where('level_id', $level->id)->get();
+        }
+        $items['courses'] = $courses;
+
+        $items = collect($items);
+
+        return view('admin.pages.lessons.edit', compact(
+            'lesson',
+            'levels',
+            'programs',
+            'sessions',
+            'items'
+        ));
     }
 
     /**
@@ -140,15 +191,18 @@ class LessonController extends Controller
      */
     public function update(Request $request, Lesson $lesson)
     {
+        // return $request->all();
         $valid = Validator::make(
             $request->all(),
             [
-                'subject_id' => 'required|integer',
+                'course_id' => 'required|integer',
+                'session_id' => 'required|integer',
                 'topic' => 'required|max:1000',
                 'description' => 'required'
             ],
             [
-                'subject_id.required' => 'Please choose subject'
+                'course_id.required' => 'Please choose course',
+                'session_id.required' => 'Please choose Session'
             ]
         );
 
@@ -162,18 +216,19 @@ class LessonController extends Controller
         $l = $lesson;
         $l->topic = $request->topic;
 
-        $l->subject_id = $request->subject_id;
+        $l->course_id = $request->course_id;
+        $l->session_id = $request->session_id;
         $l->description = $request->description;
         $l->active = intval($request->active);
 
-        // saving photo;
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
+        // saving image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
             if ($file->isValid()) {
 
-                $name = Str::slug(Str::random(10)) . time()
-                    . '.' . $file->extension();
-                $l->photo = $file->storeAs('materials/previews', $name);
+                $name = Str::slug(Str::random(10)) . '-' . time()
+                    . '.' . $file->getClientOriginalExtension();
+                $l->image = $file->storeAs('lessons/previews', $name);
             }
         }
 
@@ -194,8 +249,47 @@ class LessonController extends Controller
      * @param  \App\Models\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lesson $lesson)
+    public function destroy(Request $request)
     {
-        //
+        $ids = trim($request->ids, ',');
+
+        if (empty($ids)) {
+            return ['message' => 'nothing to delete'];
+        }
+
+        $ids = explode(',', $ids);
+        $images = Lesson::whereIn('id', $ids)->get(['image']);
+        // delete images
+        $images->each(function ($img) {
+            if (file_exists(public_path("storage/$img->image")) && $img->image) {
+                unlink(public_path("storage/$img->image"));
+            }
+        });
+
+        // delete materials;
+        $materials = Material::whereIn('lesson_id', $ids)->get();
+
+        $materials->each(function ($m) {
+            if (file_exists(public_path("storage/$m->path")) && $m->path) {
+                unlink(public_path("storage/$m->path"));
+            }
+        });
+
+        $total =  Lesson::whereIn('id', $ids)->delete();
+        if (!$total) {
+            return [
+                'type' => 'info',
+                'message' => 'Unable to excute the delete command',
+                'desc' => 'Reload this page and try again'
+            ];
+        }
+
+        $desc = $total > 1 ? 'Reload this page to see changes' : '';
+
+        return [
+            'message' => "$total " . Str::plural('page', $total) . " Deleted successfuly",
+            'status' => 200,
+            'desc' => $desc
+        ];
     }
 }

@@ -15,9 +15,9 @@
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-12 my-3 " style="background-color: rgb(16, 17, 90);">
+                    <div class="my-3 col-12 " style="background-color: rgb(16, 17, 90);">
                         <div class="row justify-content-between">
-                            <h4 class=" text-white mr-3">{{$title}}</h4>
+                            <h4 class="mr-3 text-white ">{{$title}}</h4>
                         </div>
                     </div>
                     <div class="col-12">
@@ -102,7 +102,7 @@
                 <input class="form-control required" type="text" name="name" id="editing-name">
             </div>
 
-            <div class="form-group text-right my-2">
+            <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>
             </div>
         </form>
@@ -117,9 +117,6 @@
 <script src="/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="/vendor/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/vendor/jszip/jszip.min.js"></script>
-<script src="/vendor/pdfmake/pdfmake.min.js"></script>
-<script src="/vendor/pdfmake/vfs_fonts.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.colVis.min.js"></script>

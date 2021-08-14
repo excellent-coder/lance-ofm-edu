@@ -24,6 +24,9 @@
             </div>
         </div>
     </div> --}}
+    <div class="w-full h-96">
+        <carousel-slide id="carousel"></carousel-slide>
+    </div>
     <div class="grid w-full grid-cols-2 gap-2 my-5 lg:grid-cols-5 lg:gap-4 md:gap-3 md:grid-cols-4">
         @foreach ($products as $p )
         <product-tag

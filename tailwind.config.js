@@ -20,17 +20,20 @@ module.exports = {
             },
             width: {
                 '1/7': '14.2857143%',
+            },
+            border: {
+                'border-1':'1px',
             }
         },
         // screens: {
-            // 'tablet': '640px',
-            // => @media (min-width: 640px) { ... }
+        //     'tablet': '640px',
+        //     => @media (min-width: 640px) { ... }
 
-            // 'laptop': '1024px',
-            // => @media (min-width: 1024px) { ... }
+        //     'laptop': '1024px',
+        //     => @media (min-width: 1024px) { ... }
 
-            // 'desktop': '1280px',
-            // => @media (min-width: 1280px) { ... }
+        //     'desktop': '1280px',
+        //     => @media (min-width: 1280px) { ... }
         // }
     },
     variants: {

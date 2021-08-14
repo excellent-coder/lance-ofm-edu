@@ -39,13 +39,13 @@
     <div class="col-md-12">
         <div class="card">
             <x-admin-card-tool title="User Categories" :links="$cardLinks">
-                <a href="{{route('admin.lessons.create')}}" class="btn btn-success btn-tool btn-sm text-white">
+                <a href="{{route('admin.lessons.create')}}" class="text-white btn btn-success btn-tool btn-sm">
                     new Lesson
                 </a>
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-12 my-3" style="background-color: indigo;">
+                    <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
                             <a href="{{route('admin.lessons.create')}}" class="btn btn-success">
                                 new Lesson
@@ -61,9 +61,10 @@
                                     </th>
                                     <th>#</th>
                                     <th>Topic</th>
-                                    <th>Subject</th>
-                                    <th>Programs</th>
+                                    <th>Course</th>
+                                    <th>Program</th>
                                     <th>Materials</th>
+                                    <th>Session</th>
                                     <th>Total Users</th>
                                     <th>Action</th>
                                 </tr>
@@ -81,22 +82,16 @@
                                 <?php
                                 $action['id'] = $l->id;
                                 $action['route'] = route('admin.lessons.edit', $l->id);
-                                $action['update_route']= route("admin.lessons.update", $l->id);
                                 $action['rowid'] = "#tr-less-$l->id";
-                                $programs = "";
-                                foreach ($l->subject->Categories as $p) {
-                                   $programs.=" $p->name |";
-                                }
-                                $programs = trim($programs, '|');
-                                $action['item']= json_encode([]);
                                 ?>
-                                <tr class="tr-less-{{$l->id}}">
+                                <tr id="tr-less-{{$l->id}}">
                                     <td><input type="checkbox" value="{{$l->id}}" class="checking"></td>
                                     <td>{{$i++}}</td>
                                     <td>{{ Str::limit($l->topic, 100, '...')}}</td>
-                                    <td>{{ $l->subject->name}}</td>
-                                    <td>{{ $programs }}</td>
+                                    <td>{{ $l->course->name??'-'}}</td>
+                                    <td>{{ $l->course->program->abbr??'-' }}</td>
                                     <td>{{ $l->materials->count()}}</td>
+                                    <td>{{ $l->session->name}}</td>
                                     <td>{{$l->users??'nil'}}</td>
                                     <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
@@ -114,6 +109,7 @@
                                     <th>Subject</th>
                                     <th>Programs</th>
                                     <th>Materials</th>
+                                    <th>Session</th>
                                     <th>Total Users</th>
                                     <th>Action</th>
                                 </tr>
@@ -138,9 +134,7 @@
 <script src="/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="/vendor/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/vendor/jszip/jszip.min.js"></script>
-<script src="/vendor/pdfmake/pdfmake.min.js"></script>
-<script src="/vendor/pdfmake/vfs_fonts.js"></script>
+
 <script src="/vendor/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.colVis.min.js"></script>

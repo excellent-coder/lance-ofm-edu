@@ -57,7 +57,7 @@ class MaterialController extends Controller
 
                 $path = Str::slug(Str::random(20)) . '-' . time()
                     . '.' . $file->extension();
-                $m->url = $file->storeAs('lesson/materials', $path);
+                $m->path = $file->storeAs('lesson/materials', $path);
 
                 $m->save();
                 return [

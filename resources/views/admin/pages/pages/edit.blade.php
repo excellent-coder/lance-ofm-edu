@@ -2,75 +2,94 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/file.css">
-
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="All Pages" :links="$cardLinks">
+            <x-admin-card-tool title="All Pages">
             </x-admin-card-tool>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form method="POST" @submit.prevent="submit($event)"
-                            action="{{route('admin.pages.update', $page->id)}}">
+                        <form method="POST" @submit.prevent="submit($event)" action="{{route('admin.pages.update', $page->id)}}">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-lg-8">
                                     <div class="form-group">
                                         <label for="body">Body</label>
-                                        <textarea class="form-control required tinymce" name="body" rows="12">{{$page->body}}</textarea>
+                                        <textarea class="form-control required tinymce" name="description"
+                                            rows="12">{!! $page->description !!}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Excerpt</label>
-                                        <textarea placeholder="excerpt" class="form-control" name="excerpt"rows="3">{{$page->excerpt}}</textarea>
+                                        <textarea placeholder="excerpt" class="form-control" name="excerpt"
+                                            rows="3">{{$page->excerpt}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="title">Title</label>
-                                        <input class="form-control required" type="text" name="title" value="{{$page->title}}" placeholder="title">
+                                        <input class="form-control required" type="text" value="{{$page->title}}"
+                                            name="title" placeholder="title">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="title">Unique Name</label>
+                                        <input class="form-control" type="text" value="{{$page->name}}" name="name" placeholder="title">
                                     </div>
                                     <div class="form-group">
                                         <label for="slug">Slug</label>
-                                        <input class="form-control required" type="text"  name="slug" value="{{$page->slug}}" placeholder="slug">
+                                        <input class="form-control required" type="text" value="{{$page->slug}}"
+                                            name="slug" placeholder="slug">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Status
-                                            <i class="fas fa-info-circle" data-toggle="tooltip"
-                                                title="Make page active and accessible other save as draft"></i>
+                                    <div class="checkbox checkbox-primary p-t-0">
+                                        <input id="featured" type="checkbox" class="form-check-input form-control"
+                                            {{$page->published?'checked':''}} name="published" value="1">
+                                        <label for="featured">
+                                            Published
                                         </label>
-                                        <select class="form-control select2" style="width: 100%;" name="active">
-                                            <option value="1" {{ $page->active ?'selected':''}}>Active</option>
-                                            <option value="0" {{$page->active ?'' :'selected'}}>Draft</option>
-                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <h5 class="mb-3">Choose Open graph
+                                        <h5 class="mb-3 text-muted">Featured Image
                                             <i class="fas fa-info-circle" data-toggle="tooltip"
                                                 title="This image is used for open graph. Use the editor to add images to your page">
                                             </i>
                                         </h5>
-                                        <div class="form-group position-relative">
-                                            <input @change.prevent="previewSelected($event)" id="image" class="form-control-file" type="file" name="image"
-                                                accept="image/*">
+                                        <div class="form-group position-relative"
+                                            style="background-color:rgba(81, 32, 128, 0.787)">
+                                            <input @change.prevent="previewSelected($event, 'image', false)" id="image"
+                                                class="form-control-file" type="file" name="image" accept="image/*">
                                             <label for="image" class="text-center">
                                                 <i class="fas fa-plus deeppink"></i>
                                             </label>
                                         </div>
-                                        <div class="row selected-files" id="image_preview">
-                                            <div class="col-12 px-3 select-cover-photo selected preview-file featured-photo">
-                                                <img :src="imageFile?imageFile:'/storage/{{$page->image}}'" alt="preview" class="cursor-pointer preview-img">
-                                                <i v-if="imageFile" class="remove-image" @click.prevent="removeSelected('image')">×</i>
+                                        <div class="row selected-files"
+                                            v-if="files.image && files.image.length || '{{$page->image}}' && !form.remove_image">
+                                            <div
+                                                class="px-3 col-12 select-cover-photo selected preview-file featured-photo">
+                                                <img :src="(files.image && files.image[0])?fileSrc(files.image[0].file):'/storage/{{$page->image}}'"
+                                                    alt="preview" class="cursor-pointer preview-img">
+                                                <i class="remove-image" @click.prevent="removeFile('image', 0)">×</i>
                                             </div>
                                         </div>
                                     </div>
+                                    @if ($page->image)
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-primary p-t-0">
+                                                <input id="remove_image" type="checkbox"
+                                                    class="form-check-input form-control"
+                                                   v-model="form.remove_image"
+                                                name="remove_image" value="1">
+                                                <label for="remove_image">
+                                                    Remove old featured image
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                            <button class="btn btn-block btn-success btn-lg rounded-1">update</button>
+                            <button class="btn btn-block btn-success btn-lg">submit</button>
                         </form>
                     </div>
                 </div>

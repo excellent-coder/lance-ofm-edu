@@ -40,11 +40,12 @@ const app = createApp({
             imageFile: "",
             hide_modal: false,
 
-            form: {type:'text'},
+            form: {type:'text', categories:[]},
             // shop categories
             parentShopCats: [],
             shopCats: [],
             products: [],
+            categories:[],
             // super_cat: {id:1,name:"updated"},
             price: '',
             highPrice: '',
@@ -150,6 +151,7 @@ const app = createApp({
             }).catch(err => {
                 console.log(err);
                 if (err.response) {
+                    err.response.data.type = 'danger';
                     return this.processResponse(err.response.data);
                 }
                 isLoading(false);
@@ -478,6 +480,7 @@ const app = createApp({
                 return false;
             }
             $(form).find('.required').removeClass('is-invalid');
+
             if (newForm) {
 
                 Vm.data.hide_modal = false;
@@ -485,8 +488,10 @@ const app = createApp({
                 form.action = el.dataset.store_route;
                 form.reset();
                 oldValues(form);
+                $(form).find('.hide-on-edit').css('display', 'block');
                 return
             }
+            $(form).find('.hide-on-edit').css('display', 'none');
             let updater = document.getElementById('form-updater');
             if (updater) {
                 updater.dataset.items = el.dataset.item;
@@ -509,6 +514,11 @@ const app = createApp({
                 }
                 if (input.attr('type') == 'file') {
                     return;
+                }
+
+                if (input.attr('type') == 'checkbox') {
+                    input.prop('checked', Boolean(item[id]));
+                    return
                 }
 
                 input.val(item[id]);
@@ -569,6 +579,8 @@ const app = createApp({
         },
 
         processResponse(data) {
+            // console.log(data);
+            isLoading(false);
             let type = data.type;
             let title = data.message;
             let description = data.desc;
@@ -586,13 +598,13 @@ const app = createApp({
 
                 if (data.to) {
                     window.location.href = data.to;
-                    return;
                 }
 
                 if (data.reload) {
                     window.location.reload()
-                    return
                 }
+
+                return;
             }
 
             if (data.errors) {
@@ -620,9 +632,19 @@ const app = createApp({
                     type,
                     timeout
                 });
+
+                return;
             }
 
-            isLoading(false);
+            if (data.message) {
+                notify(
+                    { title: data.message },
+                    {
+                        type: data.type ? data.type : 'info',
+                        timeout: data.timeout?data.timeout: 60* 60 * 60
+                    }
+                );
+            }
             return
         },
 
@@ -751,6 +773,42 @@ const app = createApp({
                 });
             }
 
+        },
+
+        subItems(event, url, formKey, clears = {}) {
+            let clearKeys = Object.keys(clears);
+
+            clearKeys.forEach(x => {
+                this.form[x] = clears[x];
+            });
+
+            url = `${url}?id=${event.id}`;
+            axios.get(url).then(res => {
+                this.form[formKey] = res.data;
+            })
+        },
+
+        fetchCourses(event, target) {
+            let action = '/admin/courses/json/';
+
+            switch (target) {
+                case 'program':
+                    if (!this.form.level) {
+                        return;
+                    }
+                    action = action += event.id +'/'+ this.form.level.id;
+                    break;
+
+                case 'level':
+                    if (!this.form.program) {
+                        return;
+                    }
+                    action = action += this.form.program.id +'/'+ event.id;
+                    break;
+            }
+            axios.get(action).then(res => {
+                this.form.courses = res.data;
+            })
         }
     },
     watch: {
