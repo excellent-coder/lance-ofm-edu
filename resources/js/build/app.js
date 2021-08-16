@@ -13,6 +13,9 @@ import SignUp from '../components/Auth/Signup.vue';
 import ResetPassword from '../components/Auth/ResetPassword.vue';
 import CarouselSlide from '../components/utils/CarouselSlide.vue';
 
+import MultiSelect from '../npm/vue-multiselect/src';
+
+
 const app = createApp({
     components: {
         App,
@@ -23,6 +26,7 @@ const app = createApp({
     },
     data() {
         return {
+            form:{}
         }
     },
     methods: {
@@ -42,6 +46,7 @@ const app = createApp({
 
             // generate form data
             let formData = new FormData(form);
+            formData.append('device', navigator.userAgent);
             // upload formdata using axios
             // show upload progress
             axios.post(url, formData).then(res => {
@@ -153,6 +158,8 @@ app.use(store);
 app.use(router);
 // register global components
 app.component('CarouselSlide', CarouselSlide)
+app.component('MultiSelect',MultiSelect)
+
 
 const vm = app.mount('#app')
 isLoading(false);

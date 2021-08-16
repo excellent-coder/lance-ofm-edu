@@ -25238,6 +25238,9 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
         } // console.log(item[id]);
 
       });
+      setTimeout(function () {
+        return $('#modal-action').trigger('click');
+      }, 500);
     },
     activate: function activate(el) {
       var _this4 = this;
@@ -25510,6 +25513,27 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
 
       axios__WEBPACK_IMPORTED_MODULE_6___default().get(action).then(function (res) {
         _this8.form.courses = res.data;
+      });
+    },
+    generateMemberID: function generateMemberID() {
+      var _this9 = this;
+
+      var member = $('#editing-applying_for').val();
+
+      if (!member) {
+        console.log('member not found');
+        return;
+      }
+
+      if ($('#editing-member_id').val()) {
+        return;
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_6___default().get("/admin/applications/id/".concat(member)).then(function (res) {
+        var data = res.data;
+        _this9.form.last_id = data.last_id;
+        _this9.form.member_id = data.member_id;
+        _this9.form.applying_for = member;
       });
     }
   },

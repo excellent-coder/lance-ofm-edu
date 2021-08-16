@@ -52,6 +52,14 @@ Route::prefix('scs')->middleware('auth:scs')->group(function () {
     require __DIR__ . '/get/scs.php';
 });
 
+Route::prefix('member')->middleware('auth:mem')->group(function () {
+    require __DIR__ . '/get/members.php';
+});
+
+Route::prefix('portal')->middleware('auth:pgs')->group(function () {
+    require __DIR__ . '/get/students.php';
+});
+
 
 
 Route::get('login-ceo', function () {

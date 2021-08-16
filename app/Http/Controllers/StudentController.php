@@ -27,6 +27,11 @@ class StudentController extends Controller
         //
     }
 
+    public function portal()
+    {
+        return 'Student Portal';
+    }
+
     /**
      * Store a newly created resource in storage.
      *

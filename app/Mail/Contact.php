@@ -32,7 +32,10 @@ class Contact extends Mailable
     public function build()
     {
 
-        return $this->from(env('CONTACT_RECEIVER_EMAIL'))
-            ->view('emails.contact');
+        return $this->from(
+            config('mail.receivers.contact.email'),
+            config('mail.receivers.contact.name')
+        )->view('emails.contact')
+            ->subject("new message from " . $this->contact->first_name);
     }
 }

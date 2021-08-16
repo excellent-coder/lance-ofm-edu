@@ -69,7 +69,7 @@ class ContactController extends Controller
 
         $contact->save();
 
-        Mail::to(config('mail.receivers.contact'))->send(new MailContact($contact));
+        Mail::to(config('mail.receivers.contact.email'))->send(new MailContact($contact));
 
         return [
             'message' => "Your message have been successfully sent to admin",

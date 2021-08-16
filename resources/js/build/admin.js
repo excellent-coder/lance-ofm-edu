@@ -534,6 +534,10 @@ const app = createApp({
                 // console.log(item[id]);
             })
 
+            setTimeout(() => {
+                return $('#modal-action').trigger('click');
+            }, 500);
+
         },
         activate(el) {
             let route = el.dataset.route;
@@ -808,6 +812,23 @@ const app = createApp({
             }
             axios.get(action).then(res => {
                 this.form.courses = res.data;
+            })
+        },
+        generateMemberID() {
+            let member = $('#editing-applying_for').val();
+            if (!member) {
+                console.log('member not found');
+                return
+            }
+            if ($('#editing-member_id').val()) {
+                return;
+            }
+
+            axios.get(`/admin/applications/id/${member}`).then(res => {
+                let data = res.data
+                this.form.last_id = data.last_id
+                this.form.member_id = data.member_id
+                this.form.applying_for = member;
             })
         }
     },

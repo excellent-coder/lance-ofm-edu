@@ -64,7 +64,7 @@
                     </div>
                     <div class="text-right ">
                         <span class="mr-2 text-white">Already A member</span>
-                        <a class="text-green-400 hover:text-yellow-300" href="{{route('login')}}">
+                        <a class="text-green-400 hover:text-yellow-300" href="{{route('scs.login')}}">
                             Login here
                         </a>
                     </div>
@@ -75,9 +75,18 @@
                         Register <i class="fas fa-forward "></i>
                     </button>
                 </div>
-                <div class="grid grid-cols-2 mt-3 text-base font-bold text-green-500">
-                    <a href="{{route('apply')}}" class="hover:text-yellow-500">Apply For membership</a>
-                    <a class="text-right hover:text-yellow-500" href="{{route('apply')}}">Apply For Other Program</a>
+                <div class="flex flex-wrap w-full mt-3 text-base font-bold text-green-500">
+                    <p class="w-1/2 ">
+                    <a href="{{route('mem.apply')}}" class="hover:text-yellow-500">Apply For membership</a>
+                    </p>
+                    <p class="w-1/2 text-right">
+                    <a class="text-right hover:text-yellow-500" href="{{route('pgs.apply')}}">Apply For Main Student</a>
+                    </p>
+                    <p class="w-full my-8 text-center text-gray-100">
+                    <a class="text-3xl text-right hover:text-yellow-500" href="{{route('home')}}">
+                        Go Home
+                    </a>
+                    </p>
                 </div>
             </form>
         </div>

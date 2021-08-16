@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
 use App\Models\Profile;
 use App\Models\SCStudent;
 use App\Models\User;
@@ -115,12 +116,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // return $request->all();
-        // return auth('scs')->user();
+
         $valid = Validator::make(
             $request->all(),
             [
                 'username' => 'required',
                 'password' => 'required',
+                'login_as' => 'required'
             ]
         );
 
@@ -131,12 +133,46 @@ class AuthController extends Controller
             ];
         }
 
+        $login_as = $request->login_as;
+        if (!in_array($login_as, ['Member', 'SCStudent', 'Student'])) {
+            return [
+                'message' => 'Unable To authenticate',
+                'type' => 'error',
+                'status' => 200
+            ];
+        }
+
         $username = $request->username;
         $password = $request->password;
         $remember = $request->filled('remember');
 
         $user = false;
-        $auth = User::where('email', $username)->first();
+
+        switch ($login_as) {
+            case 'Member':
+                $log = $this->memberLogin($username, $password, $remember);
+                if ($log) {
+                    return $log;
+                }
+                break;
+            case 'Student':
+                $log = $this->studentLogin($username, $password, $remember);
+                if ($log) {
+                    return $log;
+                }
+                break;
+            case 'SCStudent':
+                break;
+            default:
+                return [
+                    'message' => 'Invalid credentials',
+                    'type' => 'error',
+                    'status' => 200
+                ];
+                break;
+        }
+        $user = SCStudent::where('email', $username)->first();
+
         if ($user) {
             if (password_verify($password, $user->password)) {
                 $user = $auth;
@@ -161,6 +197,40 @@ class AuthController extends Controller
             'type' => 'error',
             'status' => 200
         ];
+    }
+
+    protected function memberLogin($id, $password, $remember)
+    {
+        $user = Member::where('member_id', $id)->first();
+        if ($user) {
+            if (password_verify($password, $user->password)) {
+                auth('mem')->login($user, $remember);
+                return [
+                    'message' => "Successfully Logged in",
+                    'to' => '/member',
+                    'status' => 200
+                ];
+            }
+        }
+
+        return false;
+    }
+
+    protected function studentLogin($id, $password, $remember)
+    {
+        $user = Student::where('matric_no', $id)->first();
+        if ($user) {
+            if (password_verify($password, $user->password)) {
+                auth('pgs')->login($user, $remember);
+                return [
+                    'message' => "Successfully Logged in",
+                    'to' => '/portal',
+                    'status' => 200
+                ];
+            }
+        }
+
+        return false;
     }
 
     protected function loginUsername($username, $password)
@@ -209,5 +279,14 @@ class AuthController extends Controller
         $action = "<$tag></$tag>";
 
         return view('auth.auth', compact('action'));
+    }
+
+
+    public function logout()
+    {
+        foreach (['scs', 'pgs'] as $guard) {
+            auth($guard)->logout();
+        }
+        return redirect('/');
     }
 }

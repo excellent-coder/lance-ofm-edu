@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Membership;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -26,6 +27,12 @@ class MemberController extends Controller
     {
         //
     }
+
+    public function portal()
+    {
+        return 'members dashboard';
+    }
+
 
     /**
      * Store a newly created resource in storage.

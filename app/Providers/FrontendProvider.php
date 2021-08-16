@@ -60,5 +60,13 @@ class FrontendProvider extends ServiceProvider
             $userPrograms = auth('scs')->user()->programs;
             $view->with(compact('programs', 'userPrograms'));
         });
+
+        view()->composer('includes.navbar', function ($view) {
+            $navPrograms = Program::where('active', 1)
+                ->where('is_program', 1)
+                ->where('visibility', '<', 3)
+                ->get();
+            $view->with(compact('navPrograms'));
+        });
     }
 }

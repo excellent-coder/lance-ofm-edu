@@ -21,7 +21,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="/storage/web/logo.png" alt="web Logo" height="60" width="60">
+            <img class="animation__wobble" src="/storage/{{web_setting('general', 'logo')}}" alt="web Logo" height="60" width="60">
         </div>
         <div id="preloader" style="display: block;">
             <div class="bars"></div>

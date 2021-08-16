@@ -52,10 +52,24 @@ return [
             'driver' => 'session',
             'provider' => 'ceos'
         ],
+        // schort course students guard
         'scs' => [
             'driver' => 'session',
             'provider' => 'scs',
         ],
+
+        // Program students guard ie. main students
+        'pgs' => [
+            'driver' => 'session',
+            'provider' => 'pgs',
+        ],
+
+        // Members guard ie. main students
+        'mem' => [
+            'driver' => 'session',
+            'provider' => 'mem',
+        ],
+
     ],
 
     /*
@@ -87,6 +101,14 @@ return [
         'scs' => [
             'driver' => 'eloquent',
             'model' => App\Models\SCStudent::class,
+        ],
+        'pgs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
+        ],
+        'mem' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Member::class,
         ],
 
         // 'users' => [

@@ -23,7 +23,7 @@ class CreateProgramsTable extends Migration
             $table->integer('max_level');
             $table->text('excerpt');
             $table->boolean('active')->nullable()->default(true);
-            $table->boolean('is_program')->nullable()->default(true);
+            $table->boolean('is_program')->nullable()->default(true)->comment("if it is a program, students can apply for it");
             $table->tinyInteger('visibility')->unsigned()->comment("1 for all, 2 for program alone, and 3 for short course students alone");
             $table->timestamps();
         });

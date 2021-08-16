@@ -3,7 +3,7 @@
         $item  = (object) $action;
     @endphp
 
-    @empty ($item->route)
+    @isset ($item->item)
         <button class="btn modal-edit-btn text-primary"
         data-form="{{$item->form}}"
         data-item="{{$item->item}}"
@@ -12,11 +12,12 @@
         >
         <i class="fas fa-{{$item->icon??'pencil-alt'}}"></i>
         </button>
-        @else
+        @endisset
+        @isset($item->route)
     <a href="{{$item->route}}" class="text-primary">
         <i class="fas fa-{{$item->icon??'pencil-alt'}}"></i>
     </a>
-    @endempty
+    @endisset
     {{-- load extra buttons --}}
     @isset($item->btns)
     @foreach ($item->btns as $btn)

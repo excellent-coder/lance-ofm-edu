@@ -6,7 +6,7 @@ Route::get('/', 'AdminController@dashboard')->name('dashboard');
 
 Route::prefix('pages')->name('pages')->group(function () {
     Route::get('/', 'PageController@index');
-    Route::get('create', 'pageController@create')->name('.create');
+    Route::get('create', 'PageController@create')->name('.create');
     Route::get('edit/{page}', 'PageController@edit')->name('.edit');
 });
 
@@ -16,7 +16,9 @@ Route::prefix('user-categories')->name('user-categories')->group(function () {
 
 Route::prefix('applications')->name('applications')->group(function () {
     Route::get('/', 'ApplicationController@index');
+    Route::get('details/{app}', 'ApplicationController@details')->name('.details');
     Route::get('/{category}', 'ApplicationController@category')->name('.category');
+    Route::get('id/{member}', 'ApplicationController@id')->name('.id');
 });
 
 Route::prefix('subjects')->name('subjects')->group(function () {

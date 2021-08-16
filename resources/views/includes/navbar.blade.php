@@ -45,6 +45,9 @@
                 <a class="dropdown-item" href="{{route('static-pages.memberships.honourary')}}">
                     Honourary Membership
                 </a>
+                <a class="text-green-600 dropdown-item" href="{{route('mem.apply')}}">
+                    Apply For Membership
+                </a>
             </ul>
         </li>
         <li class="nav-item">
@@ -52,11 +55,14 @@
                Programs
             </a>
             <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
-                @foreach (\App\models\Program::all() as $nc)
+                @foreach ($navPrograms as $nc)
                 <a class="dropdown-item" href="{{route('programs.show', $nc->slug)}}">
                     {{$nc->abbr}}
                 </a>
                 @endforeach
+                <a class="dropdown-item" href="{{route('pgs.apply')}}">
+                    Apply For Program
+                </a>
             </ul>
         </li>
         <li class="nav-item">

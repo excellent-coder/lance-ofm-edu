@@ -12,19 +12,36 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('apply', 'ApplicationController@create')->name('apply');
 
-
 Route::any('logout', 'AuthController@logout')->name('logout');
 
-Route::post('signup', 'AuthController@signup')->middleware('guest');
-Route::post('reset', 'AuthController@reset')->middleware('guest');
+Route::get('member/apply', 'ApplicationController@memberApply')->name('mem.apply');
+Route::post('member/apply', 'ApplicationController@store');
+Route::get('main-student/apply', 'ApplicationController@studentApply')->name('pgs.apply');
 
-Route::middleware('guest:scs')->group(function () {
-    Route::get('register', 'AuthController@registerPage')->name('register');
-    Route::post('register', 'AuthController@register');
 
+
+Route::get('register', 'AuthController@registerPage')->name('register');
+Route::post('password', 'AuthController@password')->name('password');
+
+Route::middleware(['guest:scs', 'guest:pgs', 'guest:mem'])->group(function () {
     Route::get('login', 'AuthController@loginPage')->name('login');
     Route::post('login', 'AuthController@login');
 
-    Route::get('password', 'AuthController@passwordPage')->name('password');
-    Route::post('password', 'AuthController@password');
+    Route::prefix('scs')->group(function () {
+        Route::get('register', 'AuthController@registerPage')->name('scs.register');
+        Route::post('register', 'AuthController@register');
+
+        Route::get('password', 'AuthController@passwordPage')->name('scs.password');
+        Route::post('password', 'AuthController@password');
+    });
+
+    Route::prefix('main-student')->group(function () {
+        Route::get('password', 'AuthController@passwordPage')->name('pgs.password');
+        Route::post('password', 'AuthController@password');
+    });
+
+    Route::prefix('members')->group(function () {
+        Route::get('password', 'AuthController@passwordPage')->name('mem.password');
+        Route::post('password', 'AuthController@password');
+    });
 });

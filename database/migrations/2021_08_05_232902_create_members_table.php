@@ -17,6 +17,7 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->string('member_id')->unique()
                 ->nullable()->comment("this is like a matric number");
+
             $table->string('email');
             $table->string('phone');
             $table->string('password');
@@ -31,7 +32,10 @@ class CreateMembersTable extends Migration
             $table->date('disabled_on')->nullable();
             $table->date('terminated_on')->nullable();
 
+            $table->string('image', 300)->nullable();
+
             $table->boolean('active')->nullable()->default(false);
+            $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('membership_id')

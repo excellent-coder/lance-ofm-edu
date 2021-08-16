@@ -11,12 +11,20 @@
     <table>
         <tbody>
             <td>
-                <h1>New Contact Message fROM</h1>
-                <h1>{{"$contact->first_name $contact->last_name"}}</h1>
-                <h1>{{$contact->phone}}</h1>
+                <h1>
+                    <strong>
+                        New Contact Message FROM
+                    </strong>
+                </h1>
+                <h1>
+                    <strong>
+                        {{"$contact->first_name $contact->last_name"}}
+                    </strong>
+                </h1>
+                <h1>{{$contact->email}}</h1>
                 <h1>{{$contact->phone}}</h1>
             </td>
-            <td>
+            <td style="font-weight:900; margin-top: 50px; margin-bottom: 50px; text-align: left; backgroud-color: rgb(237, 248, 248)">
                 {{ $contact->message }}
             </td>
         </tbody>
