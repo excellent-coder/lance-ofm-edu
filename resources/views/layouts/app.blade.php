@@ -31,6 +31,8 @@
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('vendor/intersection-observer/main.js')}}"></script>
     <script src="{{asset('js/interset.js')}}"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+
     @yield('js')
 </body>
 

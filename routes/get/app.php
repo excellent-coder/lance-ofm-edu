@@ -55,3 +55,7 @@ Route::prefix('blog')->group(function () {
 });
 
 Route::get('pages/{slug}', 'PageController@show')->name('pages.show');
+Route::get('events/{slug}', 'EventController@show')->name('events.show');
+
+// payment
+Route::get('payment/v/{payment}', 'PaymentController@paid')->name('payment.paid');

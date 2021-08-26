@@ -50,8 +50,21 @@
                             <i class="fas fa-eye-slash"></i>
                         </span>
                     </div>
+                    <div class="relative mb-4">
+                            <label class="font-semibold text-white">Passport</label>
+                            <input accept="image/*" type="file" required name="passport" class="relative h-12 p-4 bg-white">
+                        </div>
+                    <div class="relative mb-4">
+                            <label class="font-semibold text-white">Certificate</label>
+                            <input accept=".pdf,.docx" type="file" required name="certificate" class="relative h-12 p-4 bg-white">
+                        </div>
+                    <div class="relative mb-4">
+                            <label class="font-semibold text-white">Documents</label>
+                            <input accept=".pdf,.docx" type="file" name="documents" class="relative h-12 p-4 bg-white">
+                        </div>
                 </div>
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">
+                    <div>
                     <div class="text-white checkbox">
                         <input id="terms" type="checkbox" class="form-check-input form-control filled-in"
                             name="terms" value="1">
@@ -62,9 +75,26 @@
                             </span>
                         </label>
                     </div>
+                    <div class="text-white checkbox">
+                        <input id="pay" type="checkbox" class="form-check-input form-control filled-in"
+                            name="pay" value="1">
+                        <label for="pay" class="after-white">
+                            <span class="relative -top-1">
+                                I'M Ready to make payment of <span class="arial">{{$currency_symbol}}</span>  {{ web_setting('scs', 'application_fee')}}
+                            </span>
+                            <span class="block ">
+                                See
+                                <a href="/programs/scs#how-to-apply" target="_blank"
+                                 class="text-green-400 hover:text-yellow-300">
+                                        How to Apply
+                                </a>
+                            </span>
+                        </label>
+                    </div>
+                    </div>
                     <div class="text-right ">
                         <span class="mr-2 text-white">Already A member</span>
-                        <a class="text-green-400 hover:text-yellow-300" href="{{route('scs.login')}}">
+                        <a class="text-green-400 hover:text-yellow-300" href="{{route('login')}}">
                             Login here
                         </a>
                     </div>

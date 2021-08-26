@@ -43,7 +43,7 @@ th{
                 <div class="row">
                     <div class="my-3 col-12 " style="background-color: rgb(16, 17, 90);">
                         <div class="row justify-content-between">
-                            <h4 class="mr-3 text-white ">{{$title}}</h4>
+                            <h4 class="px-3 text-white ">{{$title}}</h4>
                         </div>
                     </div>
                     <div class="col-12">
@@ -54,10 +54,14 @@ th{
                                         <input type="checkbox" id="checkbox">
                                     </th>
                                     <th>#</th>
+                                    <th>View</th>
+                                    <th>Paid</th>
+                                     <th>Approved On</th>
+                                    <th>Member ID</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Applied For</th>
-                                    <th>Position</th>
+                                    <th>Category</th>
                                     <th>
                                         <span class="slant">
                                             Reviewed
@@ -69,13 +73,8 @@ th{
                                         </span>
                                     </th>
                                     <th>Passport</th>
-                                    <th>
-                                        <span class="slant">
-                                        Applicatin Form
-                                        </span>
-                                        </th>
                                     <th>Applied On</th>
-                                    <th>Approved On</th>
+
                                     <th>Rejected On</th>
                                     <th>Action</th>
                                 </tr>
@@ -92,17 +91,44 @@ th{
                                 @endphp
                                 @foreach ($apps as $a)
                                 <?php
-                                    $a->member_id = $a->member->id ?? null;
+                                     $x = $a->user($a->applying_for)->first();
+                                    if($x){
+                                        switch($a->applying_for){
+                                                case 'member':
+                                                default:
+                                                $a->member_id = $x->member_id;
+                                                break;
+                                                case 'student':
+                                                $a->member_id = $x->matric_no;
+                                                break;
+                                            }
+                                    }
                                     $approve = $a->approved_at?'check':'times';
                                     $approve_title =$a->apprved_at?'un-approve':'Approve';
                                     $action['rowid'] = "#tr-app-$a->id";
                                     $action['id'] = $a->id;
-                                    $action['item'] = json_encode($a);
+                                    $a->password = Str::random(8);
+                                    $b = $a;
+                                    $b->reviewed =1;
+                                    $action['item'] = json_encode($b);
                                     $action['update_route'] = route("admin.applications.update", $a->id);
                                 ?>
                                 <tr id="tr-app-{{$a->id}}">
                                     <td><input type="checkbox" class="checking"></td>
                                     <td>{{$i++}}</td>
+                                    <td>
+                                        <button class="btn modal-edit-btn text-success"
+                                            data-form="general-modal-form"
+                                            data-item="{{$b}}"
+                                            data-target="#general-modal"
+                                            data-update_route="{{route("admin.applications.update", $a->id)}}"
+                                            >
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td>{{Str::upper(bv($a->paid)) }}</td>
+                                     <td>{{$a->approved_at}}</td>
+                                    <td>{{$a->member_id }}</td>
                                     <td>{{$a->first_name }}</td>
                                     <td>{{$a->last_name }}</td>
                                     <td>{{ $a->applying_for }}</td>
@@ -112,23 +138,11 @@ th{
                                     <td>
                                         <img src="/storage/{{$a->passport}}" alt="{{$a->first_name}}">
                                     </td>
-                                    <td>
-                                        <a href="/storage/{{$a->form}}" target="_blank"
-                                            title="View the appli catin form"
-                                            rel="noopener noreferrer">
-                                            <i class="fa fa-eye text-success" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
                                     <td>{{$a->created_at}}</td>
-                                    <td>{{$a->approved_at}}</td>
+
                                     <td>{{$a->rejected_at}}</td>
                                     <td>
                                         <x-data-table-action :action="$action">
-                                            <button data-route="{{route('admin.applications.approve', $a->id)}}"
-                                            title='{{$approve_title}}' class='btn' data-id='{{$a->id}}'
-                                             data-rowid='#tr-app-{{$a->id}}'>
-                                            <i class='fas fa-{{$approve}} text-success'></i>
-                                            </button>
                                         </x-data-table-action>
                                     </td>
                                 </tr>
@@ -140,10 +154,14 @@ th{
                                         <i class="fa fa-check-square" aria-hidden="true"></i>
                                     </th>
                                     <th>#</th>
+                                    <th>View</th>
+                                    <th>Paid</th>
+                                    <th>Approved On</th>
+                                    <th>Member ID</th>
                                    <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Applied For</th>
-                                    <th>Position</th>
+                                    <th>Category</th>
                                     <th>
                                         <span class="slant">
                                             Reviewed
@@ -155,9 +173,8 @@ th{
                                         </span>
                                     </th>
                                     <th>Passport</th>
-                                     <th>Form</th>
                                     <th>Applied On</th>
-                                    <th>Approved On</th>
+
                                     <th>Rejected On</th>
                                     <th>Action</th>
                                 </tr>
@@ -180,7 +197,7 @@ th{
             </div>
             <div class="modal-body" id="admin-modal-content">
                 <form spellcheck="off" action="" autocomplete="off" @submit.prevent="submit($event)" id="general-modal-form">
-                    <input type="item_id" id="editing-item_id" class="d-none">
+                    <input type="text" id="editing-item_id" name="item_id" class="d-none">
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="form-group">
@@ -196,7 +213,7 @@ th{
                     </div>
                     <div class="form-group col-12 col-md-6 col-lg-4">
                         <label> Middle Name</label>
-                        <input class="form-control required" type="text" name="middle_name"
+                        <input class="form-control" type="text" name="middle_name"
                         id="editing-middle_name" autocomplete="off">
                     </div>
                     <div class="form-group col-12 col-md-6 col-lg-4">
@@ -261,15 +278,18 @@ th{
                                 <label>MEMBER ID/ MATRIC NUMBER</label>
                                 <input name="member_id" v-if="form.member_id" v-model="form.member_id" type="text" class="form-control">
                                 <input v-else type="text" class="form-control" name="member_id" id="editing-member_id">
-                            </div>
-                            <div class="form-group col-12 col-md-6">
-                                <label>Password</label>
-                                <input  type="text" class="form-control" name="password">
-                            </div>
-                            <div class="form-group col-12 col-md-6" v-if="form.applying_for">
-                                <label>
+                                <label class="mt-2 " v-if="form.applying_for">
                                     LAST MEMBER ID FOR @{{form.applying_for}} is @{{form.last_id}}
                                 </label>
+                            </div>
+                            <div class="form-group col-12 col-md-6">
+                                <label>Password </label>
+                                <input  type="text" class="form-control" id="editing-password" name="password">
+                                <small class="form-text text-muted">
+                                   This password will be emailed to them to use it and login
+                                   <br>
+                                    They will be promted to change it once they login
+                                </small>
                             </div>
                             <button id="modal-action" class="d-none btn btn-primary btn-lg" @click.prevent="generateMemberID()">
                             </button>
@@ -284,10 +304,22 @@ th{
                         <label> User Device</label>
                         <textarea readonly id="editing-device" class=" form-control" rows="4"></textarea>
                     </div>
+                    <input type="hidden" id="editing-paid">
+
+                    <div class="my-3 col-12" v-if="form.paid">
+                        <h3 class="text-center d-block text-success fa-3x">
+                            Payment Confirmed <i class="fas fa-check-square "></i>
+                        </h3>
+                    </div>
+                    <div class="my-3 col-12" v-else>
+                        <h3 class="text-center d-block text-danger fa-3x">
+                           NO Payment has been Confirmed <i class="fas fa-times "></i>
+                        </h3>
+                    </div>
                 </div>
 
                     <div class="my-2 text-right form-group">
-                        <button type="submit" class="btn btn-success dont-change">Approve</button>
+                        <button type="submit" class="btn btn-success dont-change btn-block" data-update="APPROVE"></button>
                         <small class="form-text text-muted">
                             Clicking approve, The applicant can now login with member Id
                         </small>

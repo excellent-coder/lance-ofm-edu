@@ -428,11 +428,11 @@ div.checkbox [type=checkbox].filled-in:disabled:checked + label:after {
   border-color: #bdbdbd;
 }
 
-input.wtk[type=date] {
+input.wtk {
   position: relative;
 }
 
-input.wtk[type=date]::-webkit-calendar-picker-indicator {
+input.wtk::-webkit-calendar-picker-indicator {
   position: absolute;
   top: 0;
   right: 0;
@@ -486,7 +486,7 @@ input.wtk[type=date]::-webkit-calendar-picker-indicator {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-color: #443e3e;
+  background-color: #443e3e !important;
 }
 
 .border-1 {
@@ -518,22 +518,23 @@ input.wtk[type=date]::-webkit-calendar-picker-indicator {
 .scroll-in {
   -webkit-animation: scroll-in 1s linear;
           animation: scroll-in 1s linear;
+  transition: all 0.3s;
 }
 
 @-webkit-keyframes scroll-in {
   from {
-    top: 100px;
+    transform: translateY(100px);
   }
   to {
-    top: 0;
+    transform: translateY(0);
   }
 }
 
 @keyframes scroll-in {
   from {
-    top: 100px;
+    transform: translateY(100px);
   }
   to {
-    top: 0;
+    transform: translateY(0);
   }
 }

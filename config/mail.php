@@ -97,6 +97,17 @@ return [
             'email' => env('CONTACT_FROM_ADDRESS'),
             'name' => env('CONTACT_FROM_NAME')
         ],
+        'application' => [
+            'email' => env('CONTACT_FROM_ADDRESS'),
+            'name' => env('CONTACT_FROM_NAME')
+        ],
+    ],
+
+    'senders' => [
+        'application' => [
+            'email' => env('CONTACT_FROM_ADDRESS'),
+            'name' => env('CONTACT_FROM_NAME')
+        ],
     ],
 
     /*

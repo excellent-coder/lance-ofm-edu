@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
@@ -14,7 +16,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::latest('id')->take(100)->get();
+        // return $students;
+        return view('admin.pages.students.index', compact('students'));
     }
 
     /**
@@ -29,7 +33,7 @@ class StudentController extends Controller
 
     public function portal()
     {
-        return 'Student Portal';
+        return view('frontend.portal.index');
     }
 
     /**
@@ -83,8 +87,41 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(Request $request)
     {
-        //
+        $ids = trim($request->ids, ',');
+
+        if (empty($ids)) {
+            return ['message' => 'nothing to delete'];
+        }
+
+        $ids = explode(',', $ids);
+        // $files = Student::whereIn('id', $ids)->get(['passport', 'certificate', 'documents']);
+
+        // $files->each(function ($file) {
+        //     if (file_exists(public_path("storage/$file->image")) && $file->image) {
+        //         unlink(public_path("storage/$file->image"));
+        //     }
+        //     if (file_exists(public_path("storage/$file->image")) && $file->image) {
+        //         unlink(public_path("storage/$file->image"));
+        //     }
+        // });
+
+        $total =  Student::whereIn('id', $ids)->delete();
+        if (!$total) {
+            return [
+                'type' => 'info',
+                'message' => 'Unable to excute the delete command',
+                'desc' => 'Reload this page and try again'
+            ];
+        }
+
+        $desc = $total > 1 ? 'Reload this page to see changes' : '';
+
+        return [
+            'message' => "$total " . Str::plural('student', $total) . " Deleted successfuly",
+            'status' => 200,
+            'desc' => $desc
+        ];
     }
 }

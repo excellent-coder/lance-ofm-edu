@@ -25,13 +25,26 @@ class SettingController extends Controller
 
     public function storetag(Request $request)
     {
+        $valid = Validator::make(
+            $request->all(),
+            ['icon' => 'nullable|file|image|max:2000']
+        );
+        if ($valid->fails()) {
+            return [
+                'message' => 'You have some errors',
+                'errors' => $valid->errors()->all()
+            ];
+        }
+
         if (!$request->tag) {
             return [
                 'message' => 'Please fill the setting tag',
                 'errors' => []
             ];
         }
-        if (SettingTag::where('tag', $request->tag)->first()) {
+        if (SettingTag::where('tag', $request->tag)
+            ->orWhere('slug', $request->slug)->first()
+        ) {
             return [
                 'message' => 'This tag is already saved',
                 'errors' => "$request->tag is alraedy saved"
@@ -39,7 +52,16 @@ class SettingController extends Controller
         }
         $s = new SettingTag();
         $s->tag = Str::lower($request->tag);
-        $s->slug = Str::slug($request->tag);
+        $s->slug = Str::slug($request->slug);
+
+        // add featured image
+        if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            if ($file->isValid()) {
+                $name = $s->slug . '.' . $file->getClientOriginalExtension();
+                $s->icon = $file->storeAs('setting-tags', $name);
+            }
+        }
         $s->save();
         return [
             'message' => "$s->tag saved successfully",
@@ -51,8 +73,20 @@ class SettingController extends Controller
     {
         $valid = Validator::make(
             $request->all(),
+            ['icon' => 'nullable|file|image|max:2000']
+        );
+        if ($valid->fails()) {
+            return [
+                'message' => 'You have some errors',
+                'errors' => $valid->errors()->all()
+            ];
+        }
+
+        $valid = Validator::make(
+            $request->all(),
             [
                 'tag' => "required|max:50|unique:setting_tags,tag,$tag->id",
+                'slug' => "required|max:50|unique:setting_tags,slug,$tag->id",
             ]
         );
 
@@ -64,6 +98,17 @@ class SettingController extends Controller
         }
 
         $tag->tag = $request->tag;
+        $tag->slug = Str::slug($request->slug);
+
+        // add featured image
+        if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            if ($file->isValid()) {
+                $name = $tag->slug . '.' . $file->getClientOriginalExtension();
+                $tag->icon = $file->storeAs('setting-tags', $name);
+            }
+        }
+
         $tag->save();
         return [
             'message' => 'Tag updated successfully',

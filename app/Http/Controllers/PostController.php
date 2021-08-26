@@ -94,12 +94,13 @@ class PostController extends Controller
         }
 
         $post->save();
-
-        foreach ($request->tags as $t) {
-            if (empty(trim($t))) {
-                return;
+        if ($request->tags) {
+            foreach ($request->tags as $t) {
+                if (empty(trim($t))) {
+                    return;
+                }
+                PostTag::create(['post_id' => $post->id, 'tag_id' => $t]);
             }
-            PostTag::create(['post_id' => $post->id, 'tag_id' => $t]);
         }
 
         return [
@@ -230,11 +231,13 @@ class PostController extends Controller
 
         PostTag::where('post_id', $post->id)->delete();
         // update tags
-        foreach ($request->tags as $t) {
-            if (empty(trim($t))) {
-                return;
+        if ($request->tags) {
+            foreach ($request->tags as $t) {
+                if (empty(trim($t))) {
+                    return;
+                }
+                PostTag::create(['post_id' => $post->id, 'tag_id' => $t]);
             }
-            PostTag::create(['post_id' => $post->id, 'tag_id' => $t]);
         }
         return [
             'message' => "Blog post updated successfully",

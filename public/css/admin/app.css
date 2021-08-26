@@ -770,11 +770,11 @@ div.checkbox [type=checkbox].filled-in:disabled:checked + label:after {
   width: 40px;
 }
 
-input.wtk[type=date] {
+input.wtk {
   position: relative;
 }
 
-input.wtk[type=date]::-webkit-calendar-picker-indicator {
+input.wtk::-webkit-calendar-picker-indicator {
   position: absolute;
   top: 0;
   right: 0;

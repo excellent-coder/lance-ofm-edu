@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
 Route::get('/psw', function () {
     return password_hash('ofemco', PASSWORD_BCRYPT);
 });
@@ -53,7 +54,7 @@ Route::prefix('scs')->middleware('auth:scs')->group(function () {
 });
 
 Route::prefix('member')->middleware('auth:mem')->group(function () {
-    require __DIR__ . '/get/members.php';
+    require __DIR__ . '/get/mem.php';
 });
 
 Route::prefix('portal')->middleware('auth:pgs')->group(function () {

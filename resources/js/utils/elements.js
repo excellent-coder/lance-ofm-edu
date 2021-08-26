@@ -18,8 +18,10 @@ const toggleDisabled = (eleClass)=> {
 const oldValues = (form)=>{
     $(form).find('.form-control').each((index, item) => {
         let e = $(item);
-        if (e.data('value')) {
+        if (e.data('value') !== undefined) {
             $(e).val(e.data('value'));
+        } else {
+            $(e).val('');
         }
         if (e.hasClass('select2')) {
             e.trigger('change');

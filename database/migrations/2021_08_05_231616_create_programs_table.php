@@ -20,11 +20,15 @@ class CreateProgramsTable extends Migration
             $table->string('slug');
             $table->string('image', 300)->nullable();
             $table->mediumText('description')->nullable();
-            $table->integer('max_level');
+            $table->integer('max_level')->nullable();
             $table->text('excerpt');
             $table->boolean('active')->nullable()->default(true);
             $table->boolean('is_program')->nullable()->default(true)->comment("if it is a program, students can apply for it");
-            $table->tinyInteger('visibility')->unsigned()->comment("1 for all, 2 for program alone, and 3 for short course students alone");
+            $table->tinyInteger('visibility')->nullable()
+                ->unsigned()->comment("1 for all, 2 for program alone, and 3 for short course students alone");
+            // new
+            $table->decimal('main_student_app_fee')->unsigned();
+            $table->decimal('scs_app_fee')->unsigned();
             $table->timestamps();
         });
     }

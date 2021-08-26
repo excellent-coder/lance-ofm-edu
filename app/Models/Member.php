@@ -19,4 +19,14 @@ class Member extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Get the membership that owns the Member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function membership()
+    {
+        return $this->belongsTo(Membership::class, 'membership_id', 'id');
+    }
 }

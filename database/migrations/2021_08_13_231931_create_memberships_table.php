@@ -17,12 +17,10 @@ class CreateMembershipsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('form')->nullable();
+            $table->decimal('application_fee')->nullable();
+            $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->boolean('active')->default(true)
                 ->comment('1 means that it is accepting applications');
-            // $table->text('excerpt')->nullable();
-            // $table->longText('description')->nullable();
-            // $table->string('image', 1000)->nullable();
             $table->timestamps();
         });
     }

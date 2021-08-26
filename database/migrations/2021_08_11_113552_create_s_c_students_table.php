@@ -31,7 +31,17 @@ class CreateSCStudentsTable extends Migration
 
             $table->integer('level_id')->nullable()->default('0');
 
-            $table->string('dp', 300)->nullable();
+            $table->string('passport', 300)->nullable();
+            $table->string('certificate', 300)->nullable();
+            $table->text('documents')->nullable();
+            $table->ipAddress('ip')->nullable();
+            $table->text('device')->nullable();
+            $table->dateTime('approved_at')->nullable();
+            $table->boolean('active')->default(true)->nullable();
+
+            $table->bigInteger('payment_id')->nullable();
+            $table->boolean('paid')->nullable()->default(false);
+
             $table->timestamps();
         });
     }

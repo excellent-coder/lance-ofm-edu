@@ -26,10 +26,10 @@
                                         <label for="body">Long Description</label>
                                         <textarea class="form-control tinymce" name="description" rows="12"></textarea>
                                     </div>
-                                    <div class="row justify-content-between">
-                                        <div class="my-4 checkbox checkbox-primary">
+                                    <div class="row">
+                                        <div class="my-4 col-12 checkbox checkbox-primary">
                                             <input id="is_program" type="checkbox" class="form-check-input form-control"
-                                                name="is_program" value="1">
+                                                name="is_program" value="1" v-model="form.is_p">
                                             <label for="is_program">
                                                 This is a program
                                             </label>
@@ -38,17 +38,60 @@
                                                 short course studies is not a program
                                             </small>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="visibility">Available To</label>
-                                            <select id="visibility" class="form-control select2" name="visibility">
-                                                <option value="1" selected>All Studenst</option>
-                                                <option value="2">Program Students Only</option>
-                                                <option value="3">Schort Course Studenst Only</option>
-                                            </select>
-                                            <small class="form-text text-muted">
-                                                You can use this to specify those who are eligible to apply for this
-                                                program
-                                            </small>
+                                        <div class="col-12" v-if="form.is_p">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="title">Main Application Fee</label>
+                                                    <input class="form-control required" type="text" inputmode="numeric"
+                                                        pattern="([\d]+)(\.)?(\d{1,2})" name="main_student_app_fee"
+                                                        placeholder="Main Student Application Fee">
+                                                    <small class="form-text text-muted">
+                                                        requested format: numbers only optionally followed by dot (.)
+                                                        and maximmum of two numbers after the dot (.)
+                                                    </small>
+                                                    <small class="form-text text-muted">
+                                                        This is the fee for application as main student
+                                                    </small>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="title">Short Course Application Fee</label>
+                                                    <input class="form-control required" type="text" inputmode="numeric"
+                                                        pattern="([\d]+)(\.)?(\d{1,2})" name="scs_app_fee"
+                                                        placeholder="Short Course Application Fee">
+                                                    <small class="form-text text-muted">
+                                                        requested format: numbers only optionally followed by dot (.)
+                                                        and maximmum of two numbers after the dot (.)
+                                                    </small>
+                                                    <small class="form-text text-muted">
+                                                        This is the fee for application as main student
+                                                    </small>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="visibility">Available To</label>
+                                                    <select id="visibility" class="form-control select2"
+                                                        name="visibility">
+                                                        <option value="1" selected>All Studenst</option>
+                                                        <option value="2">Program Students Only</option>
+                                                        <option value="3">Schort Course Studenst Only</option>
+                                                    </select>
+                                                    <small class="form-text text-muted">
+                                                        You can use this to specify those who are eligible to apply for
+                                                        this
+                                                        program
+                                                    </small>
+                                                </div>
+                                                <div class="my-3 form-group col-md-6">
+                                                    <label for="max_level">Maximum Level</label>
+                                                    <a href="{{route('admin.levels')}}" target="_blank"
+                                                        rel="noopener noreferrer" title="add new Level">Add Levela</a>
+                                                    <select data-placeholder="maximum level" name="max_level"
+                                                        id="max_level" class=" form-control select2">
+                                                        @foreach ($levels as $l)
+                                                        <option value="{{$l->level}}">{{$l->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -75,17 +118,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="my-3 form-group">
-                                        <label for="max_level">Maximum Level</label>
-                                        <a href="{{route('admin.levels')}}" target="_blank" rel="noopener noreferrer"
-                                            title="add new Level">Add Levela</a>
-                                        <select data-placeholder="maximum level" name="max_level" id="max_level"
-                                            class=" form-control select2">
-                                            @foreach ($levels as $l)
-                                            <option value="{{$l->level}}">{{$l->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+
                                     <div class="form-group">
                                         <h5 class="mb-3">image</h5>
                                         <div class="form-group position-relative"

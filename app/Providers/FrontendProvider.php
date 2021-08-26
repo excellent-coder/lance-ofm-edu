@@ -31,19 +31,11 @@ class FrontendProvider extends ServiceProvider
         View::composer('layouts.admin', 'App\Http\ViewComposers\LayoutAdminComposer');
 
         view()->composer('frontend.portal.includes.sidebar', function ($view) {
-            $userCats  = UserCategory::where('parent_id', NULL)
-                ->where('visibility', 1)
-                ->orderBy('name')->get();
-            // all the programms
-            $programms = Application::where('user_id', Auth::id())
-                ->get(['user_category_id'])->whereNotNull('user_category_id');
-
-            // return $userCats;
-            $view
-                ->with(compact(
-                    'userCats',
-                    'programms',
-                ));
+            /**
+             * $pauth = authenticated program stiudent
+             */
+            $pauth = Auth::user('pgs');
+            $view->with(compact('pauth'));
         });
 
         view()->composer('includes.shop.sidebar', function ($view) {
@@ -63,8 +55,8 @@ class FrontendProvider extends ServiceProvider
 
         view()->composer('includes.navbar', function ($view) {
             $navPrograms = Program::where('active', 1)
-                ->where('is_program', 1)
-                ->where('visibility', '<', 3)
+                // ->where('is_program', 1)
+                // ->where('visibility', '<', 3)
                 ->get();
             $view->with(compact('navPrograms'));
         });

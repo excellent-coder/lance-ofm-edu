@@ -13,6 +13,8 @@ import SignUp from '../components/Auth/Signup.vue';
 import ResetPassword from '../components/Auth/ResetPassword.vue';
 import CarouselSlide from '../components/utils/CarouselSlide.vue';
 
+import { makePayment } from '../utils/payment';
+
 import MultiSelect from '../npm/vue-multiselect/src';
 
 
@@ -82,6 +84,22 @@ const app = createApp({
                     timeout
                 });
 
+                if (data.payment) {
+                    console.log('making payment')
+                    let p = data.payment;
+                    makePayment(
+                        p.public_key,
+                        p.ref,
+                        p.amount,
+                        p.currency,
+                        p.country,
+                        p.redirect,
+                        p.meta,
+                        p.customer,
+                        p.customization
+                    );
+                    return;
+                }
                 if (data.to) {
                     window.location.href = data.to;
                 }
@@ -150,8 +168,14 @@ const app = createApp({
                 btn.querySelector('.fa-eye').style.display = 'none';
                 btn.querySelector('.fa-eye-slash').style.display = 'inline';
             }
-        }
+        },
 
+        getMembershipChildren(event ) {
+            let id = event.id;
+            axios.get(`/json/memberships/${id}`).then((res) => {
+                this.form.memberships = res.data;
+            })
+        }
     }
 });
 app.use(store);

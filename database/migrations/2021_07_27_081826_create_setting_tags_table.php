@@ -17,6 +17,7 @@ class CreateSettingTagsTable extends Migration
             $table->increments('id');
             $table->string('tag')->unique();
             $table->string('slug')->unique();
+            $table->string('icon')->nullable();
         });
     }
 

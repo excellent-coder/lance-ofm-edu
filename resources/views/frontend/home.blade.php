@@ -60,7 +60,7 @@
             </div>
         </div>
       </div>
-     @include('includes.home.course')
+     @include('includes.home.programs')
     <div>
 
     </div>
@@ -75,7 +75,7 @@
             forceVerticalMode: 700,
             mode: 'horizontal',
             verticalStartPosition: 'left',
-            visibleItems: {{ $courses->count()>4?4:$courses->count() }}
+            visibleItems: {{ $programs->count()>4?4:$programs->count() }}
         });
     </script>
 @endsection

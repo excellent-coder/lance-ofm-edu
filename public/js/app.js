@@ -25578,7 +25578,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Auth_Signup_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Auth/Signup.vue */ "./resources/js/components/Auth/Signup.vue");
 /* harmony import */ var _components_Auth_ResetPassword_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Auth/ResetPassword.vue */ "./resources/js/components/Auth/ResetPassword.vue");
 /* harmony import */ var _components_utils_CarouselSlide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/utils/CarouselSlide.vue */ "./resources/js/components/utils/CarouselSlide.vue");
-/* harmony import */ var _npm_vue_multiselect_src__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../npm/vue-multiselect/src */ "./resources/js/npm/vue-multiselect/src/index.js");
+/* harmony import */ var _utils_payment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/payment */ "./resources/js/utils/payment.js");
+/* harmony import */ var _npm_vue_multiselect_src__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../npm/vue-multiselect/src */ "./resources/js/npm/vue-multiselect/src/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
@@ -25586,6 +25587,7 @@ __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
 
 
  // impoering componenets
+
 
 
 
@@ -25665,6 +25667,13 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
           timeout: timeout
         });
 
+        if (data.payment) {
+          console.log('making payment');
+          var p = data.payment;
+          (0,_utils_payment__WEBPACK_IMPORTED_MODULE_9__.makePayment)(p.public_key, p.ref, p.amount, p.currency, p.country, p.redirect, p.meta, p.customer, p.customization);
+          return;
+        }
+
         if (data.to) {
           window.location.href = data.to;
         }
@@ -25735,6 +25744,14 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
         btn.querySelector('.fa-eye').style.display = 'none';
         btn.querySelector('.fa-eye-slash').style.display = 'inline';
       }
+    },
+    getMembershipChildren: function getMembershipChildren(event) {
+      var _this2 = this;
+
+      var id = event.id;
+      axios.get("/json/memberships/".concat(id)).then(function (res) {
+        _this2.form.memberships = res.data;
+      });
     }
   }
 });
@@ -25742,7 +25759,7 @@ app.use(_store_apps_user__WEBPACK_IMPORTED_MODULE_2__.store);
 app.use(_routes__WEBPACK_IMPORTED_MODULE_1__.default); // register global components
 
 app.component('CarouselSlide', _components_utils_CarouselSlide_vue__WEBPACK_IMPORTED_MODULE_8__.default);
-app.component('MultiSelect', _npm_vue_multiselect_src__WEBPACK_IMPORTED_MODULE_9__.default);
+app.component('MultiSelect', _npm_vue_multiselect_src__WEBPACK_IMPORTED_MODULE_10__.default);
 var vm = app.mount('#app');
 isLoading(false);
 var prevScrollpos = window.pageYOffset;
@@ -26991,8 +27008,10 @@ var oldValues = function oldValues(form) {
   $(form).find('.form-control').each(function (index, item) {
     var e = $(item);
 
-    if (e.data('value')) {
+    if (e.data('value') !== undefined) {
       $(e).val(e.data('value'));
+    } else {
+      $(e).val('');
     }
 
     if (e.hasClass('select2')) {
@@ -27024,6 +27043,59 @@ var totalSelected = function totalSelected() {
     b.dataset.id = bulkIds;
   });
   return checked;
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/utils/payment.js":
+/*!***************************************!*\
+  !*** ./resources/js/utils/payment.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "makePayment": () => (/* binding */ makePayment)
+/* harmony export */ });
+var makePayment = function makePayment(public_key, tx_ref, amount) {
+  var currency = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "NGN";
+  var country = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'NG';
+  var redirect_url = arguments.length > 5 ? arguments[5] : undefined;
+  var meta = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : {
+    consumer_id: 'user_id',
+    consumer_mac: 'user_ip'
+  };
+  var customer = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : {
+    email: 'email',
+    phone_number: 'phone',
+    name: 'name'
+  };
+  var customizations = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : {
+    title: 'title',
+    description: 'desc',
+    logo: 'logo'
+  };
+  console.log('fluter wave called');
+  FlutterwaveCheckout({
+    public_key: public_key,
+    tx_ref: tx_ref,
+    amount: amount,
+    currency: currency,
+    country: country,
+    payment_options: "card, ussd",
+    redirect_url: redirect_url,
+    meta: meta,
+    customer: customer,
+    callback: function callback(data) {
+      console.log(data);
+    },
+    onclose: function onclose() {// close modal
+    },
+    customizations: customizations
+  });
 };
 
 

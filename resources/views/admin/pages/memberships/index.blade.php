@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <div class="card">
             <x-admin-card-tool title="Memberships">
-                <button class="text-white btn btn-success btn-tool dropdown-toggle btn-sm" data-target="#general-modal"
+                <button class="text-white btn btn-success btn-sm" data-target="#general-modal"
                     @click="modalEdit($event.target, true)" data-form="general-modal-form"
                     data-store_route="{{route('admin.memberships.store')}}">
                     new membership
@@ -38,8 +38,10 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Form</th>
+                                    <th>Application Fee</th>
+                                    <th>Parent</th>
                                     <th>Members</th>
+
                                     <th>pending Approvals</th>
                                     <th>Status</th>
                                     <th>Updated</th>
@@ -61,10 +63,7 @@
                                 $action['id'] = $c->id;
                                 $action['update_route']= route("admin.memberships.update", $c->id);
                                 $action['rowid'] = "#tr-$c->id";
-                                $action['item']= json_encode([
-                                    'name'=>$c->name,
-                                    'active'=>$c->active,
-                                ]);
+                                $action['item']= $c;
                                 $fa_icon = $c->active?'check':'times';
 
                                 $active =$c->active?'remove':'activate';
@@ -73,19 +72,8 @@
                                     <td><input type="checkbox" class="checking"></td>
                                     <td>{{$i++}}</td>
                                     <td>{{$c->name}}</td>
-                                    <td>
-                                        @if ($c->form)
-                                        @php
-                                            $f = explode('/', $c->form);
-                                        @endphp
-                                        <a href="/storage/{{$c->form}}" target="_blank"
-                                         rel="noopener noreferrer">
-                                         {{ end($f) }}
-                                         </a>
-                                            @else
-                                            N/A
-                                        @endif
-                                    </td>
+                                    <td>{{"$currency $c->application_fee"}}</td>
+                                    <td>{{$c->parent->name ?? 'N/A'}}</td>
                                     <td>{{$c->members->count()??'nil'}}</td>
                                     <td>{{$c->pending->count()??'nil'}}</td>
                                     <td>{{bv($c->active)}}</td>
@@ -108,7 +96,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Form</th>
+                                    <th>Application Fee</th>
+                                    <th>Parent</th>
                                     <th>Total Approved</th>
                                     <th>pending Approvals</th>
                                     <th>Status</th>
@@ -133,14 +122,27 @@
                     id="editing-name">
             </div>
             <div class="form-group">
-                <label for="form">Form</label>
-                <input type="file" accept=".pdf,.docx,.doc,.txt" class="form-control-file" name="form" id="form" placeholder="Form"
-                    aria-describedby="appForm">
-                <small id="appForm" class="form-text text-muted">Application Form</small>
+                <label for="title">Application Fee</label>
+                <input id="editng-application_fee" class="form-control" type="text" inputmode="numeric"
+                    pattern="([\d]+)(\.)?(\d{1,2})" name="application_fee" placeholder="Application Fee">
+                <small class="form-text text-muted">
+                    requested format: numbers only optionally followed by dot (.)
+                    and maximmum of two numbers after the dot (.)
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="editing-parent_id">Parent</label>
+                <select data-value="" data-placeholder="parent Memebership" id="editing-parent_id"
+                    class="form-control select2" name="parent">
+                    <option value=" ">-None-</option>
+                    @foreach ($memberships as $m)
+                    <option value="{{$m->id}}">{{$m->name}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="my-2 checkbox checkbox-primary">
                 <input id="editing-active" data-checked="1" type="checkbox"
-                class="form-check-input form-control filled-in" name="active" value="1">
+                    class="form-check-input form-control filled-in" name="active" value="1">
                 <label for="editing-active">
                     Active
                     <small class=" text-muted">Check to allow this membership to accept applications</small>

@@ -25207,7 +25207,9 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
 
       Vm.data.hide_modal = el.dataset.target;
       form.action = el.dataset.update_route;
-      form.querySelector('button[type="submit"]').textContent = 'UPDATE';
+      var updateText = form.querySelector('button[type="submit"]').dataset.update;
+      updateText = updateText ? updateText : 'UPDATE';
+      form.querySelector('button[type="submit"]').textContent = updateText;
       var item = JSON.parse(el.dataset.item);
       var itemKeys = Object.keys(item); // return;
 
@@ -25517,6 +25519,12 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     },
     generateMemberID: function generateMemberID() {
       var _this9 = this;
+
+      if ($('#editing-paid').val() == 1) {
+        this.form.paid = true;
+      } else {
+        this.form.paid = false;
+      }
 
       var member = $('#editing-applying_for').val();
 
@@ -26637,8 +26645,10 @@ var oldValues = function oldValues(form) {
   $(form).find('.form-control').each(function (index, item) {
     var e = $(item);
 
-    if (e.data('value')) {
+    if (e.data('value') !== undefined) {
       $(e).val(e.data('value'));
+    } else {
+      $(e).val('');
     }
 
     if (e.hasClass('select2')) {

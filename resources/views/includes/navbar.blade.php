@@ -61,8 +61,13 @@
                 </a>
                 @endforeach
                 <a class="dropdown-item" href="{{route('pgs.apply')}}">
-                    Apply For Program
+                    Apply For Main Student
                 </a>
+                @guest('scs')
+                <a class="dropdown-item" href="{{route('register')}}">
+                    Register For Short Course Student
+                </a>
+                @endguest
             </ul>
         </li>
         <li class="nav-item">
@@ -83,7 +88,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{route('portal.index')}}">
+            <a href="/portal">
                 portal
             </a>
         </li>
@@ -97,25 +102,25 @@
                 Contact
             </a>
         </li>
-        @guest
+        @guest('scs', 'pgs', 'mem')
         <li class="nav-item">
-            <a href="/login" @click.prevent="$store.commit('modal', 'login')">
+            <a href="login">
                 login
             </a>
              <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
-                <a class="dropdown-item" href="{{route('login', 'membership')}}">Membership</a>
-                <a class="dropdown-item" href="{{route('login', 'program')}}">Program</a>
-                <a class="dropdown-item" href="{{route('login', 'short-course')}}">Short Course</a>
+                <a class="dropdown-item" href="{{route('login')}}">Membership</a>
+                <a class="dropdown-item" href="{{route('login')}}">Program</a>
+                <a class="dropdown-item" href="{{route('login')}}">Short Course</a>
             </ul>
         </li>
         <li class="nav-item">
-            <a href="/register" @click.prevent="$store.commit('modal', 'register')">
+            <a href="/register" @click.prevent>
                 register
             </a>
             <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
-                <a class="dropdown-item" href="{{route('register', 'membership')}}">Membership</a>
-                <a class="dropdown-item" href="{{route('register', 'program')}}">Program</a>
-                <a class="dropdown-item" href="{{route('register', 'short-course')}}">Short Course</a>
+                <a class="dropdown-item" href="{{route('mem.apply')}}">Membership</a>
+                <a class="dropdown-item" href="{{route('pgs.apply')}}">Program</a>
+                <a class="dropdown-item" href="{{route('register')}}">Short Course</a>
             </ul>
         </li>
         @endguest

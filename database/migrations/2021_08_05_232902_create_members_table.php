@@ -18,6 +18,9 @@ class CreateMembersTable extends Migration
             $table->string('member_id')->unique()
                 ->nullable()->comment("this is like a matric number");
 
+            $table->bigInteger('application_id')->unsigned()
+                ->comment('The application form they submitted before approval');
+
             $table->string('email');
             $table->string('phone');
             $table->string('password');

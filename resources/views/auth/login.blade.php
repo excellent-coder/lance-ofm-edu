@@ -18,7 +18,7 @@
                         <input type="hidden" name="login_as" :value="form.m.v" autocomplete="off" v-if="form.m" />
                     <multi-select v-model="form.m" :options='[{v:"Member", k:"Member"}, {v:"SCStudent",k:"Short Course Student"}, {v:"Student",k:"Main Student"}]'
                         :show-labels="false" label="k" track-by="v" autocomplete="off"
-                        :clear-on-select="false" placeholder="Memebership Type" required :close-on-select="true"
+                        :clear-on-select="false" placeholder="Who Are You" required :close-on-select="true"
                         />
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     Don't Have Accout
                 </h4>
                 <p class="w-1/2 font-semibold">
-                    <a href="{{route('scs.register')}}" class="text-green-500 hover:text-yellow-400">
+                    <a href="{{route('register')}}" class="text-green-500 hover:text-yellow-400">
                         Register For Short Course
                     </a>
                 </p>

@@ -173,7 +173,7 @@
                 </div>
             </div>
             <div>
-                <div class="w-full member-card">
+                <div class="w-full member-card" id="how-to-apply">
                     <img class="w-full h-56" src="/storage/pages/blog_4.jpg" alt="">
                     <div class="px-4 py-5 border-green-600 border-1">
                         <h2 class="mb-3 text-xl title">

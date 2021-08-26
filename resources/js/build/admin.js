@@ -502,7 +502,10 @@ const app = createApp({
 
             Vm.data.hide_modal = el.dataset.target;
             form.action = el.dataset.update_route;
-            form.querySelector('button[type="submit"]').textContent = 'UPDATE';
+
+            let updateText = form.querySelector('button[type="submit"]').dataset.update;
+            updateText = updateText ? updateText : 'UPDATE';
+            form.querySelector('button[type="submit"]').textContent = updateText;
 
             let item = JSON.parse(el.dataset.item);
             let itemKeys = Object.keys(item);
@@ -815,6 +818,11 @@ const app = createApp({
             })
         },
         generateMemberID() {
+            if ($('#editing-paid').val() == 1) {
+                this.form.paid = true;
+            } else {
+                this.form.paid = false;
+            }
             let member = $('#editing-applying_for').val();
             if (!member) {
                 console.log('member not found');

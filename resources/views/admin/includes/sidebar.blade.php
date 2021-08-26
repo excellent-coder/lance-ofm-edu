@@ -70,6 +70,20 @@ $url = end($segments);
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('admin.members')}}"
+                        class="nav-link @if ($route == 'members') active @endif">
+                        <i class="fas fa-user-plus nav-icon"></i>
+                        <p>Members</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.students')}}"
+                        class="nav-link @if ($route == 'students') active @endif">
+                        <i class="fas fa-user-graduate nav-icon"></i>
+                        <p>Students</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('admin.sessions')}}" class="nav-link @if ($segment == 'sessions') active @endif">
                         <i class="fas fa-passport nav-icon"></i>
                         <p>Sessions</p>
@@ -166,7 +180,11 @@ $url = end($segments);
                         <li class="nav-item">
                             <a href="{{route('admin.settings.edit', $tag->slug)}}"
                                 class="nav-link @if ($url == $tag->slug) active @endif">
-                                <i class="fas fa-bars nav-icon"></i>
+                                @if ($tag->icon)
+                                <img src="/storage/{{$tag->icon}}" alt="{{$tag->tag}} icon" class="nav-icon">
+                                    @else
+                                <i class="fas fa-life-ring nav-icon"></i>
+                                @endif
                                 <p>{{$tag->tag}}</p>
                             </a>
                         </li>
@@ -295,7 +313,7 @@ $url = end($segments);
                         <p>Levels</p>
                     </a>
                 </li>
-
+                @include('admin.includes.1')
                 @include('admin.includes.dirty-sidebar')
                 <li class="mb-5 nav-item"></li>
             </ul>

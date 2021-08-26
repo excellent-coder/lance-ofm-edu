@@ -17,13 +17,14 @@ Route::prefix('user-categories')->name('user-categories')->group(function () {
 Route::prefix('applications')->name('applications')->group(function () {
     Route::get('/', 'ApplicationController@index');
     Route::get('details/{app}', 'ApplicationController@details')->name('.details');
-    Route::get('/{category}', 'ApplicationController@category')->name('.category');
+    Route::get('{category}', 'ApplicationController@category')->name('.category');
+    /**
+     * Get matric number or member id of the next applicant to be approved
+     */
     Route::get('id/{member}', 'ApplicationController@id')->name('.id');
+    Route::get('approve/{type}/{item}', 'ApplicationController@approve')->name('.approve');
 });
 
-Route::prefix('subjects')->name('subjects')->group(function () {
-    Route::get('/', 'SubjectController@index');
-});
 
 Route::prefix('sessions')->name('sessions')->group(function () {
     Route::get('/', 'SessionController@index');
@@ -95,4 +96,45 @@ Route::prefix('levels')->name('levels')->group(function () {
 Route::prefix('memberships')->name('memberships')->group(function () {
     Route::get('/', 'MembershipController@index');
     Route::get('{members}', 'MembershipController@members')->name('.members');
+});
+
+
+Route::prefix('licences')->name('licences')->group(function () {
+    Route::get('/', 'LicenceController@index');
+    Route::get('create', 'LicenceController@create')->name('.create');
+    Route::get('edit/{licence}', 'LicenceController@edit')->name('.edit');
+
+    Route::get('{slug}/program', 'LicenceController@program')->name('.program');
+
+    Route::get('json/{program}/{level}', 'LicenceController@pl')->name('.pl.json');
+});
+
+
+Route::prefix('events')->name('events')->group(function () {
+    Route::get('/', 'EventController@index');
+    Route::get('create', 'EventController@create')->name('.create');
+    Route::get('edit/{event}', 'EventController@edit')->name('.edit');
+    Route::get('categories', 'EventCatController@index')->name('.categories');
+});
+
+Route::prefix('notifications')->name('notifications')->group(function () {
+    Route::get('/', 'NotificationController@index');
+    Route::get('create', 'NotificationController@create')->name('.create');
+    Route::get('edit/{notice}', 'NotificationController@edit')->name('.edit');
+    Route::get('categories', 'NotificationCatController@index')->name('.categories');
+
+    Route::get('{slug}', 'NotificationController@show')->name('.show');
+});
+
+Route::prefix('members')->name('members')->group(function () {
+    Route::get('/', 'MemberController@index');
+    Route::get('create', 'MemberController@create')->name('.create');
+    Route::get('edit/{event}', 'MemberController@edit')->name('.edit');
+    Route::get('categories', 'MemberCatController@index')->name('.categories');
+});
+Route::prefix('students')->name('students')->group(function () {
+    Route::get('/', 'StudentController@index');
+    Route::get('create', 'StudentController@create')->name('.create');
+    Route::get('edit/{event}', 'StudentController@edit')->name('.edit');
+    Route::get('categories', 'StudentCatController@index')->name('.categories');
 });

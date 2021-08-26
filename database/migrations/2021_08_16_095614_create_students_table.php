@@ -15,6 +15,8 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('application_id')->unsigned()
+                ->comment('The application form they submitted before approval');
 
             $table->string('email');
             $table->string('phone');

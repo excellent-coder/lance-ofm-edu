@@ -15,7 +15,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $members = Member::latest()->with('membership')->take(100)->get();
+        // return $members;
+        return view('admin.pages.members.index', compact('members'));
     }
 
     /**
@@ -30,7 +32,7 @@ class MemberController extends Controller
 
     public function portal()
     {
-        return 'members dashboard';
+        return view('frontend.members.index');
     }
 
 

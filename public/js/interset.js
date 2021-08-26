@@ -2,6 +2,7 @@ const config = {
   rootMargin: '0px 0px 50px 0px',
   threshold: 0
 };
+var prevScrollpos = window.pageYOffset;
 
 let observer = new IntersectionObserver(function (entries, self) {
     entries.forEach(entry => {
@@ -16,7 +17,7 @@ function scrollIn(el) {
     if (el.dataset.src) {
         el.src = element.dataset.src;
     }
-    el.classList.toggle('scroll-in');
+    el.classList.add('scroll-in');
 }
 
 document.querySelectorAll('[data-src]').forEach(img => {

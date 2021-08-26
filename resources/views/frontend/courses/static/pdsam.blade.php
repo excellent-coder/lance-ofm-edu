@@ -153,7 +153,7 @@
                     <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
                 </div>
             </div>
-            <div>
+            <div id="how-to-apply">
                 <div class="w-full member-card">
                     <img class="w-full h-56" src="/storage/pages/blog_4.jpg" alt="">
                     <div class="px-4 py-5 border-green-600 border-1">

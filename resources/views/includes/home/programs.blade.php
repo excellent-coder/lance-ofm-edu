@@ -12,11 +12,11 @@
             <div class="timeline">
                 <div class="timeline__wrap">
                     <div class="timeline__items">
-                        @foreach ($courses as $course)
+                        @foreach ($programs as $p)
                             <div class="timeline__item">
-                                <div class="timeline__content" @if($course->image) style="background-image: url(/storage/{{$course->image}})" @endif>
-                                        <h2>{{$course->name}}</h2>
-                                    <p>{{$course->excerpt}}</p>
+                                <div class="timeline__content" @if($p->image) style="background-image: url(/storage/{{$p->image}})" @endif>
+                                        <h2>{{$p->title}}</h2>
+                                    <p>{{$p->excerpt}}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -28,7 +28,7 @@
 </div>
 
 <div class="bg-black lg:p-10">
-    <div class="grid grid-cols-3 text-white">
+    <div class="grid grid-cols-1 gap-3 text-white md:grid-cols-3 md:gap-0">
         <div>
             <div class="flex w-full bg-yellow-500">
                 <span class="block p-4 ml-2 text-6xl text-black bg-white">

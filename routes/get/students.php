@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'StudentController@portal')->name('portal.index');
+Route::get('/', 'StudentController@portal')->name('portal.dashboard');

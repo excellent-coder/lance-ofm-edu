@@ -10,6 +10,10 @@ class FrontComposer
     public function compose(View $view)
     {
         $web_title = WebSegment::where('name', 'title')->first();
+
+        $currency = web_setting('general', 'currency');
+        $currency_symbol = web_setting('general', 'currency_symbol');
+
         if (!$web_title) {
             $web_title = 'comming soon';
         }
@@ -17,7 +21,9 @@ class FrontComposer
         $view
             ->with(
                 compact(
-                    'web_title'
+                    'web_title',
+                    'currency',
+                    'currency_symbol'
                 )
             );
     }

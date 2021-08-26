@@ -29,16 +29,22 @@ class CreateApplicationsTable extends Migration
             $table->date('dob');
             $table->string('passport', 225)->nullable();
 
+
             $table->string('applicant');
             //  ['guest', 'scs', 'pgs', 'mem'])->nullable();
             $table->bigInteger('applicant_id')->unsigned()->nullable();
 
             $table->string('form')->nullable();
+            $table->text('certificates')->nullable();
+            $table->text('documents')->nullable();
 
             $table->boolean('reviewed')->nullable()->default(false);
             $table->dateTime('rejected_at')->nullable();
             $table->text('reject_reason')->nullable();
             $table->dateTime('approved_at')->nullable();
+
+            $table->bigInteger('payment_id')->nullable();
+            $table->boolean('paid')->nullable()->default(false);
 
             $table->ipAddress('ip');
             $table->text('device')->nullable();

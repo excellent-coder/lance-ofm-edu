@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Applied;
+use App\Mail\AdminApplied;
+use App\Mail\ApproveApp;
+use App\Mail\RejectApp;
 use App\Models\Application;
 use App\Models\Member;
 use App\Models\UserCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Membership;
 use App\Models\Program;
+use App\Models\Payment;
+use App\Models\StudentProgram;
+use App\Models\User;
+use Illuminate\Support\Facades\App;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -27,18 +36,26 @@ class ApplicationController extends Controller
         $apps = Application::latest('id')->take(100)->get();
         $title = "Last " . $apps->count() . " " . Str::plural('Application', $apps->count());
         // return $apps;
-
         return view('admin.pages.applications.index', compact('apps', 'title'));
     }
 
     public function id($member)
     {
         $class = ucfirst($member);
+        $model = "App\Models\\$class";
 
-        $last_id = "App\Models\\$class"::latest('id')->first();
+        $last = $model::latest('id')->first();
 
-        if ($last_id) {
-            $last_id = $last_id->id;
+
+        if ($last) {
+            switch ($member) {
+                case 'member':
+                    $last_id = $last->member_id;
+                    break;
+                case 'student':
+                    $last_id = $last->matric_no;
+                    break;
+            }
         } else {
             $last_id = 0;
         }
@@ -88,10 +105,11 @@ class ApplicationController extends Controller
      */
     public function memberApply()
     {
-        $memberships = Membership::whereActive('1')->get();
+        $memberships = Membership::whereActive('1')->where('parent_id', null)->get();
         // return $memberships;
         return view('apply.member', compact('memberships'));
     }
+
 
     /**
      * Show the form for applying for  a new membre
@@ -117,23 +135,40 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        $applying_for = $request->applying_for;
+        $applying_for = Str::lower($request->applying_for);
+
+        if ($applying_for != 'member' && $applying_for != 'student') {
+            return [
+                'message' => "The application status is not recognized",
+                'desc' => "Refresh Your browser and try again",
+                'reload' => true,
+                'status' => 200,
+                'type' => 'error'
+            ];
+        }
 
         $valid = Validator::make(
             $request->all(),
             [
                 'applying_for' => 'required',
                 'membership' => 'required',
+                'sub_membership' => 'required_if:sub,1',
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'dob' => 'required',
                 'phone' => 'required',
                 'email' => 'required',
                 'passport' => 'required|image',
-                'form' => 'required_if:applying_for,member|file|mimes:pdf,docx',
-                'terms' => 'required'
+                'terms' => 'required',
+                'pay' => 'required'
             ],
-            ['terms.required' => 'You must agree to our terms To apply']
+            [
+                'terms.required' => 'You must agree to our terms To apply',
+                'sub_membership.required_if' => 'Sub membership is Required',
+                'pay.required' => 'You must be ready to make payment of
+                                    application fee before registration'
+
+            ]
         );
 
         if ($valid->fails()) {
@@ -143,17 +178,26 @@ class ApplicationController extends Controller
             ];
         }
 
+        $membership = $request->membership;
+        $item_id = $request->item_id;
+
+        if ($request->sub_membership) {
+            $membership = $request->sub_membership;
+            $item_id = $request->sub_item_id;
+        }
+        // return ['--'];
         $applied = Application::where('email', $request->email)
             ->whereNull('rejected_at')
             ->where('applying_for', $applying_for)
-            ->where('item', $request->membership)
+            ->where('item_id', $item_id)
             ->first();
 
         if ($applied) {
             return [
-                'message' => 'You have already applied for this Membership',
+                'message' => "You have already applied for this $membership $applying_for",
                 'type' => 'info',
-                'desc' => "You will be contacted via $applied->email",
+                'desc' => "You will be contacted via $applied->email Once the status
+                of your request is updated",
                 'timeout' => 400000
             ];
         }
@@ -177,27 +221,50 @@ class ApplicationController extends Controller
         $app->email = $request->email;
 
         $app->applying_for = $applying_for;
-        $app->item = $request->membership;
+        $app->item = $membership;
         $app->ip = $request->ip();
         $app->device = $request->device;
 
-        $app->item_id = $request->item_id;
+        $app->item_id = $item_id;
 
-        // saving photo;
-        if ($request->hasFile('form')) {
-            $form = $request->file('form');
-            if ($form->isValid()) {
+        // saving form;
+        if ($request->hasFile('certificate')) {
+            $cert = $request->file('certificate');
+            if ($cert->isValid()) {
 
                 $name =  Str::upper(Str::slug("$request->first_name $request->last_name"))
-                    . '-MEMBER-APPLICATION' . '.' . $form->getClientOriginalExtension();
-                $app->form = $form->storeAs('forms/members', $name);
+                    . '-MEMBER-APP-CERT-' . time() . '-.' . $cert->getClientOriginalExtension();
+                $app->certificates = $cert->storeAs(
+                    "$request->applying_for/certificates",
+                    $name
+                );
             } else {
                 return [
-                    'message' => "Please upload the form you have filled",
+                    'message' => "Please upload avalid certificate",
                     'type' => 'error',
                     'status' => 200
                 ];
             }
+        }
+
+        // saving documents
+        if ($request->hasFile('documents')) {
+            $docs = $request->file('documents');
+            $docName = [];
+            foreach ($docs as $d) {
+                if ($d->isValid()) {
+                    $name = Str::slug("$request->first_name $request->last_name")
+                        . '-' . time()
+                        . $d->getClientOriginalName();
+
+                    $docName[] = $d->storeAs(
+                        "$request->applying_for/documents",
+                        $name
+                    );
+                }
+            }
+
+            $app->documents = implode(',', $docName);
         }
 
         $passport = $request->file('passport');
@@ -205,22 +272,85 @@ class ApplicationController extends Controller
 
             $name =  Str::slug("$request->first_name $request->last_name") . "-" . time()
                 . '.' . $passport->getClientOriginalExtension();
-            $app->passport = $passport->storeAs('members/passports', $name);
-        } else {
-            return [
-                'message' => "Please upload your recent passport",
-                'type' => 'error',
-                'status' => 200
-            ];
+            $app->passport = $passport->storeAs("$request->applying_for/passports", $name);
         }
 
         $app->save();
+
+        switch ($applying_for) {
+            case 'member':
+                $amount = Membership::find($item_id)->application_fee;
+                $code = 'MEM';
+                break;
+            case 'student':
+                $amount = Program::find($item_id)->main_student_app_fee;
+                $code = 'STU';
+                break;
+        }
+
+        if ((int) $amount < 1) {
+            // no payment needed
+            // Mail::send(new AdminApplied($app));
+            // Mail::send(new Applied($app));
+
+            return [
+                'status' => 200,
+                'message' => 'Your application has been submitted successfully',
+                'desc' => 'You will be contacted via email',
+                'type' => 'info',
+            ];
+        }
+
+        $payment = new Payment();
+        $payment->user_id = $app->id;
+        $payment->guard = 'applications';
+
+        $payment->amount = $amount;
+        $payment->currency =  web_setting('general', 'currency');
+        $payment->reason = "Application for $membership $applying_for";
+        do {
+            $ref = "ISAM-REG-$code-" . Str::upper(Str::random(10));
+        } while (Payment::where('ref', $ref)->first());
+
+        $payment->ref = $ref;
+        $payment->ip = $request->ip();
+        $mac = exec('getmac');
+        $payment->mac = strtok($mac, ' ');
+        $payment->device = $request->devce;
+
+        $payment->save();
+
+        $p = [
+            'public_key' => config('services.rave.public_key'),
+            'ref' => $ref,
+            'amount' => $payment->amount,
+            'currency' => $payment->currency,
+            'country' => config('msc.country', 'NG'),
+            'redirect' => route('payment.paid', $payment->id),
+            'meta' => ['consumer_id' => $app->id, 'consumer_mac' => $mac],
+            'customer' => [
+                'email' => $request->email,
+                'phone_number' => $request->phone,
+                'reason' => $payment->reason,
+                'user_id' => $app->id,
+                'name' => "$request->last_name $request->first_name",
+            ],
+            'customization' => [
+                'title' => web_setting('scs', 'payment_title', 'Title'),
+                'description' => web_setting('scs', 'payment_desc', 'Description'),
+                'logo' => asset('storage/' . web_setting('general', 'logo', 'web/logo.png'))
+            ],
+        ];
+
+        Mail::send(new AdminApplied($app));
+        Mail::send(new Applied($app));
+
         return [
             'status' => 200,
             'message' => 'Your application has been submitted successfully',
             'desc' => 'You will be contacted via email',
-            'type' => 'info',
-            'to' => '/'
+            'type' => 'success',
+            'payment' => $p,
         ];
     }
 
@@ -301,7 +431,17 @@ class ApplicationController extends Controller
         $app->rejected_at = $request->filled('rejected') ? $date : null;
         $app->reviewed = $request->filled('reviewed');
         $app->reject_reason = $request->reject_reason;
+
         if ($app->rejected_at) {
+            $app->save();
+
+            if (!$request->reject_reason) {
+                return [
+                    'message' => "Please Fill reject reason",
+                    'errors' => 'To noty the applicant about the rejection'
+                ];
+            }
+            Mail::send(new RejectApp($app));
             return [
                 "message" => "$request->email has been notified about the rejected offer",
                 'type' => 'success',
@@ -316,17 +456,18 @@ class ApplicationController extends Controller
             $class = ucfirst($for);
             $class =  "\App\\Models\\$class";
 
-
             $new = new $class;
+
+            $new->application_id = $app->id;
 
             if ($for == 'member') {
                 $new->member_id = $request->member_id;
                 $new->membership_id = $request->item_id;
-                $new->accepted_on = $date;
             } else {
-                $new->program_id = $request->item_id;
+                // $new->program_id = $request->item_id;
                 $new->matric_no = $request->member_id;
             }
+            $new->accepted_on = $date;
 
             $new->first_name = $request->first_name;
             $new->last_name = $request->last_name;
@@ -338,6 +479,20 @@ class ApplicationController extends Controller
             $new->image = $app->passport;
 
             $new->save();
+
+            if ($for == 'student') {
+                $sp = new StudentProgram();
+                $sp->student_id =  $new->id;
+                $sp->program_id = $request->item_id;
+                $sp->save();
+            }
+
+            $login = new Application();
+            $login->id = $request->member_id;
+            $login->password = $request->password;
+
+            Mail::to($app->email, "$app->last_name $app->first_name")
+                ->send(new ApproveApp($app, $login));
             return [
                 "message" => "New $for added successfully",
                 'desc' => "An Email has also been sent to notiy him of the approval",
@@ -349,33 +504,22 @@ class ApplicationController extends Controller
         return [
             "message" => "Application has been updated successfully",
             'type' => 'success',
-            // 'status' => 200,
+            'status' => 200,
         ];
     }
 
-    public function approve(Request $request, Application $app)
+    public function approve(Request $request, $type, $item)
     {
-        $status = 'APPROVED';
-        if ($app->approved_at) {
-            $status = 'UN-APPROVED';
-            $add_class = 'fa-times';
-            $remove_class = 'fa-check';
-            $app->approved_at = NULL;
-        } else {
-            $app->approved_at = date('Y-m-d H:i:s', time());
-            $add_class = 'fa-check';
-            $remove_class = 'fa-times';
-        }
-        $app->save();
-        return [
-            'status' => 200,
-            'type' => 'success',
-            'message' => "This application has been $status",
-            'add_class' => $add_class,
-            'remove_class' => $remove_class,
-            'timeout' => 6000,
-        ];
-        return $app;
+        $apps = Application::where('applying_for', $type)
+            ->whereNull('approved_at')
+            ->where('item_id', $item)->get();
+
+        $item_name = $request->category;
+        $title = $apps->count()
+            . ' Pending approval for '
+            . Str::plural('Application', $apps->count())
+            . " For $item_name $type";
+        return view('admin.pages.applications.index', compact('apps', 'title'));
     }
 
     /**

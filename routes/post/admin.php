@@ -21,16 +21,10 @@ Route::prefix('user-categories')->name('user-categories')->group(function () {
 });
 
 Route::prefix('applications')->name('applications')->group(function () {
-    Route::post('approve/{app}', 'ApplicationController@approve')->name('.approve');
     Route::post('update/{app}', 'ApplicationController@update')->name('.update');
     Route::delete('destroy', 'ApplicationController@destroy')->name('.destroy');
 });
 
-Route::prefix('subjects')->name('subjects')->group(function () {
-    Route::post('store', 'SubjectController@store')->name('.store');
-    Route::post('update/{subject}', 'SubjectController@update')->name('.update');
-    Route::delete('destroy', 'SubjectController@destroy')->name('.destroy');
-});
 
 Route::prefix('sessions')->name('sessions')->group(function () {
     Route::post('store', 'SessionController@store')->name('.store');
@@ -155,4 +149,57 @@ Route::prefix('memberships')->name('memberships')->group(function () {
     Route::post('update/{membership}', 'MembershipController@update')->name('.update');
     Route::delete('destroy', 'MembershipController@destroy')->name('.destroy');
     Route::post('activate/{post}', 'MembershipController@activate')->name('.activate');
+});
+
+
+Route::prefix('licences')->name('licences')->group(function () {
+    Route::post('store', 'LicenceController@store')->name('.store');
+    Route::post('update/{licence}', 'LicenceController@update')->name('.update');
+    Route::delete('destroy', 'LicenceController@destroy')->name('.destroy');
+    Route::post('activate/{post}', 'LicenceController@activate')->name('.activate');
+});
+
+Route::prefix('events')->name('events')->group(function () {
+    Route::post('store', 'EventController@store')->name('.store');
+    Route::post('update/{event}', 'EventController@update')->name('.update');
+    Route::delete('destroy', 'EventController@destroy')->name('.destroy');
+    Route::post('activate/{post}', 'EventController@activate')->name('.activate');
+});
+
+
+Route::prefix('event-cats')->name('event-cats')->group(function () {
+    Route::post('store', 'EventCatController@store')->name('.store');
+    Route::delete('destroy', 'EventCatController@destroy')->name('.destroy');
+    Route::post('activate/{cat}', 'EventCatController@activate')->name('.activate');
+    Route::post('update/{cat}', 'EventCatController@update')->name('.update');
+});
+
+Route::prefix('notifications')->name('notifications')->group(function () {
+    Route::post('store', 'NotificationController@store')->name('.store');
+    Route::delete('destroy', 'NotificationController@destroy')->name('.destroy');
+    Route::post('activate/{notice}', 'NotificationController@activate')->name('.activate');
+    Route::post('update/{cat}', 'NotificationController@update')->name('.update');
+
+    Route::post('reply/{notice}/{model}', 'NotificationReplyController@store')->name('.reply');
+});
+
+Route::prefix('notification-cats')->name('notification-cats')->group(function () {
+    Route::post('store', 'NotificationCatController@store')->name('.store');
+    Route::delete('destroy', 'NotificationCatController@destroy')->name('.destroy');
+    Route::post('activate/{cat}', 'NotificationCatController@activate')->name('.activate');
+    Route::post('update/{cat}', 'NotificationCatController@update')->name('.update');
+});
+
+Route::prefix('members')->name('members')->group(function () {
+    Route::post('store', 'MemberController@store')->name('.store');
+    Route::post('update/{event}', 'MemberController@update')->name('.update');
+    Route::delete('destroy', 'MemberController@destroy')->name('.destroy');
+    Route::post('activate/{post}', 'MemberController@activate')->name('.activate');
+});
+
+Route::prefix('students')->name('students')->group(function () {
+    Route::post('store', 'StudentController@store')->name('.store');
+    Route::post('update/{event}', 'StudentController@update')->name('.update');
+    Route::delete('destroy', 'StudentController@destroy')->name('.destroy');
+    Route::post('activate/{post}', 'StudentController@activate')->name('.activate');
 });

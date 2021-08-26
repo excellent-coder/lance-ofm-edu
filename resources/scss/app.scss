@@ -68,7 +68,7 @@ textarea {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-color: #443e3e;
+    background-color: #443e3e !important;
 }
 
 .border-1 {
@@ -101,13 +101,16 @@ textarea {
 
 .scroll-in {
     animation: scroll-in 1s linear;
+    transition: all 0.3s;
 }
 
 @keyframes scroll-in {
     from {
-        top: 100px;
+        // top: 100px;
+        transform: translateY(100px);
     }
     to {
-        top: 0;
+        // top: 0;
+        transform: translateY(0);
     }
 }

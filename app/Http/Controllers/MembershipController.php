@@ -41,7 +41,9 @@ class MembershipController extends Controller
         // return $request->all();
         $valid = Validator::make(
             $request->all(),
-            ['name' => 'required']
+            [
+                'name' => 'required'
+            ]
         );
         if ($valid->fails()) {
             return [
@@ -50,22 +52,21 @@ class MembershipController extends Controller
             ];
         }
 
+        if (Membership::where('name', $request->name)
+            ->where('parent_id', $request->parent)->first()
+        ) {
+            return [
+                'message' => "This Membership $request->name already Exist",
+                'errors' => 'Try another One'
+            ];
+        }
+
         $m = new Membership();
         $m->name = $request->name;
         $m->active = $request->filled('active');
-        $slug = Str::slug($request->name);
-        $m->slug = $slug;
-
-        // add application form
-        if ($request->hasFile('form')) {
-            $file = $request->file('form');
-            if ($file->isValid()) {
-
-                $name = "ISAM-" . Str::upper($slug) . "-MEMBERSHIP-APPLICATION-FORM"
-                    . '.' . $file->getClientOriginalExtension();
-                $m->form = $file->storeAs('membership-forms', $name);
-            }
-        }
+        $m->slug = Str::slug("$request->name $request->parent");
+        $m->parent_id = $request->parent;
+        $m->application_fee = $request->application_fee;
 
         $m->save();
 
@@ -86,6 +87,13 @@ class MembershipController extends Controller
     public function show(Membership $membership)
     {
         //
+    }
+    public function children(Request $request, Membership $parent)
+    {
+        if ($request->expectsJson()) {
+            return $parent->children;
+        }
+        return redirect('/');
     }
 
     /**
@@ -124,17 +132,7 @@ class MembershipController extends Controller
         $m->name = $request->name;
         $m->active = $request->filled('active');
         $slug = Str::slug($request->name);
-
-        // add application form
-        if ($request->hasFile('form')) {
-            $file = $request->file('form');
-            if ($file->isValid()) {
-
-                $name = "ISAM-" . Str::upper($slug) . "-MEMBERSHIP-APPLICATION-FORM"
-                    . '.' . $file->getClientOriginalExtension();
-                $m->form = $file->storeAs('membership-forms', $name);
-            }
-        }
+        $m->application_fee = $request->application_fee;
 
         $m->save();
 
@@ -156,5 +154,9 @@ class MembershipController extends Controller
     public function destroy(Membership $membership)
     {
         //
+    }
+
+    public function members()
+    {
     }
 }

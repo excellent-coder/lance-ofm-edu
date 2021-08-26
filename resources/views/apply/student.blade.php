@@ -4,7 +4,7 @@
     <div class="w-full md:w-11/12 lg:w-3/4">
         <div class="p-4 bg-gray-700 shadow-2xl">
             <h1 class="text-lg font-black text-center text-white md:text-3xl lg:text-4xl">
-                Apply For A program
+                Apply For Main Student
             </h1>
             <form action="{{route('mem.apply')}}" method="POST" @submit.prevent="submit($event)"
                 class="my-8 text-gray-800">
@@ -19,6 +19,8 @@
                             <multi-select v-model="form.m" :options="{{$programs}}"
                                 :show-labels="false" label="title" track-by="id" autocomplete="off"
                                 :clear-on-select="false" placeholder="Program Of Study" required :close-on-select="true"
+                                @select="($event)=>{form.fee = $event.main_student_app_fee}"
+                                @remove="($event)=>{form.fee =0;}"
                              />
                         </div>
                         <div class="relative mb-4">
@@ -32,6 +34,10 @@
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Other Name</label>
                             <input placeholder="Other Name" type="text" name="middle_name" class="h-12 p-4">
+                        </div>
+                        <div class="relative mb-4">
+                            <label class="font-semibold text-white">Certificate</label>
+                            <input accept=".pdf,.docx" type="file" name="certificate" class="relative h-12 p-4 bg-white">
                         </div>
 
                     </div>
@@ -54,21 +60,49 @@
                             <label class="font-semibold text-white">Upload Your reccent photograph</label>
                             <input type="file" accept="image/*" required name="passport" class="relative h-12 p-4 bg-white">
                         </div>
+                        <div class="relative mb-4">
+                            <label class="font-semibold text-white">
+                                Upload Documents
+                            </label>
+                            <input type="file" accept=".pdf,.docx" multiple name="documents[]" class="relative h-12 p-4 bg-white">
+                        </div>
 
                     </div>
                 </div>
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">
-                    <div class="text-white checkbox">
-                        <input id="terms" type="checkbox" class="form-check-input form-control filled-in" name="terms"
-                            value="1">
-                        <label for="terms" class="after-white">
-                            <span class="relative -top-1">
-                                Agree to
-                                <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
-                            </span>
-                        </label>
+                    <div>
+                        <div class="text-white checkbox">
+                            <input id="terms" type="checkbox" class="form-check-input form-control filled-in" name="terms"
+                                value="1">
+                            <label for="terms" class="after-white">
+                                <span class="relative -top-1">
+                                    Agree to
+                                    <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="text-white checkbox bounce-in" v-if="parseInt(form.fee)">
+                            <input id="pay" type="checkbox" class="form-check-input form-control filled-in"
+                                name="pay" value="1">
+                            <label for="pay" class="after-white">
+                                <span class="relative -top-1">
+                                    I'M Ready to make payment of
+                                     {{$currency}}
+                                     <span v-text="form.fee"></span>
+                                </span>
+                                <span class="block ">
+                                    See
+                                    <a v-if="form.m" :href="'/programs/'+form.m.slug+'#how-to-apply'" target="_blank"
+                                    class="text-green-400 hover:text-yellow-300">
+                                            How to Apply
+                                    </a>
+                                </span>
+                            </label>
+                        </div>
+                        <input type="hidden" name="pay" value="1" v-else>
                     </div>
-                    @guest
+                    @guest('pgs', 'mem', 'scs')
                     <div class="text-right ">
                         <span class="mr-2 text-white">Already A member</span>
                         <a class="text-green-400 hover:text-yellow-300" href="{{route('login')}}">
@@ -84,14 +118,14 @@
                     </button>
                 </div>
                 <div class="flex flex-wrap w-full mt-3 text-base font-bold text-green-500">
-                @guest
+                @guest('pgs', 'mem', 'scs')
                     <p class="w-1/2 ">
-                        <a href="{{route('scs.register')}}" class="hover:text-yellow-500">
+                        <a href="{{route('register')}}" class="hover:text-yellow-500">
                             Register For short Course Studies
                         </a>
                     </p>
                 @endguest
-                    <p class="w-1/2 @guest text-right @endguest">
+                    <p class="w-1/2 @guest('pgs', 'mem', 'scs') text-right @endguest">
                         <a class=" hover:text-yellow-500" href="{{route('mem.apply')}}">
                             Apply For Membership
                         </a>

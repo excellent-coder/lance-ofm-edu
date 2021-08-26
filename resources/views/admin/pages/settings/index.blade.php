@@ -26,7 +26,9 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Icon</th>
                                     <th>setting</th>
+                                    <th>Key</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -46,11 +48,20 @@
                                 $action['rowid'] = "#tr-$s->id";
                                 $action['item']= json_encode([
                                     'tag'=>$s->tag,
+                                    'slug'=>$s->slug
                                 ]);
                                 @endphp
                                 <tr id="tr-{{$s->id}}">
                                     <td>{{$i++}}</td>
+                                    <td>
+                                        @if ($s->icon)
+                                        <img src="/storage/{{$s->icon}}" alt="{{$s->tag}} icon">
+                                            @else
+                                            N/A
+                                        @endif
+                                    </td>
                                     <td>{{$s->tag}}</td>
+                                    <td>{{$s->slug}}</td>
                                     <td>
                                         <a title="edit {{$s->tag}} settings" href="{{route('admin.settings.edit', $s->slug)}}">
                                             <i class="fas fa-edit "></i>
@@ -63,7 +74,9 @@
                             <tfoot>
                                 <tr>
                                     <th>#</th>
+                                    <th>Icon</th>
                                     <th>Setting</th>
+                                    <th>Key</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -82,6 +95,15 @@
                 <label>Setting Tag</label>
                 <input class="form-control required"
                 placeholder="tag" type="text" name="tag" id="editing-tag">
+            </div>
+            <div class="form-group">
+                <label>Key</label>
+                <input class="form-control required"
+                placeholder="key" type="text" name="slug" id="editing-slug">
+            </div>
+            <div class="form-group">
+                <label for="icon">Icon</label>
+               <input class="form-control" accept="image/*" type="file" name="icon" id="icon">
             </div>
             <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>

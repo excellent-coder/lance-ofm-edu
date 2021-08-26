@@ -1,4 +1,24 @@
 @extends('layouts.auth')
+@section('css')
+
+<style>
+
+    .bounce-in{
+        animation: bounce-in .1s ease-in;
+        transition: all 0.2s;
+    }
+
+  @keyframes bounce-in{
+      from {
+          transform: translateY(50px);
+      }
+      to{
+          transform:  translateY(0);
+      }
+  }
+</style>
+
+@endsection
 @section('content')
 <div class="flex justify-center w-full bg-yellow-100">
     <div class="w-full md:w-11/12 lg:w-3/4">
@@ -18,7 +38,24 @@
                              <input type="hidden" name="item_id" :value="form.m.id" autocomplete="off" v-if="form.m" />
                             <multi-select v-model="form.m" :options="{{$memberships}}"
                                 :show-labels="false" label="name" track-by="id" autocomplete="off"
-                                :clear-on-select="false" placeholder="Memebership Type" required :close-on-select="true"
+                                :clear-on-select="false" placeholder="Memebership Type"
+                                required
+                                 :close-on-select="true"
+                                 @select="($event)=>{form.memberships=[]; form.fee =  $event.application_fee; form.m1=null; getMembershipChildren($event)}"
+                                 @remove="($event)=>{form.memberships = []; form.m1=null;}"
+                             />
+                        </div>
+                        <div class="relative mb-4 bounce-in" v-if="form.m && form.memberships && form.memberships.length">
+                            <input type="hidden" name="sub" value="1">
+                            <label class="font-semibold text-white">Sub @{{form.m.name}} Membership</label>
+                             <input type="hidden" name="sub_membership" :value="form.m1.name" autocomplete="off" v-if="form.m1" />
+                             <input type="hidden" name="sub_item_id" :value="form.m1.id" autocomplete="off" v-if="form.m1" />
+                            <multi-select v-model="form.m1" :options="form.memberships"
+                                :show-labels="false" label="name" track-by="id" autocomplete="off"
+                                :clear-on-select="false" :placeholder="'Sub ' + form.m.name+' Membership'"
+                                 :close-on-select="true"
+                                 required
+                                 @select="($event)=>{form.fee = $event.application_fee;}"
                              />
                         </div>
                         <div class="relative mb-4">
@@ -34,18 +71,9 @@
                             <input placeholder="Other Name" type="text" name="middle_name" class="h-12 p-4">
                         </div>
                         <div class="relative mb-4">
-                            <label class="font-semibold text-white">Application Form</label>
-                            <input accept=".pdf,.docx" type="file" name="form" class="relative h-12 p-4 bg-white">
-                            <small class="block font-semibold text-gray-200" v-if="form.m">
-                                Download application form
-                                <a target="_blank"
-                                 :href="form.m.form?'/storage/'+form.m.form:'/memberships/'+form.m.slug"
-                                 class="text-green-500 hover:text-yellow-400">
-                                here</a>
-                                and fill
-                            </small>
+                            <label class="font-semibold text-white">Certificate</label>
+                            <input accept=".pdf,.docx" type="file" name="certificate" class="relative h-12 p-4 bg-white">
                         </div>
-
                     </div>
                     <div>
                         <div class="relative mb-4">
@@ -66,21 +94,52 @@
                             <label class="font-semibold text-white">Upload Your reccent photograph</label>
                             <input type="file" accept="image/*" required name="passport" class="relative h-12 p-4 bg-white">
                         </div>
+                        <div class="relative mb-4">
+                            <label class="font-semibold text-white">
+                                Upload Documents
+                            </label>
+                            <input type="file" accept=".pdf,.docx" multiple name="documents[]" class="relative h-12 p-4 bg-white">
+                        </div>
 
                     </div>
                 </div>
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">
-                    <div class="text-white checkbox">
-                        <input id="terms" type="checkbox" class="form-check-input form-control filled-in" name="terms"
-                            value="1">
-                        <label for="terms" class="after-white">
-                            <span class="relative -top-1">
-                                Agree to
-                                <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
-                            </span>
-                        </label>
+                    <div>
+                        <div class="text-white checkbox">
+                            <input id="terms" type="checkbox" class="form-check-input form-control filled-in" name="terms"
+                                value="1">
+                            <label for="terms" class="after-white">
+                                <span class="relative -top-1">
+                                    Agree to
+                                    <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="text-white checkbox bounce-in" v-if="parseInt(form.fee)">
+                            <input id="pay" type="checkbox" class="form-check-input form-control filled-in"
+                                name="pay" value="1">
+                            <label for="pay" class="after-white">
+                                <span class="relative -top-1">
+                                    I'M Ready to make payment of
+                                     {{$currency}}
+                                     <span v-text="form.fee"></span>
+                                </span>
+                                <span class="block ">
+                                    See
+                                    <a v-if="form.m1" :href="'/memberships/'+form.m1.slug+'#how-to-apply'" target="_blank"
+                                    class="text-green-400 hover:text-yellow-300">
+                                            How to Apply
+                                    </a>
+                                    <a v-else v-if="form.m" :href="'/memberships/'+form.m.slug+'#how-to-apply'" target="_blank"
+                                    class="text-green-400 hover:text-yellow-300">
+                                            How to Apply
+                                    </a>
+                                </span>
+                            </label>
+                        </div>
+                        <input type="hidden" name="pay" value="1" v-else>
                     </div>
-                    @guest
+                    @guest('pgs', 'mem', 'scs')
                     <div class="text-right ">
                         <span class="mr-2 text-white">Already A member</span>
                         <a class="text-green-400 hover:text-yellow-300" href="{{route('login')}}">
@@ -96,14 +155,14 @@
                     </button>
                 </div>
                 <div class="flex flex-wrap w-full mt-3 text-base font-bold text-green-500">
-                    @guest
+                    @guest('pgs', 'mem', 'scs')
                         <p class="w-1/2 ">
-                            <a href="{{route('scs.register')}}" class="hover:text-yellow-500">
+                            <a href="{{route('register')}}" class="hover:text-yellow-500">
                                 Register For short Course Studies
                             </a>
                         </p>
                     @endguest
-                    <p class="w-1/2 @guest text-right @endguest">
+                    <p class="w-1/2 @guest('pgs', 'mem', 'scs') text-right @endguest">
                         <a class="text-right hover:text-yellow-500" href="{{route('pgs.apply')}}">
                             Apply For Main Student
                         </a>

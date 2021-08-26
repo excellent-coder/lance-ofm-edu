@@ -26,8 +26,8 @@ const mix = require('laravel-mix');
 /**
  * Here we will build all the js and other css needed for the frontend app to function
  */
-// mix.js("resources/js/build/app.js", "public/js/app.js").vue()
-//     .sass("resources/scss/app.scss", "public/css");
+mix.js("resources/js/build/app.js", "public/js/app.js").vue()
+    .sass("resources/scss/app.scss", "public/css");
 
 
     /**
@@ -54,6 +54,8 @@ const mix = require('laravel-mix');
      |
      */
 
-    mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
-    .sass('resources/scss/admin.scss', 'public/css/admin/app.css');
+    // mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
+    // .sass('resources/scss/admin.scss', 'public/css/admin/app.css')
+
+// mix.js('resources/js/utils/tinymce.js', 'public/js/parts/tinymce.js');
 

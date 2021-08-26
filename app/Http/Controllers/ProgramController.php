@@ -40,13 +40,16 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
+        return $request->all();
 
         $valid = Validator::make(
             $request->all(),
             [
                 'excerpt' => 'required',
-                'visibility' => 'required',
+                'max_level' => 'required_if:is_program,1',
+                'main_fee' => 'required_if:is_program,1',
+                'scs_fee' => 'required_if:is_program,1',
+                'visibility' => 'required_if:is_program,1',
                 'title' => 'required|max:150|unique:programs,title',
                 'abbr' => 'required|max:100|unique:programs,abbr',
                 'image' => 'nullable|file|image'
@@ -76,10 +79,12 @@ class ProgramController extends Controller
 
         $program->excerpt = $request->excerpt;
         $program->visibility = $request->visibility;
-        $program->active = intval($request->active);
-        $program->is_program = intval($request->is_program);
+        $program->active = $request->filled('active');
+        $program->is_program = $request->filled('is_program');
 
         $program->max_level = $request->max_level;
+        $program->main_student_app_fee = $request->main_student_app_fee;
+        $program->scs_app_fee = $request->scs_app_fee;
 
         // add featured image
         if ($request->hasFile('image')) {
@@ -108,8 +113,12 @@ class ProgramController extends Controller
      */
     public function show($slug)
     {
+        $slug = preg_replace('/^(scs|scourses?|short-courses?)$/i', 'scs', $slug);
         $course = Program::where('slug', $slug)->firstOrFail();
         // return $course;
+        // $slug =  preg_replace('/^(scs|scourses?|short-course.*)$/i', 'scourse', $slug);
+
+        // return $slug;
         if (view()->exists("frontend.courses.static.$slug")) {
             return view("frontend.courses.static.$slug", compact('course'));
         }
@@ -137,8 +146,6 @@ class ProgramController extends Controller
      */
     public function update(Request $request, Program $program)
     {
-        // return $request->all();
-
         // return $request->all();
 
         $valid = Validator::make(
@@ -173,8 +180,12 @@ class ProgramController extends Controller
 
         $program->excerpt = $request->excerpt;
         $program->visibility = $request->visibility;
-        $program->active = intval($request->active);
-        $program->is_program = intval($request->is_program);
+        $program->active = $request->filled('active');
+        $program->is_program = $request->filled('is_program');
+
+        $program->max_level = $request->max_level;
+        $program->main_student_app_fee = $request->main_student_app_fee;
+        $program->scs_app_fee = $request->scs_app_fee;
 
         if ($request->remove_image) {
             if (file_exists(public_path("storage/$program->image")) && $program->image) {

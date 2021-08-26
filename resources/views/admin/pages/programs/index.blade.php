@@ -63,7 +63,12 @@
                                     <th>Program</th>
                                     <th>Abbr</th>
                                     <th>Active</th>
-                                    <th>Total Students</th>
+                                    <th> Main Student App Fee</th>
+                                    <th> SCS App Fee</th>
+                                    <th>Main Studenst</th>
+                                    {{-- <th>SCS</th> --}}
+                                    <th>Pending Approvals</th>
+                                    {{-- <th>SCS Pending</th> --}}
                                     <th>Created</th>
                                     <th>Updated</th>
                                     <th>Action</th>
@@ -91,7 +96,22 @@
                                     <td>{{$c->title}}</td>
                                     <td>{{$c->abbr}}</td>
                                     <td>{{ json_encode($c->active) }}</td>
+                                    <td>{{ $c->main_student_app_fee }}</td>
+                                    <td>{{ $c->scs_app_fee }}</td>
                                     <td>{{ $c->students->count() }}</td>
+                                    {{-- <td>{{ $c->scs->count() }}</td> --}}
+
+                                    <td>
+                                        {{ $c->studentsPending->count() }}
+                                        @if ($c->studentsPending->count())
+                                            /
+                                            <a href="{{route('admin.applications.approve', ['type'=>'student', 'item'=>$c->id])}}?category={{$c->title}}" target="_blank" rel="noopener noreferrer">
+                                                Approve
+                                            </a>
+                                        @endif
+                                        </td>
+                                    {{-- <td>{{ $c->scsPending->count() }}</td> --}}
+
                                     <td>{{$c->created_at}}</td>
                                     <td>{{$c->updated_at}}</td>
                                     <td>
@@ -109,6 +129,8 @@
                                     <th>Course</th>
                                     <th>Course Code</th>
                                     <th>Active</th>
+                                    <th>Main Stdent APP Fee</th>
+                                    <th>SCS App Fee</th>
                                     <th>Total Students</th>
                                     <th>Created</th>
                                     <th>Updated</th>
