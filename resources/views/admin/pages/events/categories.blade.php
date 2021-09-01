@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="Post Categories">
+            <x-admin-card-tool title="Event Categories">
                 <button class="text-white btn btn-success btn-tool dropdown-toggle btn-sm" data-target="#general-modal"
                     @click="modalEdit($event.target, true)" data-form="general-modal-form"
                     data-store_route="{{route('admin.event-cats.store')}}">

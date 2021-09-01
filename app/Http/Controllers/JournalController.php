@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
+use App\Models\Journal;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\Contact as MailContact;
+use Illuminate\Support\Str;
 
-
-class ContactController extends Controller
+class JournalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +16,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $journals = Journal::all();
+        return view('admin.pages.journals.index', compact('journals'));
     }
 
     /**
@@ -29,7 +27,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.journals.create');
     }
 
     /**
@@ -40,14 +38,12 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $valid = Validator::make(
             $request->all(),
             [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'email' => 'required|email',
-                'message' => 'required',
-                'phone' => 'required|max:20'
+                'pdf' => 'required|file|mimes:pdf',
+                'title' => 'required'
             ]
         );
 
@@ -57,37 +53,44 @@ class ContactController extends Controller
                 'errors' => $valid->errors()->all()
             ];
         }
-        $contact = new Contact();
-        if (Auth::check()) {
-            $contact->user_id = Auth::id();
+
+        $pdf = new Journal();
+        $pdf->title = $request->title;
+        $pdf->slug = $request->slug;
+        $slug = Str::slug(Str::limit($request->title, 150, ''));
+
+        if (Journal::where('slug', $slug)->first()) {
+            $slug .= '-' . Journal::where('slug', 'like', "%$slug%")->count();
         }
-        $contact->first_name = $request->first_name;
-        $contact->last_name = $request->last_name;
-        $contact->email = $request->email;
-        $contact->phone = $request->phone;
-        $contact->message = $request->message;
 
-        $contact->save();
+        $pdf->active = $request->filled('active');
+        $pdf->slug = $slug;
 
-        Mail::to(config('mail.receivers.contact.email'))
-            ->send(new MailContact($contact));
+        if ($request->hasFile('pdf')) {
+            $file = $request->file('pdf');
+            if ($file->isValid()) {
+
+                $name = $slug . '.' . $file->getClientOriginalExtension();
+                $pdf->pdf = $file->storeAs('journals', $name);
+            }
+        }
+        $pdf->save();
 
         return [
-            'message' => "Your message have been successfully sent to admin",
-            'desc' => "Check your email $request->email for reply from admin",
+            'message' => 'Journal Added successfully',
             'status' => 200,
-            'type' => 'success',
-            'timeout' => 30000
+            'to' => route('admin.journals'),
+            'type' => 'success'
         ];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Contact  $contact
+     * @param  \App\Models\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $contact)
+    public function show(Journal $journal)
     {
         //
     }
@@ -95,10 +98,10 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Contact  $contact
+     * @param  \App\Models\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contact $contact)
+    public function edit(Journal $journal)
     {
         //
     }
@@ -107,10 +110,10 @@ class ContactController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contact  $contact
+     * @param  \App\Models\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, Journal $journal)
     {
         //
     }
@@ -118,10 +121,10 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Contact  $contact
+     * @param  \App\Models\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy(Journal $journal)
     {
         //
     }

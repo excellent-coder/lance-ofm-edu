@@ -24707,6 +24707,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_validate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/validate */ "./resources/js/utils/validate.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_7__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -24716,6 +24718,7 @@ __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
 
 
  // impoering componenets
+
 
 
 
@@ -25543,6 +25546,9 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
         _this9.form.member_id = data.member_id;
         _this9.form.applying_for = member;
       });
+    },
+    slugMethod: function slugMethod(title) {
+      this.slug = title.replace(/\W+/g, '-').toLowerCase();
     }
   },
   watch: {
@@ -25551,7 +25557,14 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
         return;
       }
 
-      this.slug = newValue.replace(/\W+/g, '-').toLowerCase();
+      this.slugMethod(newValue);
+    },
+    updateSlug: function updateSlug(newValue) {
+      if (!newValue) {
+        return;
+      }
+
+      this.slugMethod(this.slugTitle.trim());
     },
     price: function price(newValue) {
       var divisor = Number(newValue);
@@ -25587,7 +25600,18 @@ notify({
 window.Vm = app._component;
 app.config.globalProperties.window = window;
 app.mount('#adminApp');
-(0,_utils_validate__WEBPACK_IMPORTED_MODULE_5__.isLoading)(false);
+(0,_utils_validate__WEBPACK_IMPORTED_MODULE_5__.isLoading)(false); // var formSubmitting = false;
+// var setFormSubmitting = function() { formSubmitting = true; };
+// window.onload = function() {
+//     window.addEventListener("beforeunload", function (e) {
+//         if (formSubmitting) {
+//             return undefined;
+//         }
+//         var confirmationMessage = 'You have some changes';
+//         (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+//         return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+//     });
+// };
 
 /***/ }),
 

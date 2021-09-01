@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="All Pages">
+            <x-admin-card-tool :title="'Edit - '. $page->title">
             </x-admin-card-tool>
             <div class="card-body">
                 <div class="row">
@@ -34,10 +34,10 @@
                                         <input class="form-control required" type="text" value="{{$page->title}}"
                                             name="title" placeholder="title">
                                     </div>
-                                     <div class="form-group">
+                                     {{-- <div class="form-group">
                                         <label for="title">Unique Name</label>
                                         <input class="form-control" type="text" value="{{$page->name}}" name="name" placeholder="title">
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="slug">Slug</label>
                                         <input class="form-control required" type="text" value="{{$page->slug}}"

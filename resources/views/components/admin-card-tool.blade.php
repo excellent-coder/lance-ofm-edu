@@ -1,5 +1,5 @@
 <div class="card-header">
-    <h5 class="card-title">{{$title}}</h5>
+    <h5 class="card-title admin-card-title">{{$title}}</h5>
     <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>

@@ -8,8 +8,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="All Pages">
-            </x-admin-card-tool>
+            <x-admin-card-tool title="Create An Awesome Page"></x-admin-card-tool>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -34,11 +33,11 @@
                                         <input class="form-control required" type="text" v-model="slugTitle"
                                             name="title" placeholder="title">
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="title">Unique Name</label>
                                         <input class="form-control" type="text" name="name"
                                             placeholder="unique name">
-                                    </div>
+                                    </div> --}}
                                     <div class="text-right form-group">
                                         <small class="mr-3 text-left text-muted">Conevert title to the page url</small>
                                         <label class="switch">

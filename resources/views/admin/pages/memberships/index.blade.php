@@ -39,6 +39,8 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Application Fee</th>
+                                    <th>Induction Fee</th>
+                                    <th>Annual Fee</th>
                                     <th>Parent</th>
                                     <th>Members</th>
 
@@ -72,19 +74,16 @@
                                     <td><input type="checkbox" class="checking"></td>
                                     <td>{{$i++}}</td>
                                     <td>{{$c->name}}</td>
-                                    <td>{{"$currency $c->application_fee"}}</td>
+                                    <td>{{$currency .' '. number_format( $c->application_fee, 2)}}</td>
+                                    <td>{{$currency .' '. number_format($c->induction_fee, 2)}}</td>
+                                    <td>{{$currency .' '. number_format( $c->annual_fee, 2)}}</td>
                                     <td>{{$c->parent->name ?? 'N/A'}}</td>
                                     <td>{{$c->members->count()??'nil'}}</td>
                                     <td>{{$c->pending->count()??'nil'}}</td>
                                     <td>{{bv($c->active)}}</td>
                                     <td>{{$c->updated_at??'nil'}}</td>
                                     <td>
-                                        <x-data-table-action :action="$action">
-                                            <button data-route="{{route('admin.memberships.activate', $c->id)}}"
-                                                title="{{$active}}" class="btn activate-btn" data-rowid="#tr-$c->id">
-                                                <i class="fas fa-{{$fa_icon}} text-success"></i>
-                                            </button>
-                                        </x-data-table-action>
+                                        <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -97,6 +96,8 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Application Fee</th>
+                                    <th>Induction Fee</th>
+                                    <th>Annual Fee</th>
                                     <th>Parent</th>
                                     <th>Total Approved</th>
                                     <th>pending Approvals</th>
@@ -122,13 +123,27 @@
                     id="editing-name">
             </div>
             <div class="form-group">
-                <label for="title">Application Fee</label>
-                <input id="editng-application_fee" class="form-control" type="text" inputmode="numeric"
+                <label class=" position-relative">
+                    Application Fee
+                    <span class=" fa-2x position-relative" style="top: .3rem;">•</span>
+                    Administrative Fee
+                </label>
+                <input id="editing-application_fee" class="form-control" type="text" inputmode="numeric"
                     pattern="([\d]+)(\.)?(\d{1,2})" name="application_fee" placeholder="Application Fee">
-                <small class="form-text text-muted">
-                    requested format: numbers only optionally followed by dot (.)
-                    and maximmum of two numbers after the dot (.)
-                </small>
+            </div>
+            <div class="form-group">
+                <label>
+                    Induction Fee
+                </label>
+                <input id="editing-induction_fee" class="form-control" type="text" inputmode="numeric"
+                    pattern="([\d]+)(\.)?(\d{1,2})" name="induction_fee" placeholder="Induction Fee">
+            </div>
+            <div class="form-group">
+                <label>
+                   Annual Dues
+                </label>
+                <input id="editing-annual_fee" class="form-control" type="text" inputmode="numeric"
+                    pattern="([\d]+)(\.)?(\d{1,2})" name="annual_fee" placeholder="Annual Fee">
             </div>
             <div class="form-group">
                 <label for="editing-parent_id">Parent</label>

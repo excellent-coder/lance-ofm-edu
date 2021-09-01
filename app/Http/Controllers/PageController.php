@@ -203,7 +203,7 @@ class PageController extends Controller
         }
 
         $ids = explode(',', $ids);
-        $images = Page::whereIn('id', $ids)->get(['image']);
+        $images = Page::whereIn('id', $ids)->whereNull('name')->get(['image']);
 
         $images->each(function ($img) {
             if (file_exists(public_path("storage/$img->image")) && $img->image) {
@@ -211,7 +211,7 @@ class PageController extends Controller
             }
         });
 
-        $total =  Page::whereIn('id', $ids)->delete();
+        $total =  Page::whereIn('id', $ids)->whereNull('name')->delete();
         if (!$total) {
             return [
                 'type' => 'info',

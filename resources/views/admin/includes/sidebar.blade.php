@@ -6,21 +6,23 @@ $segment = 'dashboard';
 $segment = $segments[1];
 }
 $url = end($segments);
+$logo = web_setting('general', 'logo');
+$title = web_setting('general', 'title');
 @endphp
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img src="/storage/web/logo.png" alt="{{$web_title}}" class="brand-image img-circle elevation-3"
+        <img src="/storage/{{$logo}}" alt="{{$title}}" class="brand-image img-circle elevation-3"
             style="opacity: .8">
-        <span class="brand-text font-weight-light">{{$web_title}}</span>
+        <span class="brand-text font-weight-light">{{$title}}</span>
     </a>
     <!-- Sidebar -->
     <div class="mb-5 sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="pb-3 mt-3 mb-3 user-panel d-flex">
             <div class="image">
-                <img src="/storage/web/logo.png" class="img-circle elevation-2" alt="User Image">
+                <img src="/storage/{{$logo}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{Auth::user()->name}}</a>
@@ -35,6 +37,12 @@ $url = end($segments);
                         class="nav-link @if ($segment=='dashboard' && $url == 'admin') active @endif ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.profile')}}" class="nav-link @if ($route == 'journals') active @endif">
+                        <i class="fas fa-user nav-icon"></i>
+                        <p>Profile</p>
                     </a>
                 </li>
                 <li class="nav-item  @if ($segment == 'pages') menu-open @endif">

@@ -88,11 +88,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="/portal">
-                portal
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="{{route('static-pages.donate')}}">
                 Donate
             </a>
@@ -100,6 +95,11 @@
         <li class="nav-item">
             <a href="{{route('static-pages.contact')}}">
                 Contact
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('events.index')}}">
+                Events
             </a>
         </li>
         @guest('scs', 'pgs', 'mem')

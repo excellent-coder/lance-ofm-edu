@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('css')
-<!-- DataTables -->
+{{-- DataTables --}}
 <link rel="stylesheet" href="/vendor/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/vendor/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="/vendor/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -16,16 +16,15 @@
                     <div class="row">
                         <div class="col-6 text-md-left">
                             <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?=count($members)?></span>
-                                members
+                                <span class="badge bg-pink"><?=$journals->count()?></span>
+                                Journals
                             </h4>
                         </div>
                         <div class="col-6">
                             <button class="btn btn-danger bulk-action"
-                                title="Delete all selected members"
+                                title="Delete all selected subjects"
                                 @click.prevent="destroy($event.target)"
-                                data-action="{{route('admin.members.destroy')}}"
-                                data-id=""
+                                data-action="{{route('admin.journals.destroy')}}"
                                 >
                                 <i class="fas fa-trash-alt"></i> Bulk
                                  (<span class="total-selected">0</span>)
@@ -38,18 +37,17 @@
     </div>
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool :title="$title">
-                <div class=" dropdown-divider"></div>
-                <a href="{{route('admin.members.create')}}" class=" btn btn-success btn-sm">
-                    new Member
+            <x-admin-card-tool title="ISAM Journals">
+                <a href="{{route('admin.journals.create')}}" class="text-white btn btn-success btn-tool btn-sm">
+                    new Journal
                 </a>
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
                     <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
-                            <a href="{{route('admin.members.create')}}" class="btn btn-success">
-                                new Member
+                            <a href="{{route('admin.journals.create')}}" class="btn btn-success">
+                                new Journal
                             </a>
                         </div>
                     </div>
@@ -61,9 +59,9 @@
                                         <input type="checkbox" id="checkbox">
                                     </th>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Membership</th>
-                                    <th>Date Approved</th>
+                                    <th>Title</th>
+                                    <th>view</th>
+                                    <th>Active</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -71,20 +69,27 @@
                                 <?php $i=1;?>
                                 @php
                                 $action = [
-                                'destroy'=> route('admin.members.destroy'),
+                                    'destroy'=> route('admin.journals.destroy'),
                                 ];
                                 @endphp
-                                @foreach ($members as $c)
+                                @foreach ($journals as $l)
                                 <?php
-                                $action['id'] = $c->id;
-                                $action['rowid'] = "#tr-$c->id";
+                                $action['id'] = $l->id;
+                                $action['route'] = route('admin.journals.edit', $l->id);
+                                $action['rowid'] = "#tr-$l->id";
                                 ?>
-                                <tr id="tr-{{$c->id}}">
-                                    <td><input type="checkbox" value="{{$c->id}}" class="checking"></td>
+                                <tr id="tr-{{$l->id}}">
+                                    <td><input type="checkbox" value="{{$l->id}}" class="checking"></td>
                                     <td>{{$i++}}</td>
-                                    <td>{{$c->first_name}}</td>
-                                    <td>{{$c->membership->name ?? 'N/A'}}</td>
-                                    <td>{{$c->accepted_on}}</td>
+                                    <td>{{ Str::limit($l->title, 100, '...')}}</td>
+                                    <td>
+                                        <a href="/storage/{{$l->pdf}}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{bv($l->active)}}
+                                    </td>
                                     <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
@@ -97,9 +102,9 @@
                                         <i class="fa fa-check-square" aria-hidden="true"></i>
                                     </th>
                                     <th>#</th>
-                                     <th>Name</th>
-                                    <th>Membership</th>
-                                    <th>Date Approved</th>
+                                     <th>Title</th>
+                                    <th>view</th>
+                                    <th>Active</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -110,6 +115,10 @@
         </div>
     </div>
 </div>
+<div>
+    <x-admin-modal title="Managing subjects">
+    </x-admin-modal>
+</div>
 @endsection
 
 @section('js')
@@ -119,6 +128,7 @@
 <script src="/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="/vendor/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+
 <script src="/vendor/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.colVis.min.js"></script>

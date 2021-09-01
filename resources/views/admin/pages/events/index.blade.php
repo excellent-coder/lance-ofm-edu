@@ -47,7 +47,7 @@
                     <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
                             <a href="{{route('admin.events.create')}}" class="btn btn-success">
-                                New Post
+                                New Event
                             </a>
                         </div>
                     </div>

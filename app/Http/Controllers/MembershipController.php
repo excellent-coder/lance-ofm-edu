@@ -67,6 +67,8 @@ class MembershipController extends Controller
         $m->slug = Str::slug("$request->name $request->parent");
         $m->parent_id = $request->parent;
         $m->application_fee = $request->application_fee;
+        $m->induction_fee = $request->induction_fee;
+        $m->annual_fee = $request->annual_fee;
 
         $m->save();
 
@@ -133,6 +135,8 @@ class MembershipController extends Controller
         $m->active = $request->filled('active');
         $slug = Str::slug($request->name);
         $m->application_fee = $request->application_fee;
+        $m->induction_fee = $request->induction_fee;
+        $m->annual_fee = $request->annual_fee;
 
         $m->save();
 
@@ -156,7 +160,11 @@ class MembershipController extends Controller
         //
     }
 
-    public function members()
+    public function members($slug)
     {
+        $membership = Membership::whereSlug($slug)->firstOrFail();
+        $members = $membership->members;
+        $title = Str::upper($membership->name);
+        return view('admin.pages.members.index', compact('members', 'title'));
     }
 }

@@ -113,7 +113,10 @@ class EventController extends Controller
             ->whereActive('1')
             ->where('end_at', '>', date('Y-m-d H:i:s'))
             ->firstOrFail();
-        return $event;
+        // events that jave not strted
+        $events = Event::where('end_at', '>', date('Y-m-d H:i:s'))->get();
+        // return $events;
+        return view('frontend.events.single', compact('event', 'events'));
     }
 
     /**
@@ -230,5 +233,18 @@ class EventController extends Controller
             'status' => 200,
             'desc' => $desc
         ];
+    }
+
+    public function register($slug)
+    {
+        $event = Event::whereSlug($slug)->firstOrFail();
+        return view('frontend.events.register', compact('event'));
+    }
+    public function events()
+    {
+        $events = Event::where('end_at', '>', date('Y-m-d H:i:s'))
+            ->orderBy('start_at', 'ASC')
+            ->get();
+        return view('frontend.events.index', compact('events'));
     }
 }

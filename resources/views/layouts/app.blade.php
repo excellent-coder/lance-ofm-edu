@@ -14,7 +14,7 @@
     </div>
     <div id="app" class="w-full overflow-x-hidden">
         @include('includes.navbar')
-        <div style="margin-top:50px">
+        <div style="margin-top:65px">
         @yield('content')
         </div>
         @include('includes.app.footer')

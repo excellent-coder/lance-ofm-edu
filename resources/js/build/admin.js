@@ -20,6 +20,7 @@ import {
     reactive
 } from 'vue';
 import axios from 'axios';
+import _ from 'lodash';
 
 const app = createApp({
     data() {
@@ -838,6 +839,9 @@ const app = createApp({
                 this.form.member_id = data.member_id
                 this.form.applying_for = member;
             })
+        },
+        slugMethod(title) {
+            this.slug = title.replace(/\W+/g, '-').toLowerCase();
         }
     },
     watch: {
@@ -845,7 +849,14 @@ const app = createApp({
             if (!this.updateSlug) {
                 return;
             }
-            this.slug = newValue.replace(/\W+/g, '-').toLowerCase();
+            this.slugMethod(newValue)
+        },
+
+        updateSlug(newValue) {
+            if (!newValue) {
+            return;
+            }
+            this.slugMethod(this.slugTitle.trim());
         },
 
         price(newValue) {
@@ -889,3 +900,17 @@ app.config.globalProperties.window = window;
 
 app.mount('#adminApp')
 isLoading(false);
+
+// var formSubmitting = false;
+// var setFormSubmitting = function() { formSubmitting = true; };
+
+// window.onload = function() {
+//     window.addEventListener("beforeunload", function (e) {
+//         if (formSubmitting) {
+//             return undefined;
+//         }
+//         var confirmationMessage = 'You have some changes';
+//         (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+//         return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+//     });
+// };

@@ -31,19 +31,21 @@ class PaymentController extends Controller
     public function paid(Request $request, Payment $payment)
     {
         // return $payment;
-        // if ($payment->transaction_id) {
-        //     // this payment has been processes,
-        //     return redirect('/');
-        // }
+        if ($payment->transaction_id) {
+            // this payment has been processes,
+            return redirect('/');
+        }
         if ($request->tx_ref != $payment->ref) {
             // something is wrong we will come to you later
         }
-        // $payment->status = $request->status;
-        // $payment->transaction_id = $request->transaction_id;
-        // $payment->save();
-        // if ($request->status == 'successful') {
-        // DB::table($payment->guard)->update(['paid' => 1]);
-        // }
+        $payment->status = $request->status;
+        $payment->transaction_id = $request->transaction_id;
+        $payment->save();
+        if ($request->status == 'successful') {
+            DB::table($payment->guard)
+                ->find($payment->user_id)
+                ->update(['paid' => 1]);
+        }
         return view('frontend.payments.member', compact('payment'));
     }
 

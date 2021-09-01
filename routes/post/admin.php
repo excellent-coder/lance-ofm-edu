@@ -203,3 +203,14 @@ Route::prefix('students')->name('students')->group(function () {
     Route::delete('destroy', 'StudentController@destroy')->name('.destroy');
     Route::post('activate/{post}', 'StudentController@activate')->name('.activate');
 });
+
+Route::prefix('journals')->name('journals')->group(function () {
+    Route::post('store', 'JournalController@store')->name('.store');
+    Route::post('update/{event}', 'JournalController@update')->name('.update');
+    Route::delete('destroy', 'JournalController@destroy')->name('.destroy');
+    Route::post('activate/{post}', 'JournalController@activate')->name('.activate');
+});
+
+Route::prefix('profile')->name('profile')->group(function () {
+    Route::post('update', 'AdminProfileController@update')->name('.update');
+});

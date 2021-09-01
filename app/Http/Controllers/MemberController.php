@@ -16,8 +16,9 @@ class MemberController extends Controller
     public function index()
     {
         $members = Member::latest()->with('membership')->take(100)->get();
+        $title = 'MEMBERS';
         // return $members;
-        return view('admin.pages.members.index', compact('members'));
+        return view('admin.pages.members.index', compact('members', 'title'));
     }
 
     /**

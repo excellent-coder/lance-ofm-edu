@@ -18,6 +18,8 @@ class CreateMembershipsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->decimal('application_fee')->nullable();
+            $table->decimal('induction_fee')->nullable();
+            $table->decimal('annual_fee')->nullable();
             $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->boolean('active')->default(true)
                 ->comment('1 means that it is accepting applications');

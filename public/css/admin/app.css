@@ -792,3 +792,10 @@ input.wtk::-webkit-calendar-picker-indicator {
 .required {
   color: inherit;
 }
+
+.admin-card-title {
+  color: #b00a86;
+  font-weight: 900;
+  font-size: 1.2rem;
+  font-family: "Times New Roman", Times, serif;
+}

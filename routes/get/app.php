@@ -9,6 +9,7 @@ Route::prefix('shop')->group(function () {
     Route::get('{slug}', 'ProductController@show')->name('shop.product');
     Route::get('category/{slug}', 'ProductCatController@show')->name('shop.cat.show');
 });
+// Route::get('jo')
 
 Route::prefix('portal')->name('portal.')->group(function () {
     Route::get('/', 'PortalController@index')->name('index');
@@ -56,6 +57,9 @@ Route::prefix('blog')->group(function () {
 
 Route::get('pages/{slug}', 'PageController@show')->name('pages.show');
 Route::get('events/{slug}', 'EventController@show')->name('events.show');
+Route::get('events/register/{event}', 'EventController@register')->name('events.register');
+Route::post('events/register/{event}', 'EventGoerController@store')->name('events.register');
+Route::get('events', 'EventController@events')->name('events.index');
 
 // payment
 Route::get('payment/v/{payment}', 'PaymentController@paid')->name('payment.paid');

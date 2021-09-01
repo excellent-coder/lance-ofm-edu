@@ -95,7 +95,7 @@ Route::prefix('levels')->name('levels')->group(function () {
 
 Route::prefix('memberships')->name('memberships')->group(function () {
     Route::get('/', 'MembershipController@index');
-    Route::get('{members}', 'MembershipController@members')->name('.members');
+    Route::get('{slug}', 'MembershipController@members')->name('.members');
 });
 
 
@@ -104,7 +104,7 @@ Route::prefix('licences')->name('licences')->group(function () {
     Route::get('create', 'LicenceController@create')->name('.create');
     Route::get('edit/{licence}', 'LicenceController@edit')->name('.edit');
 
-    Route::get('{slug}/program', 'LicenceController@program')->name('.program');
+    Route::get('{slug}', 'LicenceController@members')->name('.members');
 
     Route::get('json/{program}/{level}', 'LicenceController@pl')->name('.pl.json');
 });
@@ -137,4 +137,16 @@ Route::prefix('students')->name('students')->group(function () {
     Route::get('create', 'StudentController@create')->name('.create');
     Route::get('edit/{event}', 'StudentController@edit')->name('.edit');
     Route::get('categories', 'StudentCatController@index')->name('.categories');
+});
+
+Route::prefix('journals')->name('journals')->group(function () {
+    Route::get('/', 'JournalController@index');
+    Route::get('create', 'JournalController@create')->name('.create');
+    Route::get('edit/{event}', 'JournalController@edit')->name('.edit');
+    Route::get('categories', 'JournalCatController@index')->name('.categories');
+});
+
+Route::prefix('profile')->name('profile')->group(function () {
+    Route::get('/', 'AdminProfileController@index');
+    Route::get('edit', 'AdminProfileController@edit')->name('.edit');
 });

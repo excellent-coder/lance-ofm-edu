@@ -227,4 +227,12 @@ class LicenceController extends Controller
             'desc' => $desc
         ];
     }
+
+    public function members($slug)
+    {
+        $l = Licence::whereSlug($slug)->firstOrFail();
+        $members = $l->members;
+        $title = Str::upper($l->name) . ' LICENSED MEMBERS';
+        return view('admin.pages.members.index', compact('members', 'title'));
+    }
 }

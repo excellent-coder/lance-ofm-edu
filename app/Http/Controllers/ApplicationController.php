@@ -290,8 +290,8 @@ class ApplicationController extends Controller
 
         if ((int) $amount < 1) {
             // no payment needed
-            // Mail::send(new AdminApplied($app));
-            // Mail::send(new Applied($app));
+            Mail::send(new AdminApplied($app));
+            Mail::send(new Applied($app));
 
             return [
                 'status' => 200,
@@ -319,6 +319,8 @@ class ApplicationController extends Controller
         $payment->device = $request->devce;
 
         $payment->save();
+
+        $app->payment_id = $payment->id;
 
         $p = [
             'public_key' => config('services.rave.public_key'),
