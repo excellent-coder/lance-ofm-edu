@@ -26,6 +26,12 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="{{route('scs.programs.apply')}}" class="sidebar-link">
+                        <i class="sidebar-icon fas fa-home"></i>
+                        <p>Apply For Program</p>
+                    </a>
+                </li>
                 <li class="sidebar-item has-children">
                     <a href="#" class="sidebar-link">
                         <i class="sidebar-icon fa fa-street-view"></i>
@@ -54,12 +60,12 @@
                     <ul class="mt-3 nav-children">
                         @foreach ($userPrograms as $up)
                         @php
-                         if($up->visibility <> 2 || !$up->active){
+                         if($up->visibility == 2 || !$up->active){
                              continue;
                          }
                         @endphp
                         <li class="nav-item">
-                            <a href="{{route('portal.application.create', $up->slug)}}" class="sidebar-link">
+                            <a href="{{route('scs.program', $up->slug)}}" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>{{$up->abbr}}</p>
                             </a>

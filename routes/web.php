@@ -26,6 +26,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+// Route::get('l', function () {
+//     foreach (['pgs', 'scs', 'mem'] as $g) {
+//         if ($a = auth($g)->user()) {
+//             return [$g, $a];
+//         }
+//     }
+// });
 
 Route::get('/psw', function () {
     return password_hash('ofemco', PASSWORD_BCRYPT);
@@ -67,4 +74,5 @@ Route::get('login-ceo', function () {
     return view('auth.login');
 });
 
+require __DIR__ . '/payments.php';
 Route::post('ceo-login', 'AdminController@ceo');

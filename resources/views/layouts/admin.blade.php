@@ -96,28 +96,28 @@
 
 
             $(document).on('click', function (e) {
-                if (e.target.closest('#dataTable')) {
+                if (e.target.closest('#dataTable, .dataTable')) {
 
-                    $('#dataTable').find('.action-btn').off('click');
-                    $('#dataTable').find('.modal-edit-btn').off('click');
-                    $('#dataTable').find('.activate-btn').off('click');
-                    $('#dataTable').find('.checking').off('click');
+                    $('#dataTable, .dataTable').find('.action-btn').off('click');
+                    $('#dataTable, .dataTable').find('.modal-edit-btn').off('click');
+                    $('#dataTable, .dataTable').find('.activate-btn').off('click');
+                    $('#dataTable, .dataTable').find('.checking').off('click');
 
-                    $('#dataTable').find('.checking').on('click', function (e) {
+                    $('#dataTable, .dataTable').find('.checking').on('click', function (e) {
                         return totalSelected();
                     })
 
-                    $('#dataTable').find('.action-btn').on('click', function (e) {
+                    $('#dataTable, .dataTable').find('.action-btn').on('click', function (e) {
                         e.preventDefault();
                         return Vm.methods.destroy(this);
                     })
 
-                    $('#dataTable').find('.modal-edit-btn').on('click', function (e) {
+                    $('#dataTable, .dataTable').find('.modal-edit-btn').on('click', function (e) {
                         e.preventDefault();
                         return Vm.methods.modalEdit(this);
                     })
 
-                    $('#dataTable').find('.activate-btn').on('click', function (e) {
+                    $('#dataTable, .dataTable').find('.activate-btn').on('click', function (e) {
                         e.preventDefault();
                         return Vm.methods.activate(this);
                     })

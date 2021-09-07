@@ -166,6 +166,20 @@
                     @endforeach
                 </select>
             </div>
+             <div class="form-group">
+                <label for="visibility">Available To</label>
+                <select id="visibility" class="form-control select2"
+                    name="visibility">
+                    <option value="1" selected>All Studenst</option>
+                    <option value="2">Program Students Only</option>
+                    <option value="3">Schort Course Studenst Only</option>
+                </select>
+                <small class="form-text text-muted">
+                    You can use this to specify those who are eligible to apply for
+                    this
+                    program
+                </small>
+            </div>
             <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>
             </div>

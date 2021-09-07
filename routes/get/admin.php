@@ -138,6 +138,16 @@ Route::prefix('students')->name('students')->group(function () {
     Route::get('edit/{event}', 'StudentController@edit')->name('.edit');
     Route::get('categories', 'StudentCatController@index')->name('.categories');
 });
+Route::prefix('scs')->name('scs')->group(function () {
+    Route::get('/', 'SCStudentController@index');
+    Route::get('create', 'SCStudentController@create')->name('.create');
+    Route::get('edit/{event}', 'SCStudentController@edit')->name('.edit');
+    Route::get('categories', 'SCStudentCatController@index')->name('.categories');
+
+    Route::get('{student}', 'SCStudentController@show')->name('.show');
+
+    Route::get('programs/{app}', 'ScsProgramController@show')->name('.app');
+});
 
 Route::prefix('journals')->name('journals')->group(function () {
     Route::get('/', 'JournalController@index');

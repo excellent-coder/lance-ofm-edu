@@ -48,7 +48,8 @@
                                     <div class="col-12 col-lg-7">
                                         <div class="form-group">
                                             <label>Description</label>
-                                            <textarea class="form-control required tinymce" name="description" rows="4">{{$lesson->description}}</textarea>
+                                            <textarea class="form-control required tinymce" name="description"
+                                                rows="4">{{$lesson->description}}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <div class="form-group">
@@ -68,7 +69,8 @@
                                                         <tr>
                                                             <td>{{$i++}}</td>
                                                             <td>
-                                                                <a href="/storage/{{$m->path}}" target="_blank" rel="noopener noreferrer">
+                                                                <a href="/storage/{{$m->path}}" target="_blank"
+                                                                    rel="noopener noreferrer">
                                                                     {{$m->name}}
                                                                 </a>
                                                             </td>
@@ -157,8 +159,8 @@
                                     <div class=" col-lg-5 col-12">
                                         <div class="form-group">
                                             <label for="title">Topic</label>
-                                            <input class="form-control required" type="text" value="{{$lesson->topic}}" name="topic"
-                                                placeholder="title">
+                                            <input class="form-control required" type="text" value="{{$lesson->topic}}"
+                                                name="topic" placeholder="title">
                                         </div>
 
                                         <div class="form-group">
@@ -189,8 +191,8 @@
                                         </div>
 
                                         <div class="my-4 checkbox checkbox-primary p-t-0">
-                                            <input id="active" {{$lesson->active?'checked':''}} type="checkbox" class="form-check-input form-control"
-                                                name="active" value="1">
+                                            <input id="active" {{$lesson->active?'checked':''}} type="checkbox"
+                                                class="form-check-input form-control" name="active" value="1">
                                             <label for="active">
                                                 Active
                                             </label>
@@ -200,11 +202,27 @@
                                             <select id="session" class="form-control select2 required" name="session_id"
                                                 data-placeholder="Session">
                                                 @foreach ($sessions as $s)
-                                                <option {{$s->id == $lesson->session_id?'selected':''}} value="{{$s->id}}">
+                                                <option {{$s->id == $lesson->session_id?'selected':''}}
+                                                    value="{{$s->id}}">
                                                     {{$s->name}}
                                                 </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="visibility">Available To</label>
+                                            <select id="visibility" class="form-control select2" name="visibility">
+                                                <option value="1" {{$lesson->visibility==1?'selected':''}}>All Studenst
+                                                </option>
+                                                <option value="2" {{$lesson->visibility==2?'selected':''}}>Program
+                                                    Students Only</option>
+                                                <option value="3" {{$lesson->visibility==3?'selected':''}}>Schort Course
+                                                    Studenst Only</option>
+                                            </select>
+                                            <small class="form-text text-muted">
+                                                You can use this to specify those who are eligible to
+                                                take this lesson
+                                            </small>
                                         </div>
                                         <div class="form-group">
                                             <h5 class="mb-3">preview Image
@@ -216,17 +234,18 @@
                                             <div class="form-group position-relative"
                                                 style="background-color:rgba(81, 32, 128, 0.787)">
                                                 <input @change.prevent="previewSelected($event, 'image', false)"
-                                                    id="image" class="form-control-file" type="file"
-                                                    name="image" accept="image/*">
+                                                    id="image" class="form-control-file" type="file" name="image"
+                                                    accept="image/*">
                                                 <label for="image" class="text-center">
                                                     <i class="fas fa-plus deeppink"></i>
                                                 </label>
                                             </div>
-                                            <div class="row selected-files" v-if="(files.image && files.image.length)||'{{!empty($lesson->image)}}'">
+                                            <div class="row selected-files"
+                                                v-if="(files.image && files.image.length)||'{{!empty($lesson->image)}}'">
                                                 <div
                                                     class="px-3 col-12 select-cover-photo selected preview-file featured-photo">
-                                                   <img :src="(files.image && files.image[0])?fileSrc(files.image[0].file):'/storage/{{$lesson->image}}'" alt="preview"
-                                                            class="cursor-pointer preview-img">
+                                                    <img :src="(files.image && files.image[0])?fileSrc(files.image[0].file):'/storage/{{$lesson->image}}'"
+                                                        alt="preview" class="cursor-pointer preview-img">
                                                     <i class="remove-image"
                                                         @click.prevent="removeFile('image', 0)">×</i>
                                                 </div>

@@ -38,4 +38,24 @@ class Course extends Model
     {
         return $this->belongsTo(Level::class, 'level_id', 'id');
     }
+
+    /**
+     * Get all of the sLessons for the Course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sLessons()
+    {
+        return $this->hasMany(Lesson::class, 'course_id', 'id');
+    }
+
+    /**
+     * Get all of the sLessons for the Course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pLessons()
+    {
+        return $this->hasMany(Lesson::class, 'course_id', 'id');
+    }
 }

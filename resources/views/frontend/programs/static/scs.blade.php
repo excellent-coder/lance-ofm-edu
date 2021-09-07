@@ -8,8 +8,8 @@
     <div class="relative w-full bg-center bg-no-repeat bg-cover h-72"
         style="background-image: url(/storage/pages/awards-banner.jpg)">
         <div class="absolute w-full bottom-1/4">
-            <h1 class="text-4xl font-black text-center text-gray-100 top-20">
-                {{$course->name}}
+            <h1 class="text-4xl font-black text-center text-gray-100 capitalize top-20">
+                {{$program->title}}
             </h1>
         </div>
     </div>
@@ -172,7 +172,7 @@
                     <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
                 </div>
             </div>
-            <div>
+            <div id="how-to-apply">
                 <div class="w-full member-card">
                     <img class="w-full h-56" src="/storage/pages/blog_4.jpg" alt="">
                     <div class="px-4 py-5 border-green-600 border-1">

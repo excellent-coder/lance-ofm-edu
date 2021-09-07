@@ -63,6 +63,7 @@ class CourseController extends Controller
                 'name' => 'required|max:150',
                 'code' => 'required|max:100',
                 'program_id' => 'required',
+                'visibility' => 'required',
                 'level_id' => 'required'
             ],
             [
@@ -89,6 +90,7 @@ class CourseController extends Controller
         $course->level_id = $request->level_id;
 
         $course->description = $request->description;
+        $course->visibility = $request->visibility;
 
         $course->excerpt = $request->excerpt;
         $course->active = intval($request->active);
@@ -159,6 +161,7 @@ class CourseController extends Controller
                 'name' => "required|unique:courses,name,$course->id|max:150",
                 'code' => "required|unique:courses,code,$course->id|max:100",
                 'image' => 'nullable|file|image',
+                'visibility' => 'required',
             ],
             // [
             //     'name.unique' => 'This course is already taken',
@@ -179,6 +182,8 @@ class CourseController extends Controller
         $course->description = $request->description;
 
         $course->excerpt = $request->excerpt;
+        $course->visibility = $request->visibility;
+
         $course->active = intval($request->active);
 
         if ($request->remove_image) {

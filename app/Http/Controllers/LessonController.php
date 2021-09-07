@@ -74,7 +74,8 @@ class LessonController extends Controller
                 'session_id' => 'required|integer',
                 'image' => 'required|image',
                 'topic' => 'required|max:1000',
-                'description' => 'required'
+                'description' => 'required',
+                'visibility' => 'required',
             ],
             [
                 'course_id.required' => 'Please choose the course that this lesson belongs to',
@@ -102,6 +103,7 @@ class LessonController extends Controller
         $l->description = $request->description;
         $l->session_id = $request->session_id;
         $l->active = intval($request->active);
+        $l->visibility = $request->visibility;
 
         // saving image;
         if ($request->hasFile('image')) {
@@ -109,7 +111,7 @@ class LessonController extends Controller
             if ($file->isValid()) {
 
                 $name = Str::slug(Str::random(10)) . time()
-                    . '.' . $file->extension();
+                    . '.' . $file->getClientOriginalExtension();
                 $l->image = $file->storeAs('materials/previews', $name);
             }
         }
@@ -198,7 +200,8 @@ class LessonController extends Controller
                 'course_id' => 'required|integer',
                 'session_id' => 'required|integer',
                 'topic' => 'required|max:1000',
-                'description' => 'required'
+                'description' => 'required',
+                'visibility' => 'required'
             ],
             [
                 'course_id.required' => 'Please choose course',
@@ -220,6 +223,7 @@ class LessonController extends Controller
         $l->session_id = $request->session_id;
         $l->description = $request->description;
         $l->active = intval($request->active);
+        $l->visibility = $request->visibility;
 
         // saving image;
         if ($request->hasFile('image')) {

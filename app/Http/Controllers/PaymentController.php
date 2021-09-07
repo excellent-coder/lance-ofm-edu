@@ -42,9 +42,7 @@ class PaymentController extends Controller
         $payment->transaction_id = $request->transaction_id;
         $payment->save();
         if ($request->status == 'successful') {
-            DB::table($payment->guard)
-                ->find($payment->user_id)
-                ->update(['paid' => 1]);
+            DB::update("update $payment->guard set paid = 1 where id = '$payment->user_id'");
         }
         return view('frontend.payments.member', compact('payment'));
     }

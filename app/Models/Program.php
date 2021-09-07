@@ -40,4 +40,26 @@ class Program extends Model
     // {
     //     return $this->hasMany(Student::class, 'program_id', 'id');
     // }
+
+    /**
+     * Get all of the courses for the Program for short course student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pCourses()
+    {
+        return $this->hasMany(Course::class, 'program_id', 'id')
+            ->where('visibility', '!=', 3);
+    }
+
+    /**
+     * Get all of the courses for the Program for short course student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sCourses()
+    {
+        return $this->hasMany(Course::class, 'program_id', 'id')
+            ->where('visibility', '!=', 2);
+    }
 }

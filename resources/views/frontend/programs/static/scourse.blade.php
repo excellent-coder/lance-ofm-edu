@@ -9,7 +9,7 @@
         style="background-image: url(/storage/pages/awards-banner.jpg)">
         <div class="absolute w-full bottom-1/4">
             <h1 class="text-4xl font-black text-center text-gray-100 top-20">
-                {{$course->name}}
+               {{$program->title}}
             </h1>
         </div>
     </div>

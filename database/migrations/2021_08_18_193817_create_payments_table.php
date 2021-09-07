@@ -27,7 +27,6 @@ class CreatePaymentsTable extends Migration
             $table->text('device')->nullable();
             $table->ipAddress('ip')->nullable();
 
-
             $table->string('transaction_id')
                 ->nullable()
                 ->comment('commiing from flutterwave');

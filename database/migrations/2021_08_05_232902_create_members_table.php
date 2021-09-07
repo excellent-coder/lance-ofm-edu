@@ -41,10 +41,10 @@ class CreateMembersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('membership_id')
-                ->references('id')->on('memberships')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
+            // $table->foreign('membership_id')
+            //     ->references('id')->on('memberships')
+            //     ->cascadeOnUpdate()
+            //     ->nullOnDelete();
         });
     }
 

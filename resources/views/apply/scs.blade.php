@@ -1,4 +1,5 @@
 @extends('layouts.auth')
+@section('title', '| Short Course Studies Application')
 @section('content')
 <div class="flex justify-center w-full bg-yellow-100">
     <div class="w-full md:w-11/12 lg:w-3/4">
@@ -6,7 +7,7 @@
             <h1 class="text-lg font-black text-center text-white md:text-3xl lg:text-4xl">
                 Register As A short Course Student
             </h1>
-            <form action="{{route('register')}}" method="POST" @submit.prevent="submit($event)"
+            <form action="{{route('scs.apply')}}" method="POST" @submit.prevent="submit($event)"
                 class="my-8 text-gray-800">
                 @csrf
                 <div class="grid w-full grid-cols-1 gap-x-12 md:grid-cols-2">
@@ -52,11 +53,11 @@
                     </div>
                     <div class="relative mb-4">
                             <label class="font-semibold text-white">Passport</label>
-                            <input accept="image/*" type="file" required name="passport" class="relative h-12 p-4 bg-white">
+                            <input accept="image/*" type="file" name="passport" class="relative h-12 p-4 bg-white">
                         </div>
                     <div class="relative mb-4">
                             <label class="font-semibold text-white">Certificate</label>
-                            <input accept=".pdf,.docx" type="file" required name="certificate" class="relative h-12 p-4 bg-white">
+                            <input accept=".pdf,.docx" type="file" name="certificate" class="relative h-12 p-4 bg-white">
                         </div>
                     <div class="relative mb-4">
                             <label class="font-semibold text-white">Documents</label>

@@ -23,6 +23,8 @@ class CreateLessonsTable extends Migration
             $table->string('image', 300)->nullable()->comment('preview image');
 
             $table->boolean('active')->nullable()->default(true);
+            $table->tinyInteger('visibility')->default(1)
+                ->comment("Determines those whp can access the course, 1=all, 2=main, 3=scs");
             $table->timestamps();
 
             $table->foreign('course_id')->references('id')

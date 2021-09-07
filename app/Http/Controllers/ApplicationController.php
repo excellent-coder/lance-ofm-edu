@@ -7,6 +7,7 @@ use App\Mail\AdminApplied;
 use App\Mail\ApproveApp;
 use App\Mail\RejectApp;
 use App\Models\Application;
+use App\Models\AppPayment;
 use App\Models\Member;
 use App\Models\UserCategory;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ use Illuminate\Support\Str;
 use App\Models\Membership;
 use App\Models\Program;
 use App\Models\Payment;
+use App\Models\Session;
 use App\Models\StudentProgram;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
@@ -44,21 +46,21 @@ class ApplicationController extends Controller
         $class = ucfirst($member);
         $model = "App\Models\\$class";
 
-        $last = $model::latest('id')->first();
 
 
-        if ($last) {
-            switch ($member) {
-                case 'member':
-                    $last_id = $last->member_id;
-                    break;
-                case 'student':
-                    $last_id = $last->matric_no;
-                    break;
-            }
-        } else {
-            $last_id = 0;
+        switch ($member) {
+            case 'member':
+                $last = $model::latest('id')->whereNotNull('member_id')
+                    ->first();
+                $last_id = $last->member_id ?? 0;
+                break;
+            case 'student':
+                $last = $model::latest('id')->whereNotNull('matric_no')
+                    ->first();
+                $last_id = $last->matric_no ?? 0;
+                break;
         }
+
 
         $member_id = $last_id + 1;
         return [
@@ -301,26 +303,24 @@ class ApplicationController extends Controller
             ];
         }
 
-        $payment = new Payment();
-        $payment->user_id = $app->id;
-        $payment->guard = 'applications';
+        $payment = new AppPayment();
+        $payment->application_id = $app->id;
+        $payment->tag = 'applications';
 
         $payment->amount = $amount;
         $payment->currency =  web_setting('general', 'currency');
         $payment->reason = "Application for $membership $applying_for";
         do {
             $ref = "ISAM-REG-$code-" . Str::upper(Str::random(10));
-        } while (Payment::where('ref', $ref)->first());
+        } while (AppPayment::where('ref', $ref)->first());
 
         $payment->ref = $ref;
         $payment->ip = $request->ip();
         $mac = exec('getmac');
         $payment->mac = strtok($mac, ' ');
         $payment->device = $request->devce;
-
         $payment->save();
 
-        $app->payment_id = $payment->id;
 
         $p = [
             'public_key' => config('services.rave.public_key'),
@@ -328,7 +328,7 @@ class ApplicationController extends Controller
             'amount' => $payment->amount,
             'currency' => $payment->currency,
             'country' => config('msc.country', 'NG'),
-            'redirect' => route('payment.paid', $payment->id),
+            'redirect' => route('app.paid', $payment->id),
             'meta' => ['consumer_id' => $app->id, 'consumer_mac' => $mac],
             'customer' => [
                 'email' => $request->email,
@@ -344,8 +344,8 @@ class ApplicationController extends Controller
             ],
         ];
 
-        Mail::send(new AdminApplied($app));
-        Mail::send(new Applied($app));
+        // Mail::send(new AdminApplied($app));
+        // Mail::send(new Applied($app));
 
         return [
             'status' => 200,
@@ -466,7 +466,7 @@ class ApplicationController extends Controller
                 $new->member_id = $request->member_id;
                 $new->membership_id = $request->item_id;
             } else {
-                // $new->program_id = $request->item_id;
+                $new->program_id = $request->item_id;
                 $new->matric_no = $request->member_id;
             }
             $new->accepted_on = $date;
@@ -486,6 +486,8 @@ class ApplicationController extends Controller
                 $sp = new StudentProgram();
                 $sp->student_id =  $new->id;
                 $sp->program_id = $request->item_id;
+                $sp->session_id = Session::where('active', 1)->first()->id;
+                $sp->active = 1;
                 $sp->save();
             }
 

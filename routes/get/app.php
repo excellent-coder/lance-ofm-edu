@@ -12,14 +12,8 @@ Route::prefix('shop')->group(function () {
 // Route::get('jo')
 
 Route::prefix('portal')->name('portal.')->group(function () {
-    Route::get('/', 'PortalController@index')->name('index');
     Route::get('profile/status', 'ProfileController@status')->name('profile.status');
     Route::get('profile/edit', 'ProfileController@edit')->name('profile.edit');
-
-    Route::get('application/{slug}', 'UserCategoryController@create')->name('application.create');
-
-    Route::get('subjects/{slug}', 'SubjectController@show')->name('subjects');
-    Route::get('lessons/{slug}', 'LessonController@show')->name('lessons');
 });
 
 Route::name('static-pages')->group(function () {

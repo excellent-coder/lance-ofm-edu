@@ -56,7 +56,7 @@ class MaterialController extends Controller
                 $m->type = explode('/', $file->getMimeType())[0];
 
                 $path = Str::slug(Str::random(20)) . '-' . time()
-                    . '.' . $file->extension();
+                    . '.' . $file->getClientOriginalExtension();
                 $m->path = $file->storeAs('lesson/materials', $path);
 
                 $m->save();

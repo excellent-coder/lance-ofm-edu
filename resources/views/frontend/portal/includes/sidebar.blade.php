@@ -31,30 +31,18 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{route('portal.dashboard')}}" class="sidebar-link">
-                        <i class="sidebar-icon fas fa-tachometer-alt"></i>
-                        <p>Programs</p>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{route('portal.dashboard')}}" class="sidebar-link">
-                        <i class="sidebar-icon fas fa-tachometer-alt"></i>
-                        <p>Courses</p>
-                    </a>
-                </li>
-                {{-- @foreach (auth('pgs')->user()->authPrograms as $pr)
+
                 <li class="sidebar-item has-children">
                     <a href="#" class="sidebar-link">
                         <i class="sidebar-icon fa fa-chalkboard-teacher"></i>
                         <p>
-                            {{$pr->title}}
+                            {{$program->title}}
                         </p>
                     </a>
                     <ul class="nav-children">
-                        @foreach ($courses as $s)
+                        @foreach ($program->PCourses as $s)
                         <li class="nav-item">
-                            <a href="{{route('portal.subjects', $s->slug)}}" class="sidebar-link">
+                            <a href="{{route('portal.course', $s->slug)}}" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>{{$s->name}}</p>
                             </a>
@@ -62,7 +50,6 @@
                         @endforeach
                     </ul>
                 </li>
-                @endforeach --}}
             </ul>
         </nav>
     </div>

@@ -6,6 +6,8 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\Course;
+use App\Models\Lesson;
 
 class StudentController extends Controller
 {
@@ -123,5 +125,19 @@ class StudentController extends Controller
             'status' => 200,
             'desc' => $desc
         ];
+    }
+
+    public function course($slug)
+    {
+        $course = Course::where('slug', $slug)->where('visibility', '!=', '3')
+            ->firstOrFail();
+        return view('frontend.portal.lessons.show', compact('course'));
+    }
+
+    public function lesson($slug)
+    {
+        $lesson = Lesson::where('slug', $slug)->where('visibility', '!=', '3')
+            ->firstOrFail();
+        return view('frontend.portal.lessons.study', compact('lesson'));
     }
 }

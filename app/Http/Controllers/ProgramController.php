@@ -114,15 +114,15 @@ class ProgramController extends Controller
     public function show($slug)
     {
         $slug = preg_replace('/^(scs|scourses?|short-courses?)$/i', 'scs', $slug);
-        $course = Program::where('slug', $slug)->firstOrFail();
+        $program = Program::where('slug', $slug)->firstOrFail();
         // return $course;
         // $slug =  preg_replace('/^(scs|scourses?|short-course.*)$/i', 'scourse', $slug);
 
         // return $slug;
-        if (view()->exists("frontend.courses.static.$slug")) {
-            return view("frontend.courses.static.$slug", compact('course'));
+        if (view()->exists("frontend.programs.static.$slug")) {
+            return view("frontend.programs.static.$slug", compact('program'));
         }
-        return view('frontend.courses.single', compact('course'));
+        return view('frontend.programs.single', compact('program'));
     }
 
     /**

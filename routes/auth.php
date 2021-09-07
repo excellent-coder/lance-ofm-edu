@@ -10,13 +10,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-Route::get('apply', 'ApplicationController@create')->name('apply');
-
 Route::any('logout', 'AuthController@logout')->name('logout');
 
 Route::get('member/apply', 'ApplicationController@memberApply')->name('mem.apply');
-Route::get('json/memberships/{parent}', 'MembershipController@children');
 Route::post('member/apply', 'ApplicationController@store');
+Route::get('json/memberships/{parent}', 'MembershipController@children');
+
 Route::get('main-student/apply', 'ApplicationController@studentApply')->name('pgs.apply');
 
 
@@ -25,8 +24,8 @@ Route::post('password', 'AuthController@password')->name('password');
 
 Route::middleware(['guest:scs', 'guest:pgs', 'guest:mem'])->group(function () {
 
-    Route::get('register', 'AuthController@registerPage')->name('register');
-    Route::post('register', 'AuthController@register');
+    Route::get('scs/apply', 'SCStudentController@create')->name('scs.apply');
+    Route::post('scs/apply', 'SCStudentController@apply');
 
     Route::get('login', 'AuthController@loginPage')->name('login');
     Route::post('login', 'AuthController@login');

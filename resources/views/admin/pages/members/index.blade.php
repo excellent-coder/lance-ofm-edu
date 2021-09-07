@@ -63,6 +63,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Membership</th>
+                                    <th>Member ID</th>
                                     <th>Date Approved</th>
                                     <th>Action</th>
                                 </tr>
@@ -84,6 +85,7 @@
                                     <td>{{$i++}}</td>
                                     <td>{{$c->first_name}}</td>
                                     <td>{{$c->membership->name ?? 'N/A'}}</td>
+                                    <td>{{$c->member_id ?? 'N/A'}}</td>
                                     <td>{{$c->accepted_on}}</td>
                                     <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
@@ -99,6 +101,7 @@
                                     <th>#</th>
                                      <th>Name</th>
                                     <th>Membership</th>
+                                    <th>Member ID</th>
                                     <th>Date Approved</th>
                                     <th>Action</th>
                                 </tr>

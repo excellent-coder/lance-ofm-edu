@@ -92,6 +92,13 @@ $title = web_setting('general', 'title');
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('admin.scs')}}"
+                        class="nav-link @if ($route == 'scs') active @endif">
+                        <i class="fas fa-user-tie nav-icon"></i>
+                        <p>S/Students</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('admin.sessions')}}" class="nav-link @if ($segment == 'sessions') active @endif">
                         <i class="fas fa-passport nav-icon"></i>
                         <p>Sessions</p>

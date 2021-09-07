@@ -81,7 +81,7 @@
                     Don't Have Accout
                 </h4>
                 <p class="w-1/2 font-semibold">
-                    <a href="{{route('register')}}" class="text-green-500 hover:text-yellow-400">
+                    <a href="{{route('scs.apply')}}" class="text-green-500 hover:text-yellow-400">
                         Register For Short Course
                     </a>
                 </p>

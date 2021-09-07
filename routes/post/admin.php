@@ -203,6 +203,14 @@ Route::prefix('students')->name('students')->group(function () {
     Route::delete('destroy', 'StudentController@destroy')->name('.destroy');
     Route::post('activate/{post}', 'StudentController@activate')->name('.activate');
 });
+Route::prefix('scs')->name('scs')->group(function () {
+    Route::post('store', 'SCStudentController@store')->name('.store');
+    Route::post('update/{student}', 'SCStudentController@update')->name('.update');
+    Route::delete('destroy', 'SCStudentController@destroy')->name('.destroy');
+    Route::post('activate/{student}', 'SCStudentController@activate')->name('.activate');
+
+    Route::post('program/{app}', 'ScsProgramController@update')->name('.program.approve');
+});
 
 Route::prefix('journals')->name('journals')->group(function () {
     Route::post('store', 'JournalController@store')->name('.store');

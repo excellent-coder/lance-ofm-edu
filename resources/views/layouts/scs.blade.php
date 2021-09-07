@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     @include('includes.meta')
-    <link rel="stylesheet" href="{{ asset('css/portal.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/portal.css') }}">
     @yield('css')
 </head>
 <body class="w-full h-full min-h-screen overflow-x-hidden bg-white">

@@ -9,92 +9,93 @@
         style="background-image: url(/storage/pages/awards-banner.jpg)">
         <div class="absolute w-full bottom-1/4">
             <h1 class="text-4xl font-black text-center text-gray-100 top-20">
-                {{$course->name}}
+                {{$program->title}}
             </h1>
         </div>
     </div>
     <div class="w-full my-10 ">
         <div class="flex justify-center w-full ">
             <p class="w-1/2 text-xl text-center text-gray-700 ">
-               Candidates who holders Degree/HND in other fields but
-               wish to make professional career in School
-               Administration and Management, are eligible to apply
-               for the award of B.Ed (Educational Administration
-                and Management) Degree of our
-               partner Universities by Graduate Conversion Course.
+                This is the Institute’s School Administrative Management
+                Technician Course (SAMTC), with minimum duration of
+                four semesters. This comprises SAMTC 1, SAMTC 2,
+                SAMTC 3, and SAMTC 4, to be completed strictly in
+                that sequence, subject to any exemptions awarded,
+                plus Supervised Teaching Practice, Research Project,
+                and Career Development and Training (CADET) workshop.
             </p>
         </div>
     </div>
     <div class="w-full mt-20 mb-10 lg:mx-32">
-        <div class="grid grid-cols-1 mt-20 gap-x-6 gap-y-12 sm:grid-cols-2 md:grid-cols-4" >
-            <div>
-                <div class="w-full member-card">
-                    <div class="px-4 py-5 border-green-600 border-1">
-                        <h2 class="mb-3 text-xl title">
-                           Med One
-                        </h2>
-                       <p>1. Statiscal Methods</p>
-								<p>2. Educational Research Methods</p>
-								<p>3. Managerial Psychology</p>
-								<p>4. Concepts and theories of Educational Administration and planning</p>
-								<p>5. Human Resources Management in Education</p>
-								<p>6. Practicum in Educational Management</p>
-								<p>7. Project Management in Education</p>
-                    </div>
-                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
-                </div>
-            </div>
-            <div>
-                <div class="w-full member-card">
-                    <div class="px-4 py-5 border-green-600 border-1">
-                        <h2 class="mb-3 text-xl title">
-                           MED Two
-                        </h2>
-                      <p>1. Advanced Psychology of Learning</p>
-								<p>2. Supervision of Instructions in Education</p>
-								<p>3. Economics of Education</p>
-								<p>4. Monitoring/Evaluation in Education Management</p>
-								<p>5. Budgeting and Financial Management in Education</p>
-								<p>6. Application of Management Information Systems in Education</p>
-								<p>7. Educational Statistics for Education Managers</p>
-                    </div>
-                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
-                </div>
-            </div>
-            <div>
-                <div class="w-full member-card">
-                    <div class="px-4 py-5 border-green-600 border-1">
-                        <h2 class="mb-3 text-xl title">
-                           MED Three
-                        </h2>
-                      <p>1. Politics of Education</p>
-								<p>2. Legal Aspects of Educational Administration</p>
-								<p>3. Problems and Issues in Higher Education</p>
-								<p>4. Dissertation Project</p>
-								<p>5. School Plant Management</p>
-								<p>6. Principles of Institutional Administration in Education</p>
-								<p>7. Responsibility and Accountability in Education Management</p>
-                    </div>
-                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
-                </div>
-            </div>
-            <div>
-                <div class="w-full member-card">
-                    <img class="w-full h-56" src="/storage/pages/gcc.jpg" alt="">
-                    <div class="px-4 py-5 border-green-600 border-1">
-                        <h2 class="mb-3 text-xl title">
-                          AFFILIATED UNIVERSITIES
-                        </h2>
-                      <p>
-                          Contact Institute of School Administration and Management (ISAM)
-                          for list of Affiliated Universities in Benin, Ghana, UK and USA.
-                    </p>
-                    </div>
-                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
-                </div>
-            </div>
-        </div>
         <div class="grid grid-cols-1 mt-20 gap-x-6 gap-y-12 sm:grid-cols-2 md:grid-cols-4">
+            <div>
+                <div class="w-full member-card">
+                    <div class="px-4 py-5 border-green-600 border-1">
+                        <h2 class="mb-3 text-xl title">
+                            SAMTC One
+                        </h2>
+                        <p>1. Introduction to Education</p>
+                        <p>2. Development of Appropriate Skills in Children</p>
+                        <p>3. Nigerian Peoples and culture</p>
+                        <p>4. History and Philosophy of Science</p>
+                        <p>5. Principles of Economics I</p>
+                        <p>6. Nigerian Legal System</p>
+                        <p>7. Introductory Mathematics Economics I</p>
+                    </div>
+                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
+                </div>
+            </div>
+            <div>
+                <div class="w-full member-card">
+                    <div class="px-4 py-5 border-green-600 border-1">
+                        <h2 class="mb-3 text-xl title">
+                            SAMTC Two
+                        </h2>
+                        <p>1. Educational Technology</p>
+                        <p>2. Professionalism in Teaching</p>
+                        <p>3. Communication for Business</p>
+                        <p>4. Computer Appreciation for Managers</p>
+                        <p>5. Introductory Mathematics for Economics II</p>
+                        <p>6. Principle of Economics II</p>
+                        <p>7. Political Analysis</p>
+                    </div>
+                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
+                </div>
+            </div>
+            <div>
+                <div class="w-full member-card">
+                    <div class="px-4 py-5 border-green-600 border-1">
+                        <h2 class="mb-3 text-xl title">
+                            SAMTC Three
+                        </h2>
+                        <p>1. Developmental Psychology</p>
+                        <p>2. History of Education</p>
+                        <p>3. The School Environment and The Child</p>
+                        <p>4. Introduction to Microeconomics</p>
+                        <p>5. Nigerian Economy in Perspective</p>
+                        <p>6. History of Economic thought</p>
+                        <p>7. Economic Development</p>
+                    </div>
+                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
+                </div>
+            </div>
+            <div>
+                <div class="w-full member-card">
+                    <div class="px-4 py-5 border-green-600 border-1">
+                        <h2 class="mb-3 text-xl title">
+                            SAMTC Four
+                        </h2>
+                        <p>1. General Teaching Method</p>
+                        <p>2. Sociology of Education</p>
+                        <p>3. Community Development</p>
+                        <p>4. Supervised Teaching Practice</p>
+                        <p>5. Introductory Macroeconomics</p>
+                        <p>6. Politics of Development and Underdevelopment</p>
+                        <p>7. Research Project</p>
+                    </div>
+                    <div class="h-8 border-green-600 border-r-1 border-b-1 border-l-1"></div>
+                </div>
+            </div>
             <div>
                 <div class="w-full member-card">
                     <img class="w-full h-56" src="/storage/pages/blog_1.jpg" alt="">

@@ -26,6 +26,9 @@ class CreateCoursesTable extends Migration
             $table->mediumText('description')->nullable();
             $table->text('excerpt')->nullable();
             $table->boolean('active')->nullable()->default(true);
+            $table->tinyInteger('visibility')->nullable()
+                ->unsigned()->comment("1 for all, 2 for program alone, and 3 for short course students alone");
+            // new
             $table->timestamps();
 
 

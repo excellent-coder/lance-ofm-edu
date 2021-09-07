@@ -157,7 +157,7 @@
                 <div class="flex flex-wrap w-full mt-3 text-base font-bold text-green-500">
                     @guest('pgs', 'mem', 'scs')
                         <p class="w-1/2 ">
-                            <a href="{{route('register')}}" class="hover:text-yellow-500">
+                            <a href="{{route('scs.apply')}}" class="hover:text-yellow-500">
                                 Register For short Course Studies
                             </a>
                         </p>

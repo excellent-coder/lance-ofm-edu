@@ -26,6 +26,7 @@ class CreateStudentsTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name');
 
+            // The current active program he is studying
             $table->bigInteger('program_id')->unsigned();
 
             $table->date('accepted_on')->nullable();

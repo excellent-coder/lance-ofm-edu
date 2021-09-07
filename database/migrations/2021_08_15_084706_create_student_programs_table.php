@@ -16,10 +16,15 @@ class CreateStudentProgramsTable extends Migration
         Schema::create('student_programs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('student_id')->unsigned();
+            // The program he is studying
             $table->integer('program_id')->unsigned();
 
+            // The session at which he was approved
             $table->bigInteger('session_id')->unsigned()->nullable();
+
+            // The level he startes from, default 1
             $table->integer('level_id')->unsigned()->nullable();
+            $table->boolean('active')->nullable()->default(true);
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('students')

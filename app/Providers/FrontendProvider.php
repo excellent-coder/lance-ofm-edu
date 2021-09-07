@@ -30,12 +30,14 @@ class FrontendProvider extends ServiceProvider
         View::composer('*', 'App\Http\ViewComposers\FrontComposer');
         View::composer('layouts.admin', 'App\Http\ViewComposers\LayoutAdminComposer');
 
-        view()->composer('frontend.portal.includes.sidebar', function ($view) {
+        view()->composer('frontend.portal.*', function ($view) {
             /**
              * $pauth = authenticated program stiudent
              */
             $pauth = Auth::user('pgs');
-            $view->with(compact('pauth'));
+            // current program
+            $program = auth('pgs')->user()->program;
+            $view->with(compact('pauth', 'program'));
         });
 
         view()->composer('includes.shop.sidebar', function ($view) {

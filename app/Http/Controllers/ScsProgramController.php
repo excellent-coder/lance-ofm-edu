@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\ScsProgram;
+use App\Models\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ScsProgramController extends Controller
 {
@@ -44,9 +47,12 @@ class ScsProgramController extends Controller
      * @param  \App\Models\ScsProgram  $scsProgram
      * @return \Illuminate\Http\Response
      */
-    public function show(ScsProgram $scsProgram)
+    public function show(ScsProgram $app)
     {
-        //
+        $sessions = Session::all();
+        $levels = Level::all();
+        // return $app;
+        return view('admin.pages.scs.program', compact('app', 'sessions', 'levels'));
     }
 
     /**
@@ -67,9 +73,45 @@ class ScsProgramController extends Controller
      * @param  \App\Models\ScsProgram  $scsProgram
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ScsProgram $scsProgram)
+    public function update(Request $request, ScsProgram $app)
     {
-        //
+        if (!$request->filled('approve') && !$app->approved_at) {
+            return [
+                'message' => 'No update has been made',
+                'desc' => 'To update plase approve the request',
+                'type' => 'info',
+                'status' => 200
+            ];
+        }
+        $valid = Validator::make(
+            $request->all(),
+            [
+                'session' => 'required',
+                'level' => 'required',
+                'start_at' => 'required',
+                'end_at' => 'required',
+            ]
+        );
+        if ($valid->fails()) {
+            return [
+                'message' => 'Some Fields Missing',
+                'errors' => $valid->errors()->all()
+            ];
+        }
+
+        $app->approved_at = date('Y-m-d H:i:s');
+        $app->level_id = $request->level;
+        $app->session_id = $request->session;
+        $app->start_at = $request->start_at;
+        $app->end_at = $request->end_at;
+
+        $app->save();
+
+        return [
+            'message' => 'You have successfully approved this request',
+            'status' => 200,
+            'type' => 'success'
+        ];
     }
 
     /**

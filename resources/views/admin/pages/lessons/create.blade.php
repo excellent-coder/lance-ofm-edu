@@ -179,13 +179,26 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="session">Session</label>
-                                            <select id="session" class="form-control select2 required" name="session_id" data-placeholder="Session">
+                                            <select id="session" class="form-control select2 required" name="session_id"
+                                                data-placeholder="Session">
                                                 @foreach ($sessions as $s)
-                                                    <option {{$s->active?'selected':''}} value="{{$s->id}}">
-                                                        {{$s->name}}
-                                                    </option>
+                                                <option {{$s->active?'selected':''}} value="{{$s->id}}">
+                                                    {{$s->name}}
+                                                </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="visibility">Available To</label>
+                                            <select id="visibility" class="form-control select2" name="visibility">
+                                                <option value="1" selected>All Studenst</option>
+                                                <option value="2">Program Students Only</option>
+                                                <option value="3">Schort Course Studenst Only</option>
+                                            </select>
+                                            <small class="form-text text-muted">
+                                                You can use this to specify those who are eligible to
+                                                take this lesson
+                                            </small>
                                         </div>
                                     </div>
                                 </div>

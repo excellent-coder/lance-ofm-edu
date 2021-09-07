@@ -64,7 +64,7 @@
                     Apply For Main Student
                 </a>
                 @guest('scs')
-                <a class="dropdown-item" href="{{route('register')}}">
+                <a class="dropdown-item" href="{{route('scs.apply')}}">
                     Register For Short Course Student
                 </a>
                 @endguest
@@ -114,13 +114,13 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="/register" @click.prevent>
+            <a href="javascript:void()" @click.prevent>
                 register
             </a>
             <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
                 <a class="dropdown-item" href="{{route('mem.apply')}}">Membership</a>
                 <a class="dropdown-item" href="{{route('pgs.apply')}}">Program</a>
-                <a class="dropdown-item" href="{{route('register')}}">Short Course</a>
+                <a class="dropdown-item" href="{{route('scs.apply')}}">Short Course</a>
             </ul>
         </li>
         @endguest

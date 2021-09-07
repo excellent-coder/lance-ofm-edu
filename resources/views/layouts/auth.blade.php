@@ -11,7 +11,10 @@
             <div class="bars"></div>
         </div>
         <div class="w-full font-sans antialiased text-gray-900" id="app">
-            @yield('content')
+            @include('includes.navbar')
+            <div class="mt-16 ">
+                @yield('content')
+            </div>
         </div>
     <script src="{{asset('js/manifest.js')}}"></script>
     <script src="{{asset('js/vendor.js')}}"></script>
