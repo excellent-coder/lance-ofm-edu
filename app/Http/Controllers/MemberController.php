@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Licence;
 use App\Models\Member;
 use App\Models\Membership;
 use Illuminate\Http\Request;
@@ -31,9 +32,15 @@ class MemberController extends Controller
         //
     }
 
-    public function portal()
+    public function dashboard()
     {
         return view('frontend.members.index');
+    }
+
+    public function license()
+    {
+        $licenses = Licence::all();
+        return view('frontend.mem.licenses.index', compact('licenses'));
     }
 
 

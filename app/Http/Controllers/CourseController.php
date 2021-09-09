@@ -157,7 +157,6 @@ class CourseController extends Controller
         $valid = Validator::make(
             $request->all(),
             [
-                'description' => 'required',
                 'name' => "required|unique:courses,name,$course->id|max:150",
                 'code' => "required|unique:courses,code,$course->id|max:100",
                 'image' => 'nullable|file|image',

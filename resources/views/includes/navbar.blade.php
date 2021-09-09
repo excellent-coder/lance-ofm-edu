@@ -102,9 +102,9 @@
                 Events
             </a>
         </li>
-        @guest('scs', 'pgs', 'mem')
+        @logged(false)
         <li class="nav-item">
-            <a href="login">
+            <a href="{{route('login')}}">
                 login
             </a>
              <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
@@ -114,16 +114,23 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="javascript:void()" @click.prevent>
+            <a href="javascript:void()">
                 register
             </a>
             <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
                 <a class="dropdown-item" href="{{route('mem.apply')}}">Membership</a>
-                <a class="dropdown-item" href="{{route('pgs.apply')}}">Program</a>
+                <a class="dropdown-item" href="{{route('pgs.apply')}}">Main Student</a>
                 <a class="dropdown-item" href="{{route('scs.apply')}}">Short Course</a>
             </ul>
         </li>
-        @endguest
+        @endif
+        @logged()
+            <li class="nav-item">
+                <a href="{{route('dashboard')}}">
+                    Dashboard
+                </a>
+            </li>
+        @endif
         @auth()
         @if (auth()->user()->ceo)
         <li class="nav-item">

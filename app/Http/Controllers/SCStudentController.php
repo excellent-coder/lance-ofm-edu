@@ -161,8 +161,6 @@ class SCStudentController extends Controller
         $payment->device = $request->devce;
 
         $payment->save();
-        $s->payment_id = $payment->id;
-        $s->save();
 
         $p = [
             'public_key' => config('services.rave.public_key'),

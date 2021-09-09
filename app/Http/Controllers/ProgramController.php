@@ -40,15 +40,15 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        // return $request->all();
 
         $valid = Validator::make(
             $request->all(),
             [
                 'excerpt' => 'required',
                 'max_level' => 'required_if:is_program,1',
-                'main_fee' => 'required_if:is_program,1',
-                'scs_fee' => 'required_if:is_program,1',
+                'main_student_app_fee' => 'required_if:is_program,1',
+                'scs_app_fee' => 'required_if:is_program,1',
                 'visibility' => 'required_if:is_program,1',
                 'title' => 'required|max:150|unique:programs,title',
                 'abbr' => 'required|max:100|unique:programs,abbr',
@@ -152,7 +152,7 @@ class ProgramController extends Controller
             $request->all(),
             [
                 'excerpt' => 'required',
-                'visibility' => 'required',
+                'visibility' => 'required_if:is_program,1',
                 'title' => "required|max:150|unique:programs,title,$program->id",
                 'abbr' => "required|max:100|unique:programs,abbr,$program->id",
                 'image' => 'nullable|file|image'

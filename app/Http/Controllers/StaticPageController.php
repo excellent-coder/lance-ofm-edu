@@ -19,8 +19,8 @@ class StaticPageController extends Controller
     public function licences(Request $request)
     {
         $segment = $request->segment(2);
-        if (view()->exists("frontend.pages.licences.$segment")) {
-            return view("frontend.pages.licences.$segment");
+        if (view()->exists("frontend.pages.licenses.$segment")) {
+            return view("frontend.pages.licenses.$segment");
         }
         return redirect(route('home'));
     }

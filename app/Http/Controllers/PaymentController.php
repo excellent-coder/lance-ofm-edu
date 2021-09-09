@@ -30,7 +30,7 @@ class PaymentController extends Controller
 
     public function paid(Request $request, Payment $payment)
     {
-        // return $payment;
+        return $payment;
         if ($payment->transaction_id) {
             // this payment has been processes,
             return redirect('/');
@@ -41,6 +41,7 @@ class PaymentController extends Controller
         $payment->status = $request->status;
         $payment->transaction_id = $request->transaction_id;
         $payment->save();
+
         if ($request->status == 'successful') {
             DB::update("update $payment->guard set paid = 1 where id = '$payment->user_id'");
         }

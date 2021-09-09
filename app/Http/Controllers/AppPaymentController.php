@@ -44,9 +44,9 @@ class AppPaymentController extends Controller
      * @param  \App\Models\AppPayment  $appPayment
      * @return \Illuminate\Http\Response
      */
-    public function show(AppPayment $appPayment)
+    public function show(AppPayment $payment)
     {
-        //
+        return $payment->load('applicant');
     }
 
     /**
@@ -96,7 +96,7 @@ class AppPaymentController extends Controller
         }
         $payment->status = $request->status;
         $payment->transaction_id = $request->transaction_id;
-        $payment->paid_at = date('Y-m-d H:i:s'));
+        $payment->paid_at = date('Y-m-d H:i:s');
         $payment->save();
 
         return view('frontend.payments.member', compact('payment'));

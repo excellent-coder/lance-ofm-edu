@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('includes.meta')
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{ asset('css/portal.css') }}">
     @yield('css')
 </head>
@@ -23,6 +24,7 @@
     <script src="{{asset('js/portal/manifest.js')}}"></script>
     <script src="{{asset('js/portal/vendor.js')}}"></script>
     <script src="{{asset('js/portal/app.js')}}"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
     @yield('js')
 </body>
 </html>

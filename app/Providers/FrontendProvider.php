@@ -30,7 +30,7 @@ class FrontendProvider extends ServiceProvider
         View::composer('*', 'App\Http\ViewComposers\FrontComposer');
         View::composer('layouts.admin', 'App\Http\ViewComposers\LayoutAdminComposer');
 
-        view()->composer('frontend.portal.*', function ($view) {
+        view()->composer('frontend.pgs.*', function ($view) {
             /**
              * $pauth = authenticated program stiudent
              */
@@ -48,7 +48,7 @@ class FrontendProvider extends ServiceProvider
         view()->composer('frontend.scs.includes.sidebar', function ($view) {
             $programs = Program::where('active', 1)
                 ->where('is_program', 1)
-                ->where('visibility', '<>', 2)
+                ->where('visibility', '!=', 2)
                 ->get();
 
             $userPrograms = auth('scs')->user()->programs;
@@ -61,6 +61,20 @@ class FrontendProvider extends ServiceProvider
                 // ->where('visibility', '<', 3)
                 ->get();
             $view->with(compact('navPrograms'));
+        });
+
+        // user dashboards
+        view()->composer([
+            'frontend.scs.*',
+            'frontend.pgs.*',
+            'frontend.mem.*'
+        ], function ($view) {
+            foreach (['pgs', 'scs', 'mem'] as $g) {
+                if ($auth = auth($g)->user()) {
+                    break;
+                }
+            }
+            $view->with(compact('auth'));
         });
     }
 }

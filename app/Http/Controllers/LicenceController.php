@@ -98,9 +98,13 @@ class LicenceController extends Controller
      * @param  \App\Models\Licence  $licence
      * @return \Illuminate\Http\Response
      */
-    public function show(Licence $licence)
+    public function show($slug)
     {
-        //
+        $licence = Licence::where('slug', $slug)->firstOrFail();
+        if (view()->exists("frontend.pages.licenses.$slug")) {
+            return view("frontend.pages.licenses.$slug");
+        }
+        return $licence;
     }
 
     /**

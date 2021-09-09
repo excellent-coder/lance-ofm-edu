@@ -37,7 +37,7 @@ class ApplicationController extends Controller
     {
         $apps = Application::latest('id')->take(100)->get();
         $title = "Last " . $apps->count() . " " . Str::plural('Application', $apps->count());
-        // return $apps;
+        // return $apps[0]->load('paid');
         return view('admin.pages.applications.index', compact('apps', 'title'));
     }
 

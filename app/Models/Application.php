@@ -37,4 +37,25 @@ class Application extends Model
             'application_id' // key matching id(key in this table) in other table
         );
     }
+
+    /**
+     * Get the payment associated with the Application
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function payment()
+    {
+        return $this->hasOne(AppPayment::class, 'application_id', 'id');
+    }
+
+    /**
+     * Get the paid associated with the Application
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function paid()
+    {
+        return $this->hasOne(AppPayment::class, 'application_id', 'id')
+            ->where('status', "successful");
+    }
 }

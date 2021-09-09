@@ -23,6 +23,7 @@
     <script src="{{asset('js/portal/manifest.js')}}"></script>
     <script src="{{asset('js/portal/vendor.js')}}"></script>
     <script src="{{asset('js/portal/app.js')}}"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
     @yield('js')
 </body>
 </html>

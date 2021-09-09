@@ -6,7 +6,7 @@
             <p class="text-2xl font-bold text-center text-blue-300 cursor-pointer user-name">
                 {{auth('scs')->user()->first_name }}
             </p>
-            <a href="{{route('portal.profile.edit')}}" class="inline-block px-3 py-2 font-medium text-white border-2 border-opacity-75 shadow-md rounded-3xl mt-7 focus:bg-blue-700 focus:text-red-200 hover:bg-yellow-200 hover:text-green-800">
+            <a href="/" class="inline-block px-3 py-2 font-medium text-white border-2 border-opacity-75 shadow-md rounded-3xl mt-7 focus:bg-blue-700 focus:text-red-200 hover:bg-yellow-200 hover:text-green-800">
                 update profile
             </a>
         </div>
@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/portal" class="sidebar-link">
+                    <a href="/scs" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -42,7 +42,7 @@
                     <ul class="mt-3 nav-children">
                         @foreach ($programs as $p)
                         <li class="nav-item">
-                            <a href="{{route('portal.application.create', $p->slug)}}" class="sidebar-link">
+                            <a href="/" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>{{$p->abbr}}</p>
                             </a>

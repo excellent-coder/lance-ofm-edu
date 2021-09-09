@@ -12,5 +12,6 @@ Route::prefix('payments')->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
+    Route::get('app/payment/{payment}', 'AppPaymentController@show')->name('app.payments.show');
     Route::get('scs/payment/{payment}', 'ScsPaymentController@show')->name('scs.payments.show');
 });

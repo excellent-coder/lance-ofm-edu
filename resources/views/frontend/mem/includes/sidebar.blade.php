@@ -1,10 +1,11 @@
 <div class="w-full">
     <div class="flex flex-wrap justify-center pt-5 bg-indigo-800 pb-11 -mt-9 lg:-mt-0">
-        <img src="{{asset('storage/'.(Auth::user('scs')->dp ?? 'web/profile.jpg'))}}" alt="{{Auth::user()->name}}"
+        <img src="{{asset('storage/'.($auth->image ?? 'web/profile.jpg'))}}"
+        alt="{{$auth->first_name}}"
             class="profile-img">
         <div class="w-full text-center ">
             <p class="text-2xl font-bold text-center text-blue-300 cursor-pointer user-name">
-                {{auth('mem')->user()->first_name }}
+                {{$auth->first_name }}
             </p>
             <a href="{{route('mem.profile')}}" class="inline-block px-3 py-2 font-medium text-white border-2 border-opacity-75 shadow-md rounded-3xl mt-7 focus:bg-blue-700 focus:text-red-200 hover:bg-yellow-200 hover:text-green-800">
                 update profile
@@ -21,21 +22,21 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{route('mem.dashboard')}}" class="sidebar-link">
+                    <a href="{{route('dashboard')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{route('mem.dashboard')}}" class="sidebar-link">
+                    <a href="{{route('dashboard')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
-                        <p>Licence</p>
+                        <p>Change Membership</p>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{route('mem.dashboard')}}" class="sidebar-link">
+                    <a href="{{route('mem.licenses')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
-                        <p>Change Membership</p>
+                        <p>Buy Licences</p>
                     </a>
                 </li>
                 <li class="sidebar-item">

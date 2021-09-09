@@ -131,13 +131,13 @@ class StudentController extends Controller
     {
         $course = Course::where('slug', $slug)->where('visibility', '!=', '3')
             ->firstOrFail();
-        return view('frontend.portal.lessons.show', compact('course'));
+        return view('frontend.pgs.lessons.show', compact('course'));
     }
 
     public function lesson($slug)
     {
         $lesson = Lesson::where('slug', $slug)->where('visibility', '!=', '3')
             ->firstOrFail();
-        return view('frontend.portal.lessons.study', compact('lesson'));
+        return view('frontend.pgs.lessons.study', compact('lesson'));
     }
 }

@@ -34,8 +34,9 @@ class Applied extends Mailable
         $name = config('mail.senders.application.name');
         return $this->from($email, $name)
             ->to(
-                $this->ap->emial,
-                $this->ap->last_name . ' ' . $this->app->first_name
-            )->view('emails.applied');
+                $this->ap->email,
+                $this->ap->last_name . ' ' . $this->ap->first_name
+            )->subject("ISAM " . $this->ap->item . " " . $this->ap->applying_for . " Request")
+            ->view('emails.applied');
     }
 }

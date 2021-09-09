@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAppPaymentsTable extends Migration
+class CreateLicensePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateAppPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_payments', function (Blueprint $table) {
+        Schema::create('license_payments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('application_id')->unsigned()->nullable();
+            $table->bigInteger('member_id')->unsigned()->nullable();
 
             $table->string('currency');
             $table->decimal('amount', 10, 2)->unsigned();
@@ -24,10 +24,17 @@ class CreateAppPaymentsTable extends Migration
             $table->string('mac')->nullable();
             $table->text('device')->nullable();
             $table->ipAddress('ip')->nullable();
+            $table->bigInteger('licence_id')->unsigned()->nullable();
             // a common tag that can be used to group
             // payments processed on this table
-            $table->string('tag', 100);
+            $table->boolean('upgrade')->nullable()->default(false)
+                ->comment('true if the payment is for an upgrade and not the initial paymwnt');
 
+            // The duration might chnage frm the licence table
+            // but nce a memberf has paid before the change
+            // his duration will not be affected until next payment
+            $table->tinyInteger('duration')
+                ->comment('number of years from the day of payment before next payment');
 
             $table->string('transaction_id')
                 ->nullable()
@@ -39,7 +46,10 @@ class CreateAppPaymentsTable extends Migration
             $table->dateTime('paid_at')->nullable();
             $table->timestamps();
 
-            // $table->foreign('application_id')->references('id')->on('applications')
+            // $table->foreign('member_id')->references('id')->on('members')
+            //     ->nullOnDelete()->cascadeOnUpdate();
+
+            // $table->foreign('licence_id')->references('id')->on('licences')
             //     ->nullOnDelete()->cascadeOnUpdate();
         });
     }
@@ -51,6 +61,6 @@ class CreateAppPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app_payments');
+        Schema::dropIfExists('license_payments');
     }
 }

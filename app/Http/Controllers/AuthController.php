@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public $redirect = '/scs';
+    protected $redirect = '/dashboard';
 
     public function registerPage()
     {
@@ -52,7 +52,7 @@ class AuthController extends Controller
         return [
             'status' => 200,
             'message' => 'Registration Successfull',
-            'to' => 'portal'
+            'to' => $this->redirect,
         ];
     }
 
@@ -150,7 +150,7 @@ class AuthController extends Controller
                 auth('mem')->login($user, $remember);
                 return [
                     'message' => "Successfully Logged in",
-                    'to' => '/member',
+                    'to' => $this->redirect,
                     'status' => 200
                 ];
             }
@@ -167,7 +167,7 @@ class AuthController extends Controller
                 auth('pgs')->login($user, $remember);
                 return [
                     'message' => "Successfully Logged in",
-                    'to' => '/portal',
+                    'to' => $this->redirect,
                     'status' => 200
                 ];
             }

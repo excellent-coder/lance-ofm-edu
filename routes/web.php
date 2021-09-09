@@ -26,13 +26,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::get('l', function () {
-//     foreach (['pgs', 'scs', 'mem'] as $g) {
-//         if ($a = auth($g)->user()) {
-//             return [$g, $a];
-//         }
-//     }
-// });
+Route::get('l', function () {
+    foreach (['pgs', 'scs', 'mem'] as $g) {
+        if ($a = auth($g)->user()) {
+            return [$g, $a];
+        }
+    }
+});
 
 Route::get('/psw', function () {
     return password_hash('ofemco', PASSWORD_BCRYPT);
@@ -49,6 +49,8 @@ require __DIR__ . '/get/app.php';
 Route::middleware(['auth'])->group(function () {
     require __DIR__ . '/post/app.php';
 });
+
+Route::get('dashboard', 'FrontendController@dashboard')->name('dashboard');
 
 // register admin routes
 Route::middleware(['ceo'])->prefix('admin')->name('admin.')->group(function () {

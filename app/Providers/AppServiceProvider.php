@@ -28,5 +28,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Blade::if('logged', function ($true = true) {
+            if ($true) {
+                return auth('mem')->id() || auth('pgs')->id() || auth('scs')->id();
+            }
+            return !(auth('mem')->id() || auth('pgs')->id() || auth('scs')->id());
+        });
     }
 }

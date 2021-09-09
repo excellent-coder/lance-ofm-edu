@@ -11,7 +11,7 @@ Route::prefix('shop')->group(function () {
 });
 // Route::get('jo')
 
-Route::prefix('portal')->name('portal.')->group(function () {
+Route::prefix('portal')->name('pgs.')->group(function () {
     Route::get('profile/status', 'ProfileController@status')->name('profile.status');
     Route::get('profile/edit', 'ProfileController@edit')->name('profile.edit');
 });
@@ -39,6 +39,8 @@ Route::name('static-pages')->group(function () {
         Route::get('teacher', 'StaticPageController@licences')->name('.teacher');
     });
 });
+
+Route::get('licenses/{slug}', 'LicenceController@show')->name('license.show');
 
 Route::get('programs/{slug}', 'ProgramController@show')->name('programs.show');
 

@@ -44,7 +44,6 @@ class CreateApplicationsTable extends Migration
             $table->dateTime('approved_at')->nullable();
 
             $table->bigInteger('payment_id')->nullable();
-            $table->boolean('paid')->nullable()->default(false);
 
             $table->ipAddress('ip');
             $table->text('device')->nullable();

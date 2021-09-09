@@ -1,4 +1,4 @@
-@extends('layouts.portal')
+@extends('layouts.pgs')
 
 @section('css')
 
@@ -9,7 +9,7 @@
 
     @foreach ($course->PLessons as $lesson)
         <div class="relative cursor-pointer h-80 bg-indigo-50">
-            <a href="{{route('portal.lesson', $lesson->slug)}}">
+            <a href="{{route('pgs.lesson', $lesson->slug)}}">
                 <img class="block w-full h-3/5" src="/storage/{{$lesson->image ?? 'web/course.svg'}}" alt="{{$lesson->topic}}">
                 <h4 class="text-xl font-semibold text-left">{{$lesson->topic}}</h4>
                 <p class="px-2">

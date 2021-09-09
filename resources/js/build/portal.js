@@ -11,6 +11,8 @@ import UButton from '../components/utils/UButton.vue';
 import MultiSelect from '../npm/vue-multiselect/src';
 import { onMounted, ref, toRef } from "vue";
 // import axios from 'axios';
+import { makePayment } from '../utils/payment';
+
 
 const app = createApp({
     setup() {
@@ -185,53 +187,86 @@ const app = createApp({
                 return this.processResponse(res.data);
             }).catch(err => {
                console.log(err);
-                if (err.response) {
+                if (err.response && err.response.status<500) {
                   return  this.processResponse(err.response.data);
                 }
                 isLoading(false);
                 notify({ title: 'something went wrong' }, { 'type': 'danger' });
             });
         },
+         processResponse(data) {
+            isLoading(false);
+            let type = data.type;
+            let title = data.message;
+            let description = data.desc;
+            let timeout = data.timeout;
 
-        processResponse(data) {
+            if (data.status == 200) {
 
-              if (data.status == 200) {
-                  notify({
-                      title: data.message, description: data.desc
-                  },{
-                          type: 'success'
-                      });
-                  isLoading(false);
+                notify({
+                    title,
+                    description
+                }, {
+                    type,
+                    timeout
+                });
 
-                    if(data.to){
-                        window.location.href = data.to;
-                        return;
-                    }
-
-                   data.reload?window.location.reload():'';
+                if (data.payment) {
+                    console.log('making payment')
+                    let p = data.payment;
+                    makePayment(
+                        p.public_key,
+                        p.ref,
+                        p.amount,
+                        p.currency,
+                        p.country,
+                        p.redirect,
+                        p.meta,
+                        p.customer,
+                        p.customization
+                    );
                     return;
-              }
-
-                if(data.to){
+                }
+                if (data.to) {
                     window.location.href = data.to;
                 }
-                isLoading(false);
-                // return console.log(data);
-                // let desc =
-                if (data.errors) {
-                    let errors = Object.values(data.errors);
 
-                    let description = '';
-                    let title =data.message?data.message:'You have some errors';
-                    errors.forEach(item => {
-                        description += `* ${item}`;
-                    });
-                    // ret
-                  return  notify({title, description}, {type:'danger'});
+                if (data.reload) {
+                    window.location.reload()
                 }
 
-            if (data.message) {
+                return;
+            }
 
+            if (data.errors) {
+                let errors;
+                title = title ? title : 'You have some errors';
+                type = 'danger';
+
+                switch (typeof data.errors) {
+                    case 'object':
+                        errors = Object.values(data.errors);
+                        description = '';
+                        errors.forEach(e => {
+                            description += `* ${e}`;
+                        });
+                        break
+                    default:
+                        description = data.errors;
+                        break;
+                }
+
+                notify({
+                    title,
+                    description
+                }, {
+                    type,
+                    timeout
+                });
+                return;
+            }
+
+            if (data.message) {
                 notify(
                     { title: data.message },
                     {
@@ -240,7 +275,8 @@ const app = createApp({
                     }
                 );
             }
-            return false;
+
+            return
         },
     },
     mounted() {

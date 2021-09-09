@@ -47,7 +47,7 @@
                                                     <label for="title">Main Application Fee</label>
                                                     <input class="form-control required" type="text" inputmode="numeric"
                                                         pattern="([\d]+)(\.)?(\d{1,2})" name="main_student_app_fee"
-                                                        placeholder="Main Student Application Fee">
+                                                        placeholder="Main Student Application Fee" value="{{$program->main_student_app_fee}}">
                                                     <small class="form-text text-muted">
                                                         requested format: numbers only optionally followed by dot (.)
                                                         and maximmum of two numbers after the dot (.)
@@ -60,7 +60,7 @@
                                                     <label for="title">Short Course Application Fee</label>
                                                     <input class="form-control required" type="text" inputmode="numeric"
                                                         pattern="([\d]+)(\.)?(\d{1,2})" name="scs_app_fee"
-                                                        placeholder="Short Course Application Fee">
+                                                        placeholder="Short Course Application Fee" value="{{$program->scs_app_fee}}">
                                                     <small class="form-text text-muted">
                                                         requested format: numbers only optionally followed by dot (.)
                                                         and maximmum of two numbers after the dot (.)
