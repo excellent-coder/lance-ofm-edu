@@ -25,23 +25,7 @@
                 <img class="inline" id="image" src="/storage/web/paid.png" alt="paid" height="40" width="100">
             </p>
             <p class="text-3xl font-semibold text-center text-green-700">
-            Your payment of
-           <span class=" arial">
-               {{$currency_symbol}}
-               </span>
-               {{$payment->amount}}
-            for
-            {{$payment->reason}}
-            is
-            {{$payment->status}}
-            </p>
-            <p class="my-4 text-center ">
-                 <a class="relative p-3 text-white uppercase bg-transparent border-2 border-yellow-400 hover:text-black bg-scale-in"
-                     href="{{session('paid.next', '/')}}">
-                     <span class="relative z-10 ">
-                         {{session('paid.next_title', 'Home')}}
-                     </span>
-                     </a>
+                {{$data->message}}
             </p>
         </div>
     </div>

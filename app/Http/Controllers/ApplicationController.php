@@ -162,7 +162,8 @@ class ApplicationController extends Controller
                 'email' => 'required',
                 'passport' => 'required|image',
                 'terms' => 'required',
-                'pay' => 'required'
+                'pay' => 'required',
+                'certificates' => 'required|file'
             ],
             [
                 'terms.required' => 'You must agree to our terms To apply',
@@ -230,23 +231,21 @@ class ApplicationController extends Controller
         $app->item_id = $item_id;
 
         // saving form;
-        if ($request->hasFile('certificate')) {
-            $cert = $request->file('certificate');
-            if ($cert->isValid()) {
+        if ($request->hasFile('certificates')) {
+            $certs = $request->file('certificates');
+            $certName = [];
+            foreach ($certs as $cert) {
+                if ($cert->isValid()) {
 
-                $name =  Str::upper(Str::slug("$request->first_name $request->last_name"))
-                    . '-MEMBER-APP-CERT-' . time() . '-.' . $cert->getClientOriginalExtension();
-                $app->certificates = $cert->storeAs(
-                    "$request->applying_for/certificates",
-                    $name
-                );
-            } else {
-                return [
-                    'message' => "Please upload avalid certificate",
-                    'type' => 'error',
-                    'status' => 200
-                ];
+                    $name =  Str::upper(Str::slug("$request->first_name $request->last_name"))
+                        . '-APP-CERT-' . time() . '-.' . $cert->getClientOriginalExtension();
+                    $certName[] = $cert->storeAs(
+                        "$request->applying_for/certificates",
+                        $name
+                    );
+                }
             }
+            $app->certificates = implode(',', $certName);
         }
 
         // saving documents

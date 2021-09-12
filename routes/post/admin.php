@@ -21,6 +21,7 @@ Route::prefix('user-categories')->name('user-categories')->group(function () {
 });
 
 Route::prefix('applications')->name('applications')->group(function () {
+    Route::post('sstudent/{student}', 'StudentRequestController@approve')->name('.student.approve');
     Route::post('update/{app}', 'ApplicationController@update')->name('.update');
     Route::delete('destroy', 'ApplicationController@destroy')->name('.destroy');
 });

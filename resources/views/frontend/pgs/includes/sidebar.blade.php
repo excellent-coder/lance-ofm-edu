@@ -1,13 +1,10 @@
-@php
-    $auth = auth('pgs')->user();
-@endphp
 <div class="w-full">
     <div class="flex flex-wrap justify-center pt-5 bg-indigo-800 pb-11 -mt-9 lg:-mt-0">
-        <img src="{{asset('storage/'.($auth->image))}}" alt="{{$auth->first_name}}"
+        <img src="{{asset('storage/'.($auth->passport))}}" alt="{{$auth->name}}"
             class="profile-img">
         <div class="w-full text-center ">
             <p class="text-2xl font-bold text-center text-blue-300 cursor-pointer user-name">
-                {{"$auth->last_name $auth->first_name"}}
+                {{$auth->name}}
                 <br>
                 <span class="mt-4 text-xl times-new-romans">LEVEL 1</span>
             </p>
@@ -26,7 +23,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{route('dashboard')}}" class="sidebar-link">
+                    <a href="{{route('pgs')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>

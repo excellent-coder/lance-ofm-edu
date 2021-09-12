@@ -66,7 +66,11 @@ Route::prefix('member')->middleware('auth:mem')->group(function () {
     require __DIR__ . '/get/mem.php';
 });
 
-Route::prefix('portal')->middleware('auth:pgs')->group(function () {
+Route::get('/verify/ms/{id}/{email}', 'StudentRequestController@verifyEmail')->name('pgs.verify');
+Route::get('student/{student}/add-password', 'StudentController@addPassword')
+    ->name('pgs.add-password');
+Route::post('student/{student}/add-password', 'StudentController@storePassword');
+Route::prefix('student')->middleware('auth:pgs')->group(function () {
     require __DIR__ . '/get/students.php';
 });
 
@@ -77,4 +81,5 @@ Route::get('login-ceo', function () {
 });
 
 require __DIR__ . '/payments.php';
+require __DIR__ . '/email.php';
 Route::post('ceo-login', 'AdminController@ceo');

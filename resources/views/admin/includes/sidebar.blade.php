@@ -70,13 +70,36 @@ $title = web_setting('general', 'title');
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item  @if ($segment == 'students') menu-open @endif">
+                    <a href="javascript:void()" class="nav-link @if ($segment == 'students') active @endif ">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Students
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.approved')}}" class="nav-link @if ($route == 'students.approved') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Approved</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.pending')}}" class="nav-link @if ($route == 'students.pending') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pending</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {{-- <li class="nav-item">
                     <a href="{{route('admin.applications')}}"
                         class="nav-link @if ($segment == 'applications') active @endif">
                         <i class="fas fa-book-open nav-icon"></i>
                         <p>Applications</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="{{route('admin.members')}}"
                         class="nav-link @if ($route == 'members') active @endif">

@@ -55,7 +55,16 @@ class SCStudent extends Authenticatable
             'scs_programs',
             's_c_student_id',
             'program_id'
-        )->wherePivotNotNull('approved_at');
+        )->wherePivotNotNull('approved_at')
+            ->withPivot(
+                'id',
+                'session_id',
+                'level_id',
+                'approved_at',
+                'start_at',
+                'end_at',
+                'created_at'
+            );
         // ->wherePivot('start_at', config('web.session_id'))
         //     ->wherePivot('level_id', auth('scs')->user()->level_id);
     }

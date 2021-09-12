@@ -57,6 +57,8 @@ class Student extends Authenticatable
         return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
+
+
     /**
      * The programs that belong to the SCStudent
      *
@@ -70,5 +72,15 @@ class Student extends Authenticatable
             'student_id',
             'program_id'
         );
+    }
+
+    /**
+     * Get all of the payments for the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments()
+    {
+        return $this->hasMany(StudentPayment::class, 'student_id', 'id');
     }
 }

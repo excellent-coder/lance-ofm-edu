@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Application;
 use Illuminate\Support\Str;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Mail\AdminApplied;
+use App\Mail\Applied;
+use App\Mail\StudentVerifyEmail;
+use App\Models\Program;
+use App\Models\StudentRequest;
+use Illuminate\Support\Facades\Mail;
+use stdClass;
 
 class StudentController extends Controller
 {
@@ -23,6 +31,7 @@ class StudentController extends Controller
         return view('admin.pages.students.index', compact('students'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -33,9 +42,39 @@ class StudentController extends Controller
         //
     }
 
-    public function portal()
+    public function addPassword(Student $student)
     {
-        return view('frontend.portal.index');
+        if ($student->password) {
+            return view('errors.404');
+        }
+        return view('auth.pgs.add-password', compact('student'));
+    }
+
+    public function storePassword(Request $request, Student $student)
+    {
+        if ($student->password) {
+            return [
+                'status' => 200,
+                'type' => 'error',
+                'message' => 'something went wrong',
+                'to' => '/student'
+            ];
+        }
+        $student->password = bcrypt($request->password);
+        $student->save();
+        auth('pgs')->login($student);
+        return [
+            'message' => 'Redirecting to dashboard',
+            'to' => route('pgs'),
+            'status' => 200,
+            'type' => 'success'
+        ];
+    }
+
+    public function dashboard()
+    {
+        // return auth('pgs')->user(); //->program;
+        return view('frontend.pgs.index');
     }
 
     /**

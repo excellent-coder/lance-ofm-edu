@@ -15,34 +15,30 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('application_id')->unsigned()
-                ->comment('The application form they submitted before approval');
+            $table->bigInteger('student_request_id')->unsigned()->nullable();
 
+            $table->string('name', 400);
             $table->string('email');
             $table->string('phone');
-            $table->string('password');
-
-            $table->string('first_name');
-            $table->string('middle_name')->nullable();
-            $table->string('last_name');
-
-            // The current active program he is studying
-            $table->bigInteger('program_id')->unsigned();
-
-            $table->date('accepted_on')->nullable();
-            $table->date('disabled_on')->nullable();
-            $table->date('terminated_on')->nullable();
-
-            $table->string('image', 300)->nullable();
-
-            $table->boolean('active')->nullable()->default(true);
-
-            $table->foreign('program_id')
-                ->references('id')->on('programs')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
-
             $table->Integer('level_id')->default(1);
+            $table->bigInteger('session_id')
+                ->comment('The session the user is admitted');
+            $table->bigInteger('program_id')->unsigned();
+            $table->string('matric_no')->nullable();
+            $table->boolean('active')->nullable()->default(true);
+            $table->string('passport')->nullable();
+            // The current active program he is studying
+
+            $table->string('password')->nullable();
+
+            // $table->foreign('program_id')
+            //     ->references('id')->on('programs')
+            //     ->cascadeOnUpdate()
+            //     ->nullOnDelete();
+            // $table->foreign('student_request_id')->references('id')
+            //     ->on('student_requests')
+            //     ->nullOnDelete()->cascadeOnDelete();
+
             $table->rememberToken();
             $table->timestamps();
         });

@@ -14,9 +14,11 @@ Route::any('logout', 'AuthController@logout')->name('logout');
 
 Route::get('member/apply', 'ApplicationController@memberApply')->name('mem.apply');
 Route::post('member/apply', 'ApplicationController@store');
+
 Route::get('json/memberships/{parent}', 'MembershipController@children');
 
-Route::get('main-student/apply', 'ApplicationController@studentApply')->name('pgs.apply');
+Route::get('main-student/apply', 'StudentRequestController@create')->name('pgs.apply');
+Route::post('main-student/apply', 'StudentRequestController@store');
 
 
 

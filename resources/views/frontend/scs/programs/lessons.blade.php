@@ -9,9 +9,9 @@
         <div class="grid grid-cols-1 md:grid-cols-3">
             @foreach ($course->sLessons as $item)
             <div class="h-40 md:h-52">
-                <a href="{{route('scs.lesson', $item->slug)}}" class="block">
+                <a href="{{route('scs.lesson', $item->slug)}}" class="block text-xl font-bold text-blue-800 hover:text-yellow-600">
                     <img src="/storage/{{$item->image??'web/course.svg'}}" class="w-full h-3/4" alt="">
-                    {{$item->name}}
+                    {{$item->topic}}
                 </a>
             </div>
             @endforeach

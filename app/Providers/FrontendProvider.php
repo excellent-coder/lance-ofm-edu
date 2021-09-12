@@ -31,13 +31,8 @@ class FrontendProvider extends ServiceProvider
         View::composer('layouts.admin', 'App\Http\ViewComposers\LayoutAdminComposer');
 
         view()->composer('frontend.pgs.*', function ($view) {
-            /**
-             * $pauth = authenticated program stiudent
-             */
-            $pauth = Auth::user('pgs');
-            // current program
             $program = auth('pgs')->user()->program;
-            $view->with(compact('pauth', 'program'));
+            $view->with(compact('program'));
         });
 
         view()->composer('includes.shop.sidebar', function ($view) {
@@ -45,9 +40,9 @@ class FrontendProvider extends ServiceProvider
             $view->with(compact('superShopCats'));
         });
 
-        view()->composer('frontend.scs.includes.sidebar', function ($view) {
-            $programs = Program::where('active', 1)
-                ->where('is_program', 1)
+        view()->composer('frontend.scs.*', function ($view) {
+            $programs = Program::whereActive(1)
+                ->whereIsProgram(1)
                 ->where('visibility', '!=', 2)
                 ->get();
 

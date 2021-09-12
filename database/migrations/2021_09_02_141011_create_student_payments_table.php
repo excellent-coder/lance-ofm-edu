@@ -16,6 +16,7 @@ class CreateStudentPaymentsTable extends Migration
         Schema::create('student_payments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('student_id')->unsigned()->nullable();
+            $table->bigInteger('student_request_id')->unsigned()->nullable();
 
             $table->string('currency');
             $table->decimal('amount', 10, 2)->unsigned();
@@ -24,7 +25,9 @@ class CreateStudentPaymentsTable extends Migration
             $table->string('mac')->nullable();
             $table->text('device')->nullable();
             $table->ipAddress('ip')->nullable();
-            $table->string('tag', 100);
+            $table->string('item', 100)->comment('The item he is paying for');
+            $table->bigInteger('item_id')->unsigned()->nullable()
+                ->comment('The id of the item if it exist');
 
 
             $table->string('transaction_id')
@@ -38,6 +41,8 @@ class CreateStudentPaymentsTable extends Migration
             $table->timestamps();
 
             // $table->foreign('student_id')->references('id')->on('students')
+            //     ->nullOnDelete()->cascadeOnUpdate();
+            // $table->foreign('student_request_id')->references('id')->on('student_requests')
             //     ->nullOnDelete()->cascadeOnUpdate();
         });
     }

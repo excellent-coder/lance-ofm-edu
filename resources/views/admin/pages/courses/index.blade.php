@@ -151,7 +151,7 @@
             </div>
             <div class="form-group">
                 <label for="editing-program">Program</label>
-                <select data-placeholder="Level" id="editing-program" class="form-control select2"
+                <select data-placeholder="Select Program" id="editing-program" class="form-control select2"
                  name="program_id">
                     @foreach ($programs as $p)
                         <option value="{{$p->id}}">{{$p->title}}</option>
@@ -160,7 +160,7 @@
             </div>
             <div class="form-group">
                 <label for="editing-level">Level</label>
-                <select data-placeholder="Level" id="editing-level" class="form-control select2" name="level_id">
+                <select data-placeholder="Select Level" id="editing-level" class="form-control select2" name="level_id">
                     @foreach ($levels as $l)
                         <option value="{{$l->id}}">{{$l->name}}</option>
                     @endforeach

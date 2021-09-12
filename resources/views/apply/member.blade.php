@@ -71,8 +71,8 @@
                             <input placeholder="Other Name" type="text" name="middle_name" class="h-12 p-4">
                         </div>
                         <div class="relative mb-4">
-                            <label class="font-semibold text-white">Certificate</label>
-                            <input accept=".pdf,.docx" type="file" name="certificate" class="relative h-12 p-4 bg-white">
+                            <label class="font-semibold text-white">Certificates</label>
+                            <input accept=".pdf,.docx" type="file" name="certificates[]" multiple class="relative h-12 p-4 bg-white">
                         </div>
                     </div>
                     <div>

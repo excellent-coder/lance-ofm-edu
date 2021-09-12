@@ -21,7 +21,8 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="/storage/{{web_setting('general', 'logo')}}" alt="web Logo" height="60" width="60">
+            <img class="animation__wobble" src="/storage/{{web_setting('general', 'logo')}}" alt="web Logo" height="60"
+                width="60">
         </div>
         <div id="preloader" style="display: block;">
             <div class="bars"></div>
@@ -81,6 +82,11 @@
     <script>
         $(document).ready(function () {
             $('.select2').select2();
+            // prevent auto-focus on select2 search input
+            $('select').on('select2:opening', function (e) {
+                $('.select2-search input').prop('focus', 1);
+            });
+
             $('#checkbox').on('click', function () {
                 if (this.checked) {
                     $('.checking').each(function () {

@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ScsProgram extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'start_at' => 'datetime:Y-m-d H:00:00',
+        'end_at' => 'datetime:Y-m-d H:00:00',
+        'approved_at' => 'datetime:Y-m-d H:00:00',
+    ];
 
     /**
      * Get the program that owns the ScsProgram

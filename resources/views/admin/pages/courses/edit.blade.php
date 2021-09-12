@@ -19,7 +19,7 @@
                                 <div class="col-12 col-lg-8">
                                     <div class="form-group">
                                         <label>Short Description</label>
-                                        <textarea placeholder="excerpt" class="form-control required" name="excerpt" rows="3">{{$course->excerpt}}</textarea>
+                                        <textarea placeholder="excerpt" class="form-control" name="excerpt" rows="3">{{$course->excerpt}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="body">Long Description</label>

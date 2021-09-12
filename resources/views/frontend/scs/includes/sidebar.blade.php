@@ -42,7 +42,7 @@
                     <ul class="mt-3 nav-children">
                         @foreach ($programs as $p)
                         <li class="nav-item">
-                            <a href="/" class="sidebar-link">
+                            <a href="{{route('programs.show', $p->slug)}}" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>{{$p->abbr}}</p>
                             </a>
@@ -72,6 +72,16 @@
                         </li>
                         @endforeach
                     </ul>
+                </li>
+                 <li class="sidebar-item">
+                    <a href="{{route('logout')}}" class="sidebar-link" title="logout">
+                        <i class="text-red-500 sidebar-icon fas fa-power-off"></i>
+                        <p><i class="fas fa-sign-out-alt "></i>
+                            <span class="inline md:hidden">
+                                Logout
+                            </span>
+                        </p>
+                    </a>
                 </li>
             </ul>
         </nav>

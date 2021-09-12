@@ -152,6 +152,18 @@ const app = createApp({
             item: '',
         }
     },
+    computed: {
+      greeting() {
+            let hour = new Date().getHours();
+            if (hour < 12) {
+                return "Morning";
+            } else if (hour < 16) {
+                return "Afternoon";
+            } else {
+                return "Evening";
+            }
+        },
+    },
     methods: {
          toggleNav(id) {
             let nav = document.getElementById(id);

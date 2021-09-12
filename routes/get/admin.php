@@ -16,6 +16,7 @@ Route::prefix('user-categories')->name('user-categories')->group(function () {
 
 Route::prefix('applications')->name('applications')->group(function () {
     Route::get('/', 'ApplicationController@index');
+    Route::get('students', 'StudentRequestController@index')->name('.students');
     Route::get('details/{app}', 'ApplicationController@details')->name('.details');
     Route::get('{category}', 'ApplicationController@category')->name('.category');
     /**
@@ -134,6 +135,14 @@ Route::prefix('members')->name('members')->group(function () {
 });
 Route::prefix('students')->name('students')->group(function () {
     Route::get('/', 'StudentController@index');
+
+    Route::get('approved', 'StudentRequestController@approved')->name('.approved');
+    Route::get('pending', 'StudentRequestController@pending')->name('.pending');
+
+    Route::get('paymnets', 'StudentPaymentController@index')->name('.payments');
+    Route::get('payments/{student}', 'StudentPaymentController@student')
+        ->name('.payment.student');
+
     Route::get('create', 'StudentController@create')->name('.create');
     Route::get('edit/{event}', 'StudentController@edit')->name('.edit');
     Route::get('categories', 'StudentCatController@index')->name('.categories');

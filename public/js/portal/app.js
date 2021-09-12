@@ -25030,6 +25030,19 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
       item: ''
     };
   },
+  computed: {
+    greeting: function greeting() {
+      var hour = new Date().getHours();
+
+      if (hour < 12) {
+        return "Morning";
+      } else if (hour < 16) {
+        return "Afternoon";
+      } else {
+        return "Evening";
+      }
+    }
+  },
   methods: {
     toggleNav: function toggleNav(id) {
       var nav = document.getElementById(id);
