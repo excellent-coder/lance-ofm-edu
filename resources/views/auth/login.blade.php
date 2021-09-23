@@ -16,7 +16,7 @@
                     <div class="block ml-5 md:ml-9">
                     <label class="font-semibold text-white">Login As</label>
                         <input type="hidden" name="login_as" :value="form.m.v" autocomplete="off" v-if="form.m" />
-                    <multi-select v-model="form.m" :options='[{v:"Member", k:"Member"}, {v:"SCStudent",k:"Short Course Student"}, {v:"Student",k:"Main Student"}]'
+                    <multi-select v-model="form.m" :options='[{v:"Member", k:"Member"}, {v:"Scs",k:"Short Course Student"}, {v:"Student",k:"Main Student"}]'
                         :show-labels="false" label="k" track-by="v" autocomplete="off"
                         :clear-on-select="false" placeholder="Who Are You" required :close-on-select="true"
                         />
@@ -24,7 +24,7 @@
                 </div>
                 <div class="relative mb-8">
                     <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-user bottom-2"></i>
-                    <div class="block ml-5 md:ml-9" v-if="form.m && form.m.v=='SCStudent'">
+                    <div class="block ml-5 md:ml-9" v-if="form.m && form.m.v=='Scs'">
                         <label class="font-semibold text-white times-new-romans">
                             Email/Username/Matric No.
                         </label>

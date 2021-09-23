@@ -27,8 +27,7 @@ class Membership extends Model
      */
     public function pending()
     {
-        return $this->hasMany(Application::class, 'item_id', 'id')
-            ->where('applying_for', 'membership');
+        return $this->hasMany(MemberRequest::class, 'membership_id', 'id');
     }
 
     /**

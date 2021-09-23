@@ -24,7 +24,6 @@ use App\Models\StudentProgram;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
 
-use function PHPUnit\Framework\returnSelf;
 
 class ApplicationController extends Controller
 {

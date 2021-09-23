@@ -38,8 +38,8 @@ class StudentPaymentController extends Controller
         $idCard = web_setting('pgs', 'id_card_fee');
         $handBook = web_setting('pgs', 'student_handbook_fee');
         $devLevy = web_setting('pgs', 'development_levy');
-        $tuition = web_setting('pgs', 'tuition_fee');
-        $total = array_sum([$acceptance, $matric, $idCard, $handBook, $devLevy, $tuition]);
+
+        $total = array_sum([$acceptance, $matric, $idCard, $handBook, $devLevy]);
 
         $payment = new StudentPayment();
         $payment->student_request_id = $student->id;
@@ -98,7 +98,7 @@ class StudentPaymentController extends Controller
         // return $payment->studentRequest;
         if ($payment->transaction_id) {
             // this payment has been processes,
-            return redirect('/');
+            // return redirect('/');
         }
         if ($request->tx_ref != $payment->ref) {
             // something is wrong we will come to you later
@@ -119,7 +119,7 @@ class StudentPaymentController extends Controller
             $s->program_id = $student->program_id;
             $s->passport = $student->passport;
             $session = Session::whereActive(1)->first();
-            $year = $session->year;
+            $year = $session->year ?? date('Y');
             $next = (int) Student::where('session_id', $session->id)
                 ->where('program_id', $student->program_id)
                 ->count() + 1;
@@ -130,7 +130,7 @@ class StudentPaymentController extends Controller
                 do {
                     $next = "0" . $next;
                     $len = strlen($next);
-                } while ($len < 3);
+                } while ($len < 4);
             }
             $s->matric_no = "STU/" . $student->program->abbr . "/" . $year . "/" . $next;
             $s->save();
@@ -138,7 +138,7 @@ class StudentPaymentController extends Controller
             // assign payment to student
             $payment->student_id = $s->id;
             $payment->save();
-            $request->session()->flash('paid.next_title', 'Login');
+            $request->session()->flash('paid.next_title', 'Choose Password');
             $request->session()->flash('paid.next', route('pgs.add-password', $s->id));
         }
 

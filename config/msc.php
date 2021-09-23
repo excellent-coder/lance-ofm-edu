@@ -10,5 +10,6 @@ return [
     | This handles some miscellenues configurations used in the app
     |
     */
-    'contact_email'
+    'contact_email' => 'email',
+    'session' => env('ACTIVE_SESSION'),
 ];

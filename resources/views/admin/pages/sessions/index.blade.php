@@ -51,7 +51,6 @@
                                 @php
                                 $action = [
                                 'modal'=>'general',
-                                'destroy'=> route('admin.sessions.destroy'),
                                 'form'=>'general-modal-form',
 
                                 ];

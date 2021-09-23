@@ -26,9 +26,8 @@ class Program extends Model
      */
     public function studentsPending()
     {
-        return $this->hasMany(Application::class, 'item_id', 'id')
-            ->whereRaw("`applications`.`applying_for` = 'student'
-            AND `applications`.`approved_at` IS NULL");
+        return $this->hasMany(StudentRequest::class, 'program_id', 'id')
+            ->whereNull('approved_at')->where('reviewed', '!=', '1');
     }
 
     // /**

@@ -100,7 +100,7 @@ return [
         ],
         'scs' => [
             'driver' => 'eloquent',
-            'model' => App\Models\SCStudent::class,
+            'model' => App\Models\Scs::class,
         ],
         'pgs' => [
             'driver' => 'eloquent',

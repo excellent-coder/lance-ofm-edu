@@ -24,8 +24,11 @@
             <p class="w-full text-center">
                 <img class="inline" id="image" src="/storage/web/paid.png" alt="paid" height="40" width="100">
             </p>
-            <p class="text-3xl font-semibold text-center text-green-700">
+            <p class="py-6 text-3xl font-semibold text-center text-green-700">
                 {{$data->message}}
+            </p>
+            <p class="text-center ">
+            <a href="/dashboard" class="p-4 text-blue-700 bg-purple-50">Dashboard</a>
             </p>
         </div>
     </div>

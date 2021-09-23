@@ -16,6 +16,16 @@ class ScsPayment extends Model
      */
     public function student()
     {
-        return $this->belongsTo(SCStudent::class, 's_c_student_id', 'id');
+        return $this->belongsTo(Scs::class, 'scs_id', 'id');
+    }
+
+    /**
+     * Get the program that owns the ScsPayment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 }

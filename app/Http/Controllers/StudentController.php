@@ -122,6 +122,14 @@ class StudentController extends Controller
         //
     }
 
+    public function docs(Student $student)
+    {
+        $appDocs = $student->appRequest()
+            ->first(['documents', 'passport', 'certificates']);
+        // return $appDocs;
+        return $student;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

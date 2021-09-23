@@ -13,5 +13,6 @@ class FrontendController extends Controller
                 return view("frontend.$g.index");
             }
         }
+        return redirect(route('login'));
     }
 }

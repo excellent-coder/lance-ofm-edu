@@ -46,7 +46,6 @@ class ProgramController extends Controller
             $request->all(),
             [
                 'excerpt' => 'required',
-                'max_level' => 'required_if:is_program,1',
                 'main_student_app_fee' => 'required_if:is_program,1',
                 'scs_app_fee' => 'required_if:is_program,1',
                 'visibility' => 'required_if:is_program,1',
@@ -82,7 +81,6 @@ class ProgramController extends Controller
         $program->active = $request->filled('active');
         $program->is_program = $request->filled('is_program');
 
-        $program->max_level = $request->max_level;
         $program->main_student_app_fee = $request->main_student_app_fee;
         $program->scs_app_fee = $request->scs_app_fee;
 
@@ -183,7 +181,6 @@ class ProgramController extends Controller
         $program->active = $request->filled('active');
         $program->is_program = $request->filled('is_program');
 
-        $program->max_level = $request->max_level;
         $program->main_student_app_fee = $request->main_student_app_fee;
         $program->scs_app_fee = $request->scs_app_fee;
 

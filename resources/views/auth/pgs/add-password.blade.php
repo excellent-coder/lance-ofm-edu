@@ -4,7 +4,7 @@
     <div class="items-center self-center w-full text-white bg-red-400 md:w-1/3 sm:w-3/4">
         <div class="p-4 bg-gray-800 shadow-2xl">
             <h1 class="text-lg font-black text-center">
-               Main Student Login <br>
+              CHOOSE PASSWORD<br>
                 <i class="block text-center fas fa-user-graduate"></i>
             </h1>
 
@@ -18,6 +18,10 @@
                            Matric No.
                             </label>
                         <input placeholder="Matric No" type="text" readonly value="{{$student->matric_no}}" class="h-12 max-w-full p-4">
+                        <small class="block text-gray-50">
+                            <span class="text-xl font-black ">💡</span>
+                            Keep a copy of your Matric NO as you will need it to Login
+                        </small>
                     </div>
                 </div>
                 <div class="relative mb-4 password">

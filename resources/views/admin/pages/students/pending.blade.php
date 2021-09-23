@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-6">
                             <button class="btn btn-danger bulk-action" title="Delete all selected events"
-                                @click.prevent="destroy($event.target)" data-action="{{route('admin.applications.destroy')}}">
+                                @click.prevent="destroy($event.target)" data-action="{{route('admin.student-r.destroy')}}">
                                 <i class="fas fa-trash-alt"></i> Bulk
                                 (<span class="total-selected">0</span>)
                             </button>
@@ -86,7 +86,7 @@
                                 @php
                                 $i=1;
                                 $action = [
-                                'destroy'=> route('admin.applications.destroy'),
+                                'destroy'=> route('admin.student-r.destroy'),
                                 'form' => "general-modal-form",
                                 'modal' => "general",
                                 'icon'=>'eye'
@@ -101,7 +101,7 @@
                                     $a->reviewed =1;
                                     $a->program_name = $a->program->title;
                                     $action['item'] = json_encode($a);
-                                    $action['update_route'] = route("admin.applications.student.approve", $a->id);
+                                    $action['update_route'] = route("admin.student-r.approve", $a->id);
                                 ?>
                                 <tr id="tr-app-{{$a->id}}">
                                     <td><input type="checkbox" class="checking" value="{{$a->id}}"></td>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\Student;
-use App\Models\SCStudent;
+use App\Models\Scs;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -77,7 +77,7 @@ class AuthController extends Controller
         }
 
         $login_as = $request->login_as;
-        if (!in_array($login_as, ['Member', 'SCStudent', 'Student'])) {
+        if (!in_array($login_as, ['Member', 'Scs', 'Student'])) {
             return [
                 'message' => 'Unable To authenticate',
                 'type' => 'error',
@@ -104,7 +104,20 @@ class AuthController extends Controller
                     return $log;
                 }
                 break;
-            case 'SCStudent':
+            case 'Scs':
+                $user = Scs::where('email', $username)->first();
+                if ($user) {
+                    if (password_verify($password, $user->password)) {
+                        // $user = $auth;
+                        auth('scs')->login($user, $remember);
+                    } else {
+                        $user = false;
+                    }
+                } else if ($user = $this->loginUsername($username, $password)) {
+                    auth('scs')->login($user, $remember);
+                } else if ($user = $this->loginMatric($username, $password)) {
+                    auth('scs')->login($user, $remember);
+                }
                 break;
             default:
                 return [
@@ -114,18 +127,9 @@ class AuthController extends Controller
                 ];
                 break;
         }
-        $user = SCStudent::where('email', $username)->first();
 
-        if ($user) {
-            if (password_verify($password, $user->password)) {
-                $user = $auth;
-                auth('scs')->login($user, $remember);
-            }
-        } else if ($user = $this->loginUsername($username, $password)) {
-            auth('scs')->login($user, $remember);
-        } else if ($user = $this->loginMatric($username, $password)) {
-            auth('scs')->login($user, $remember);
-        }
+
+
 
         if ($user) {
             return [
@@ -178,7 +182,7 @@ class AuthController extends Controller
 
     protected function loginUsername($username, $password)
     {
-        $user = SCStudent::where('username', $username)->first();
+        $user = Scs::where('username', $username)->first();
         if ($user) {
             if (password_verify($password, $user->password)) {
                 return $user;
@@ -189,7 +193,7 @@ class AuthController extends Controller
 
     protected function loginMatric($no, $password)
     {
-        $user = SCStudent::where('matric_no', $no)->first();
+        $user = Scs::where('matric_no', $no)->first();
         if ($user) {
             if (password_verify($password, $user->password)) {
                 return $user;

@@ -58,6 +58,27 @@ class Student extends Authenticatable
     }
 
 
+    /**
+     * Get the session that the user registered
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function session()
+    {
+        return $this->belongsTo(Session::class, 'session_id', 'id');
+    }
+
+    /**
+     * Get the application request made by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function appRequest()
+    {
+        return $this->belongsTo(StudentRequest::class, 'student_request_id', 'id');
+    }
+
+
 
     /**
      * The programs that belong to the SCStudent

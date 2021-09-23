@@ -46,7 +46,7 @@ class LevelController extends Controller
         $valid = Validator::make(
             $request->all(),
             [
-                'order' => 'required|min:1|unique:levels,level',
+                'order' => 'required|integer|min:1|unique:levels,level',
                 'name' => 'required|unique:levels,name',
             ]
         );
@@ -60,7 +60,6 @@ class LevelController extends Controller
 
         $level = new Level();
         $level->name = $request->name;
-        $level->slug = Str::slug($request->name);
         $level->level = $request->order;
 
         $level->save();

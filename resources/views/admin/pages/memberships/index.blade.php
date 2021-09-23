@@ -38,7 +38,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Application Fee</th>
+                                    <th>Code</th>
+                                    <th>Admin Fee</th>
                                     <th>Induction Fee</th>
                                     <th>Annual Fee</th>
                                     <th>Parent</th>
@@ -74,8 +75,9 @@
                                     <td><input type="checkbox" class="checking"></td>
                                     <td>{{$i++}}</td>
                                     <td>{{$c->name}}</td>
-                                    <td>{{$currency .' '. number_format( $c->application_fee, 2)}}</td>
-                                    <td>{{$currency .' '. number_format($c->induction_fee, 2)}}</td>
+                                    <td>{{$c->code}}</td>
+                                    <td>{{$currency .' '. number_format( $c->admin_fee, 2)}}</td>
+                                    <td>{{$currency .' '. number_format($c->application_fee, 2)}}</td>
                                     <td>{{$currency .' '. number_format( $c->annual_fee, 2)}}</td>
                                     <td>{{$c->parent->name ?? 'N/A'}}</td>
                                     <td>{{$c->members->count()??'nil'}}</td>
@@ -95,7 +97,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Application Fee</th>
+                                    <th>Code</th>
+                                    <th>Admin Fee</th>
                                     <th>Induction Fee</th>
                                     <th>Annual Fee</th>
                                     <th>Parent</th>
@@ -123,20 +126,23 @@
                     id="editing-name">
             </div>
             <div class="form-group">
+                <label>Code</label>
+                <input class="form-control required" placeholder="code" type="text" name="code"
+                    id="editing-code">
+            </div>
+            <div class="form-group">
                 <label class=" position-relative">
-                    Application Fee
-                    <span class=" fa-2x position-relative" style="top: .3rem;">•</span>
                     Administrative Fee
                 </label>
-                <input id="editing-application_fee" class="form-control" type="text" inputmode="numeric"
-                    pattern="([\d]+)(\.)?(\d{1,2})" name="application_fee" placeholder="Application Fee">
+                <input id="editing-admin_fee" class="form-control" type="text" inputmode="numeric"
+                    pattern="([\d]+)(\.)?(\d{1,2})" name="admin_fee" placeholder="Admin Fee">
             </div>
             <div class="form-group">
                 <label>
-                    Induction Fee
+                   Application Fee
                 </label>
-                <input id="editing-induction_fee" class="form-control" type="text" inputmode="numeric"
-                    pattern="([\d]+)(\.)?(\d{1,2})" name="induction_fee" placeholder="Induction Fee">
+                <input id="editing-application_fee" class="form-control" type="text" inputmode="numeric"
+                    pattern="([\d]+)(\.)?(\d{1,2})" name="application_fee" placeholder="Application Fee">
             </div>
             <div class="form-group">
                 <label>

@@ -15,6 +15,7 @@ use App\Mail\StudentApproved;
 use App\Mail\StudentVerifyEmail;
 use App\Models\Program;
 use App\Models\Student;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use stdClass;
 
@@ -168,13 +169,17 @@ class StudentRequestController extends Controller
 
         $app->save();
 
-        Mail::send(new StudentVerifyEmail($app));
+        try {
+            Mail::send(new StudentVerifyEmail($app));
+        } catch (Exception $e) {
+        }
 
         return [
             'status' => 200,
             'message' => 'Your application has been submitted successfully',
             'desc' => 'You will be contacted via email',
-            'type' => 'success'
+            'type' => 'success',
+            'link' => route('pgs.verify', ['id' => $app->id, 'email' => $app->email])
         ];
     }
 
@@ -213,17 +218,24 @@ class StudentRequestController extends Controller
         if ($student->approved_at) {
             // message student for payment
             $student->save();
-            Mail::send(new StudentApproved($student));
+            try {
+                Mail::send(new StudentApproved($student));
+            } catch (Exception $e) {
+            }
             return [
                 'status' => 200,
                 'message' => 'You have successfully Approved this student',
                 'desc' => "an email has been sent to $student->email",
-                'type' => 'success'
+                'type' => 'success',
+                'link' => route('payment.pgs.induction', $student->id)
             ];
         } elseif ($student->rejected_at) {
             $student->reject_reason = $request->reject_reason;
             $student->save();
-            Mail::send(new StudentApproved($student));
+            try {
+                Mail::send(new StudentApproved($student));
+            } catch (Exception $e) {
+            }
             return [
                 'status' => 200,
                 'message' => 'You have successfully rejected this student request',
@@ -288,8 +300,38 @@ class StudentRequestController extends Controller
      * @param  \App\Models\StudentRequest  $studentRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StudentRequest $studentRequest)
+    public function destroy(Request $request)
     {
-        //
+        $ids = trim($request->ids, ',');
+
+        if (empty($ids)) {
+            return ['message' => 'nothing to delete'];
+        }
+
+        $ids = explode(',', $ids);
+        $files = StudentRequest::whereIn('id', $ids)->get(['passport', 'certificates', 'documents']);
+
+        $files->each(function ($file) {
+            if (file_exists(public_path("storage/$file->passport")) && $file->passport) {
+                unlink(public_path("storage/$file->passport"));
+            }
+        });
+
+        $total =  StudentRequest::whereIn('id', $ids)->delete();
+        if (!$total) {
+            return [
+                'type' => 'info',
+                'message' => 'Unable to excute the delete command',
+                'desc' => 'Reload this page and try again'
+            ];
+        }
+
+        $desc = $total > 1 ? 'Reload this page to see changes' : '';
+
+        return [
+            'message' => "$total " . Str::plural('Applicant', $total) . " Deleted successfuly",
+            'status' => 200,
+            'desc' => $desc
+        ];
     }
 }

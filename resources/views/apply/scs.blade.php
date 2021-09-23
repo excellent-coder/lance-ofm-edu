@@ -11,10 +11,13 @@
                 class="my-8 text-gray-800">
                 @csrf
                 <div class="grid w-full grid-cols-1 gap-x-12 md:grid-cols-2">
-                    <div class="relative mb-4">
-                        <label class="font-semibold text-white">Username</label>
-                        <input placeholder="Username" type="text" required name="username" class="h-12 p-4">
-                    </div>
+                     <div class="relative mb-4">
+                            <label class="font-semibold text-white">Program of study Type</label>
+                            <input type="hidden" name="program" :value="form.m.id" autocomplete="off" v-if="form.m" />
+                            <multi-select v-model="form.m" :options="{{$programs}}" :show-labels="false" label="title"
+                                track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Program Of Study"
+                                required :close-on-select="true"/>
+                        </div>
                     <div class="relative mb-4">
                         <label class="font-semibold text-white">Email</label>
                         <input placeholder="Email" type="email" required name="email" class="h-12 p-4">
@@ -52,46 +55,27 @@
                         </span>
                     </div>
                     <div class="relative mb-4">
-                            <label class="font-semibold text-white">Passport</label>
-                            <input accept="image/*" type="file" name="passport" class="relative h-12 p-4 bg-white">
-                        </div>
-                    <div class="relative mb-4">
-                            <label class="font-semibold text-white">Certificate</label>
-                            <input accept=".pdf,.docx" type="file" name="certificate" class="relative h-12 p-4 bg-white">
-                        </div>
-                    <div class="relative mb-4">
-                            <label class="font-semibold text-white">Documents</label>
-                            <input accept=".pdf,.docx" type="file" name="documents" class="relative h-12 p-4 bg-white">
-                        </div>
+                        <label class="font-semibold text-white">Passport</label>
+                        <input accept="image/*" type="file" name="passport" class="relative h-12 p-4 bg-white">
+                    </div>
+                    <div class="relative mb-4" v-if="form.m && parseInt(form.m.scs_app_fee)">
+                        <label class="font-semibold text-white">Course Fee <b>{{$currency}}</b> </label>
+                        <input type="text" readonly class="relative h-12 p-4 bg-white" :value="form.m.scs_app_fee">
+                    </div>
                 </div>
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">
                     <div>
-                    <div class="text-white checkbox">
-                        <input id="terms" type="checkbox" class="form-check-input form-control filled-in"
-                            name="terms" value="1">
-                        <label for="terms" class="after-white">
-                            <span class="relative -top-1">
-                                Agree to
-                                <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
-                            </span>
-                        </label>
-                    </div>
-                    <div class="text-white checkbox">
-                        <input id="pay" type="checkbox" class="form-check-input form-control filled-in"
-                            name="pay" value="1">
-                        <label for="pay" class="after-white">
-                            <span class="relative -top-1">
-                                I'M Ready to make payment of <span class="arial">{{$currency_symbol}}</span>  {{ web_setting('scs', 'application_fee')}}
-                            </span>
-                            <span class="block ">
-                                See
-                                <a href="/programs/scs#how-to-apply" target="_blank"
-                                 class="text-green-400 hover:text-yellow-300">
-                                        How to Apply
-                                </a>
-                            </span>
-                        </label>
-                    </div>
+                        <div class="text-white checkbox">
+                            <input id="terms" type="checkbox" class="form-check-input form-control filled-in"
+                                name="terms" value="1">
+                            <label for="terms" class="after-white">
+                                <span class="relative -top-1">
+                                    Agree to
+                                    <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
+                                </span>
+                            </label>
+                        </div>
+
                     </div>
                     <div class="text-right ">
                         <span class="mr-2 text-white">Already A member</span>
@@ -108,15 +92,16 @@
                 </div>
                 <div class="flex flex-wrap w-full mt-3 text-base font-bold text-green-500">
                     <p class="w-1/2 ">
-                    <a href="{{route('mem.apply')}}" class="hover:text-yellow-500">Apply For membership</a>
+                        <a href="{{route('mem.apply')}}" class="hover:text-yellow-500">Apply For membership</a>
                     </p>
                     <p class="w-1/2 text-right">
-                    <a class="text-right hover:text-yellow-500" href="{{route('pgs.apply')}}">Apply For Main Student</a>
+                        <a class="text-right hover:text-yellow-500" href="{{route('pgs.apply')}}">Apply For Main
+                            Student</a>
                     </p>
                     <p class="w-full my-8 text-center text-gray-100">
-                    <a class="text-3xl text-right hover:text-yellow-500" href="{{route('home')}}">
-                        Go Home
-                    </a>
+                        <a class="text-3xl text-right hover:text-yellow-500" href="{{route('home')}}">
+                            Go Home
+                        </a>
                     </p>
                 </div>
             </form>

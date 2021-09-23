@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{route('dashboard')}}" class="sidebar-link">
+                    <a href="{{route('mem')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -37,6 +37,12 @@
                     <a href="{{route('mem.licenses')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
                         <p>Buy Licences</p>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{route('mem.licenses')}}" class="sidebar-link">
+                        <i class="sidebar-icon fas fa-tachometer-alt"></i>
+                        <p>Publications</p>
                     </a>
                 </li>
                 <li class="sidebar-item">

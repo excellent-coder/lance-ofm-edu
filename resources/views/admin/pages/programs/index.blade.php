@@ -16,16 +16,15 @@
                     <div class="row">
                         <div class="col-6 text-md-left">
                             <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?=count($programs)?></span>
-                                Programs
+                                <span class="badge bg-pink">{{ $total = count($programs) }}</span>
+                                {{Str::plural('Program', $total)}}
                             </h4>
                         </div>
                         <div class="col-6">
                             <button class="btn btn-danger bulk-action"
-                                title="Delete all selected subjects"
+                                title="Delete all selected programs"
                                 @click.prevent="destroy($event.target)"
                                 data-action="{{route('admin.programs.destroy')}}"
-                                data-id=""
                                 >
                                 <i class="fas fa-trash-alt"></i> Bulk
                                  (<span class="total-selected">0</span>)

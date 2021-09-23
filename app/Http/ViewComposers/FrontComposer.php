@@ -9,7 +9,7 @@ class FrontComposer
 {
     public function compose(View $view)
     {
-        $web_title = WebSegment::where('name', 'title')->first();
+        $web_title = web_setting('general', 'title', 'comming soon');
 
         $currency = web_setting('general', 'currency');
         $currency_symbol = web_setting('general', 'currency_symbol');

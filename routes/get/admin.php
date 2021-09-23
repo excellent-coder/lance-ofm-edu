@@ -10,10 +10,6 @@ Route::prefix('pages')->name('pages')->group(function () {
     Route::get('edit/{page}', 'PageController@edit')->name('.edit');
 });
 
-Route::prefix('user-categories')->name('user-categories')->group(function () {
-    Route::get('/', 'UserCategoryController@index');
-});
-
 Route::prefix('applications')->name('applications')->group(function () {
     Route::get('/', 'ApplicationController@index');
     Route::get('students', 'StudentRequestController@index')->name('.students');
@@ -92,6 +88,7 @@ Route::prefix('programs')->name('programs')->group(function () {
 
 Route::prefix('levels')->name('levels')->group(function () {
     Route::get('/', 'LevelController@index');
+    Route::get('students/{level}', 'LevelController@students')->name('.students');
 });
 
 Route::prefix('memberships')->name('memberships')->group(function () {
@@ -129,26 +126,45 @@ Route::prefix('notifications')->name('notifications')->group(function () {
 
 Route::prefix('members')->name('members')->group(function () {
     Route::get('/', 'MemberController@index');
+
+    Route::get('approved', 'MemberRequestController@approved')->name('.approved');
+    Route::get('pending', 'MemberRequestController@pending')->name('.pending');
+
+    Route::get('paymnets', 'MemberPaymentController@index')->name('.payments');
+
+    Route::get('payments/{member}', 'MemberPaymentController@student')
+        ->name('.payments.mem');
+
+
     Route::get('create', 'MemberController@create')->name('.create');
     Route::get('edit/{event}', 'MemberController@edit')->name('.edit');
     Route::get('categories', 'MemberCatController@index')->name('.categories');
+
+    Route::get('{member}', 'MemberController@show')->name('.show');
 });
+
 Route::prefix('students')->name('students')->group(function () {
     Route::get('/', 'StudentController@index');
 
-    Route::get('approved', 'StudentRequestController@approved')->name('.approved');
+    Route::get('approved', 'StudentController@index')->name('.approved');
     Route::get('pending', 'StudentRequestController@pending')->name('.pending');
 
     Route::get('paymnets', 'StudentPaymentController@index')->name('.payments');
+
     Route::get('payments/{student}', 'StudentPaymentController@student')
         ->name('.payment.student');
 
     Route::get('create', 'StudentController@create')->name('.create');
     Route::get('edit/{event}', 'StudentController@edit')->name('.edit');
     Route::get('categories', 'StudentCatController@index')->name('.categories');
+
+    Route::get('documents/{student}', 'StudentController@docs')->name('.docs');
+
+    Route::get('graduated/{session?}', 'StudentController@graduated')->name('.graduated');
 });
+
 Route::prefix('scs')->name('scs')->group(function () {
-    Route::get('/', 'SCStudentController@index');
+    Route::get('/', 'ScsController@index');
     Route::get('create', 'SCStudentController@create')->name('.create');
     Route::get('edit/{event}', 'SCStudentController@edit')->name('.edit');
     Route::get('categories', 'SCStudentCatController@index')->name('.categories');
@@ -156,6 +172,10 @@ Route::prefix('scs')->name('scs')->group(function () {
     Route::get('{student}', 'SCStudentController@show')->name('.show');
 
     Route::get('programs/{app}', 'ScsProgramController@show')->name('.app');
+
+
+    Route::get('sort/graduated', 'ScsController@graduated')->name('.graduated');
+    Route::get('payments/pending', 'ScsPaymentController@pending')->name('.payments.pending');
 });
 
 Route::prefix('journals')->name('journals')->group(function () {

@@ -6,6 +6,8 @@ use App\Models\Licence;
 use App\Models\Member;
 use App\Models\Membership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class MemberController extends Controller
 {
@@ -16,10 +18,10 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = Member::latest()->with('membership')->take(100)->get();
-        $title = 'MEMBERS';
+        $members = Member::latest()->with('membership')->where('active', 1)->take(100)->get();
+        $title = 'ACTIVE MEMBERS';
         // return $members;
-        return view('admin.pages.members.index', compact('members', 'title'));
+        return view('admin.pages.members.approved', compact('members', 'title'));
     }
 
     /**
@@ -29,12 +31,44 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        $memberships = Membership::whereActive('1')->where('parent_id', null)->get();
+        // return $memberships;
+        return view('apply.member', compact('memberships'));
     }
+
+    public function addPassword(Member $member)
+    {
+        if ($member->password) {
+            return view('errors.404');
+        }
+        return view('auth.mem.add-password', compact('member'));
+    }
+
+    public function storePassword(Request $request, Member $member)
+    {
+        if ($member->password) {
+            return [
+                'status' => 200,
+                'type' => 'error',
+                'message' => 'something went wrong',
+                'to' => '/member'
+            ];
+        }
+        $member->password = bcrypt($request->password);
+        $member->save();
+        auth('mem')->login($member);
+        return [
+            'message' => 'Redirecting to dashboard',
+            'to' => route('mem'),
+            'status' => 200,
+            'type' => 'success'
+        ];
+    }
+
 
     public function dashboard()
     {
-        return view('frontend.members.index');
+        return view('frontend.mem.index');
     }
 
     public function license()
@@ -63,7 +97,7 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-        //
+        return $member;
     }
 
     /**

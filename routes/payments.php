@@ -15,6 +15,12 @@ Route::prefix('payments')->group(function () {
 
     // payment for application processing fee
     Route::get('entering/{payment}', 'AppPaymentController@paid')->name('app.paid');
+
+    Route::get('member/induction/{member}', 'MemberPaymentController@induction')
+        ->name('payment.mem.induction');
+    Route::post('member/induction/{member}', 'MemberPaymentController@storeInduction');
+    Route::get('member/induction/paid/{payment}', 'MemberPaymentController@paidInduction')
+        ->name('mem.induction.paid');
 });
 
 Route::prefix('admin')->group(function () {

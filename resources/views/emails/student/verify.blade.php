@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>
-        Your Application request to study {{$ap->program->name}}
+        Your Application request to study {{$ap->program->title}}
         has been received and you will be notified once it is reviewed
     </p>
     <p>

@@ -34,8 +34,7 @@
                     <div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Membership Type</label>
-                             <input type="hidden" name="membership" :value="form.m.name" autocomplete="off" v-if="form.m" />
-                             <input type="hidden" name="item_id" :value="form.m.id" autocomplete="off" v-if="form.m" />
+                             <input type="hidden" name="membership" :value="form.m.id" autocomplete="off" v-if="form.m" />
                             <multi-select v-model="form.m" :options="{{$memberships}}"
                                 :show-labels="false" label="name" track-by="id" autocomplete="off"
                                 :clear-on-select="false" placeholder="Memebership Type"
@@ -48,8 +47,7 @@
                         <div class="relative mb-4 bounce-in" v-if="form.m && form.memberships && form.memberships.length">
                             <input type="hidden" name="sub" value="1">
                             <label class="font-semibold text-white">Sub @{{form.m.name}} Membership</label>
-                             <input type="hidden" name="sub_membership" :value="form.m1.name" autocomplete="off" v-if="form.m1" />
-                             <input type="hidden" name="sub_item_id" :value="form.m1.id" autocomplete="off" v-if="form.m1" />
+                             <input type="hidden" name="sub_membership" :value="form.m1.id" autocomplete="off" v-if="form.m1" />
                             <multi-select v-model="form.m1" :options="form.memberships"
                                 :show-labels="false" label="name" track-by="id" autocomplete="off"
                                 :clear-on-select="false" :placeholder="'Sub ' + form.m.name+' Membership'"
@@ -91,8 +89,8 @@
                                 max="{{date('Y')-13 .'-01-01'}}" required name="dob" class="h-12 p-4 wtk">
                         </div>
                         <div class="relative mb-4">
-                            <label class="font-semibold text-white">Upload Your reccent photograph</label>
-                            <input type="file" accept="image/*" required name="passport" class="relative h-12 p-4 bg-white">
+                            <label class="font-semibold text-white">Upload Your Recent Photograph</label>
+                            <input type="file" accept="image/*" name="passport" class="relative h-12 p-4 bg-white">
                         </div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">
@@ -115,7 +113,7 @@
                                 </span>
                             </label>
                         </div>
-                        <div class="text-white checkbox bounce-in" v-if="parseInt(form.fee)">
+                        {{-- <div class="text-white checkbox bounce-in" v-if="parseInt(form.fee)">
                             <input id="pay" type="checkbox" class="form-check-input form-control filled-in"
                                 name="pay" value="1">
                             <label for="pay" class="after-white">
@@ -137,7 +135,7 @@
                                 </span>
                             </label>
                         </div>
-                        <input type="hidden" name="pay" value="1" v-else>
+                        <input type="hidden" name="pay" value="1" v-else> --}}
                     </div>
                     @guest('pgs', 'mem', 'scs')
                     <div class="text-right ">

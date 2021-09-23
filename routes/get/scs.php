@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'SCStudentController@portal')->name('scs');
+Route::get('/', 'ScsController@dashboard')->name('scs');
 
 
 Route::prefix('program')->group(function () {

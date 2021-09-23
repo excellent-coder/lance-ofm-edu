@@ -198,12 +198,26 @@ Route::prefix('members')->name('members')->group(function () {
     Route::post('activate/{post}', 'MemberController@activate')->name('.activate');
 });
 
+Route::prefix('member-r')->name('member-r')->group(function () {
+    Route::post('approve/{member}', 'MemberRequestController@approve')->name('.approve');
+
+    Route::delete('destroy', 'MemberRequestController@destroy')->name('.destroy');
+    // Route::post('activate/{post}', 'MemberRequestController@activate')->name('.activate');
+});
+
 Route::prefix('students')->name('students')->group(function () {
     Route::post('store', 'StudentController@store')->name('.store');
     Route::post('update/{event}', 'StudentController@update')->name('.update');
     Route::delete('destroy', 'StudentController@destroy')->name('.destroy');
     Route::post('activate/{post}', 'StudentController@activate')->name('.activate');
 });
+
+Route::prefix('student-r')->name('student-r')->group(function () {
+    Route::post('approve/{student}', 'StudentRequestController@approve')->name('.approve');
+    Route::delete('destroy', 'StudentRequestController@destroy')->name('.destroy');
+    // Route::post('activate/{post}', 'StudentController@activate')->name('.activate');
+});
+
 Route::prefix('scs')->name('scs')->group(function () {
     Route::post('store', 'SCStudentController@store')->name('.store');
     Route::post('update/{student}', 'SCStudentController@update')->name('.update');

@@ -62,11 +62,19 @@ Route::prefix('scs')->middleware('auth:scs')->group(function () {
     require __DIR__ . '/get/scs.php';
 });
 
+
+Route::get('verify/member/{id}/{email}', 'MemberRequestController@verifyEmail')
+    ->name('mem.verify');
+
+Route::get('member/{member}/add-password', 'MemberController@addPassword')
+    ->name('mem.add-password');
+Route::post('member/{member}/add-password', 'MemberController@storePassword');
 Route::prefix('member')->middleware('auth:mem')->group(function () {
     require __DIR__ . '/get/mem.php';
 });
 
 Route::get('/verify/ms/{id}/{email}', 'StudentRequestController@verifyEmail')->name('pgs.verify');
+
 Route::get('student/{student}/add-password', 'StudentController@addPassword')
     ->name('pgs.add-password');
 Route::post('student/{student}/add-password', 'StudentController@storePassword');

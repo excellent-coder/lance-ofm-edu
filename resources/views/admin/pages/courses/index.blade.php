@@ -95,10 +95,7 @@
                                 $action['rowid'] = ".tr-cats-$c->id";
 
 
-                                $action['item']= json_encode([
-                                    'name'=>$c->name,
-                                    'code'=>$c->code,
-                                    ]);
+                                $action['item']= json_encode($c);
 
                                 ?>
                                 <tr class="tr-cats-{{$c->id}}">
@@ -109,7 +106,11 @@
                                     <td>{{$c->level->name ??'false'}}</td>
                                     <td>{{$c->students->count()}}</td>
                                     <td>
-                                        <x-data-table-action :action="$action"></x-data-table-action>
+                                        <x-data-table-action :action="$action">
+                                            <a href="{{route('admin.courses.edit', $c->id)}}" style="color:rgb(255, 0, 212)">
+                                                <i class="fa fa-edit" aria-hidden="true"></i>
+                                            </a>
+                                        </x-data-table-action>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -150,8 +151,8 @@
                     id="editing-code">
             </div>
             <div class="form-group">
-                <label for="editing-program">Program</label>
-                <select data-placeholder="Select Program" id="editing-program" class="form-control select2"
+                <label for="editing-program_id">Program</label>
+                <select data-placeholder="Select Program" id="editing-program_id" class="form-control select2 required"
                  name="program_id">
                     @foreach ($programs as $p)
                         <option value="{{$p->id}}">{{$p->title}}</option>
@@ -159,18 +160,18 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="editing-level">Level</label>
-                <select data-placeholder="Select Level" id="editing-level" class="form-control select2" name="level_id">
+                <label for="editing-level_id">Level</label>
+                <select data-placeholder="Select Level" id="editing-level_id" class="form-control select2 required" name="level_id">
                     @foreach ($levels as $l)
                         <option value="{{$l->id}}">{{$l->name}}</option>
                     @endforeach
                 </select>
             </div>
              <div class="form-group">
-                <label for="visibility">Available To</label>
-                <select id="visibility" class="form-control select2"
+                <label for="editing-visibility">Available To</label>
+                <select data-value="1" data-placeholder="Available To" id="editing-visibility" class="form-control select2 required"
                     name="visibility">
-                    <option value="1" selected>All Studenst</option>
+                    <option value="1">All Studenst</option>
                     <option value="2">Program Students Only</option>
                     <option value="3">Schort Course Studenst Only</option>
                 </select>

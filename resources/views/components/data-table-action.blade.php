@@ -26,8 +26,10 @@
     @endisset
     {{$slot}}
     {{-- load extra buttons --}}
-    <button class="btn action-btn" data-action="{{$item->destroy}}"
-    data-id="{{$item->id}}" data-rowid="{{$item->rowid}}">
-        <i class="fas fa-trash-alt text-danger"></i>
-    </button>
+    @isset ($item->destroy)
+        <button class="btn action-btn" data-action="{{$item->destroy}}"
+        data-id="{{$item->id}}" data-rowid="{{$item->rowid}}">
+            <i class="fas fa-trash-alt text-danger"></i>
+        </button>
+    @endisset
 </div>

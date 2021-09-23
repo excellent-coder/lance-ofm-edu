@@ -28,8 +28,7 @@
                 $idCard = web_setting('pgs', 'id_card_fee');
                 $handBook = web_setting('pgs', 'student_handbook_fee');
                 $devLevy =web_setting('pgs', 'development_levy');
-                $tuition=web_setting('pgs', 'tuition_fee');
-                $total = array_sum([$acceptance,$matric,$idCard,$handBook, $devLevy, $tuition]);
+                $total = array_sum([$acceptance,$matric,$idCard,$handBook, $devLevy]);
                 @endphp
                 <tr>
                     <th style="border: 2px solid black; padding: 5px;">Acceptance Fee</th>
@@ -51,10 +50,7 @@
                     <th style="border: 2px solid black; padding: 5px;">Development Levy</th>
                     <td style="border: 2px solid black; padding: 5px;">{{$devLevy}}</td>
                 </tr>
-                <tr>
-                    <th style="border: 2px solid black; padding: 5px;">Tuition</th>
-                    <td style="border: 2px solid black; padding: 5px;">{{$tuition}}</td>
-                </tr>
+
                 <tr>
                     <th style="border: 2px solid black; padding: 5px;">Total</th>
                     <td style="border: 2px solid black; padding: 5px;"><b>{{$currency}} {{number_format($total, 2)}} </b>

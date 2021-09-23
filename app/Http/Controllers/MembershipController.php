@@ -17,6 +17,7 @@ class MembershipController extends Controller
     public function index()
     {
         $memberships = Membership::all();
+        // return $memberships;
         return view('admin.pages.memberships.index', compact('memberships'));
     }
 
@@ -42,7 +43,8 @@ class MembershipController extends Controller
         $valid = Validator::make(
             $request->all(),
             [
-                'name' => 'required'
+                'name' => 'required',
+                'code' => 'required|unique:memberships,code'
             ]
         );
         if ($valid->fails()) {
@@ -63,12 +65,14 @@ class MembershipController extends Controller
 
         $m = new Membership();
         $m->name = $request->name;
+        $m->code = $request->code;
         $m->active = $request->filled('active');
         $m->slug = Str::slug("$request->name $request->parent");
         $m->parent_id = $request->parent;
         $m->application_fee = $request->application_fee;
-        $m->induction_fee = $request->induction_fee;
+        $m->admin_fee = $request->admin_fee;
         $m->annual_fee = $request->annual_fee;
+        $m->active = $request->filled('active');
 
         $m->save();
 
@@ -121,7 +125,10 @@ class MembershipController extends Controller
         // return $request->all();
         $valid = Validator::make(
             $request->all(),
-            ['name' => 'required']
+            [
+                'name' => 'required',
+                'code' => "required|unique:memberships,code,$membership->id"
+            ]
         );
         if ($valid->fails()) {
             return [
@@ -132,10 +139,11 @@ class MembershipController extends Controller
 
         $m = $membership;
         $m->name = $request->name;
+        $m->code = $request->code;
         $m->active = $request->filled('active');
-        $slug = Str::slug($request->name);
+        $slug = Str::slug($request->code);
         $m->application_fee = $request->application_fee;
-        $m->induction_fee = $request->induction_fee;
+        $m->admin_fee = $request->admin_fee;
         $m->annual_fee = $request->annual_fee;
 
         $m->save();

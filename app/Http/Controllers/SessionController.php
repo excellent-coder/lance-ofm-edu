@@ -182,15 +182,20 @@ class SessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        return [
+            'message' => 'Session deleting is not allowed',
+            'type' => 'warning',
+            'status' => 200
+        ];
         $ids = trim($request->ids, ',');
 
         if (empty($ids)) {
             return ['message' => 'nothing to delete'];
         }
 
-        $ids = explode(',', $ids);
+        // $ids = explode(',', $ids);
 
-        $total = Session::whereIn('id', $ids)->delete();
+        $total = Session::whereIn('id', $ids)->whereActive('0')->delete();
 
         if (!$total) {
             return [

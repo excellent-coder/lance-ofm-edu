@@ -140,7 +140,9 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('admin.pages.courses.edit', compact('course'));
+        $levels = Level::latest('level')->get();
+        $programs = Program::all();
+        return view('admin.pages.courses.edit', compact('course', 'levels', 'programs'));
     }
 
     /**
@@ -160,7 +162,9 @@ class CourseController extends Controller
                 'name' => "required|unique:courses,name,$course->id|max:150",
                 'code' => "required|unique:courses,code,$course->id|max:100",
                 'image' => 'nullable|file|image',
+                'program_id' => 'required',
                 'visibility' => 'required',
+                'level_id' => 'required'
             ],
             // [
             //     'name.unique' => 'This course is already taken',
@@ -181,6 +185,10 @@ class CourseController extends Controller
         $course->description = $request->description;
 
         $course->excerpt = $request->excerpt;
+
+        $course->program_id = $request->program_id;
+        $course->level_id = $request->level_id;
+
         $course->visibility = $request->visibility;
 
         $course->active = intval($request->active);
@@ -208,6 +216,8 @@ class CourseController extends Controller
         }
 
         $course->save();
+
+        // return $course;
 
         return [
             'message' => "$course->code updated successfully",

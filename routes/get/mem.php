@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', 'MemberController@dashboard')->name('mem');
-Route::get('profile', 'MemberController@profile')->name('mem.profile');
+Route::get('profile', 'MemberProfileController@profile')->name('mem.profile');
+Route::post('profile', 'MemberProfileController@updateProfile');
+
 
 Route::prefix('licenses')->group(function () {
     Route::get('/', 'MemberController@license')->name('mem.licenses');

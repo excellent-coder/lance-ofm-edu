@@ -86,19 +86,6 @@
                                                         program
                                                     </small>
                                                 </div>
-                                                <div class="my-3 form-group col-md-6">
-                                                    <label for="max_level">Maximum Level</label>
-                                                    <a href="{{route('admin.levels')}}" target="_blank"
-                                                        rel="noopener noreferrer" title="add new Level">Add Levela</a>
-                                                    <select data-placeholder="maximum level" name="max_level"
-                                                        id="max_level" class=" form-control select2">
-                                                        @foreach ($levels as $l)
-                                                        <option value="{{$l->level}}"
-                                                            {{$l->id == $program->max_level ? 'selected':''}}>
-                                                            {{$l->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

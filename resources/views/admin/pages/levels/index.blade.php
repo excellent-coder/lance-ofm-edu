@@ -16,8 +16,8 @@
                     <div class="row">
                         <div class="col-6 text-md-left">
                             <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?=count($levels)?></span>
-                                Levels
+                                <span class="badge bg-pink"><?=$total= count($levels)?></span>
+                                {{Str::plural('Level', $total)}}
                             </h4>
                         </div>
                         <div class="col-6">
@@ -25,7 +25,6 @@
                                 title="Delete all selected levels"
                                 @click.prevent="destroy($event.target)"
                                 data-action="{{route('admin.levels.destroy')}}"
-                                data-id=""
                                 >
                                 <i class="fas fa-trash-alt"></i> Bulk
                                  (<span class="total-selected">0</span>)
@@ -65,8 +64,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Order</th>
-                                    <th>Total Users</th>
+                                    <th>Level</th>
+                                    <th>Students</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -96,7 +95,17 @@
                                     <td>{{$i++}}</td>
                                     <td>{{$c->name}}</td>
                                     <td>{{$c->level}}</td>
-                                    <td>{{$c->students->count()}}</td>
+                                    <td>
+                                        @if ($c->students->count())
+                                        <a href="{{'admin.levels.students', $c->id}}" class="btn">
+                                            <span class="badge badge-primary">
+                                                 {{$c->students->count()}}
+                                            </span>
+                                        </a>
+                                        @else
+                                           <i class="fa fa-battery-empty" aria-hidden="true"></i>
+                                        @endif
+                                    </td>
                                     <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
@@ -110,8 +119,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>User Category</th>
-                                    <th>Total Users</th>
+                                    <th>Level</th>
+                                    <th>Students</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

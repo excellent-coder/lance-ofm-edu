@@ -5,24 +5,6 @@
 <link rel="stylesheet" href="/vendor/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/vendor/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="/vendor/datatables-buttons/css/buttons.bootstrap4.min.css">
-<style>
-
-    @media (min-width: 760px) {
-        .modal-dialog {
-            max-width: 700px;
-            margin: 1.75rem auto;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .modal-dialog {
-            max-width: 900px;
-            margin: 1.75rem auto;
-        }
-    }
-
-</style>
-
 @endsection
 
 @section('content')
@@ -34,8 +16,8 @@
                     <div class="row">
                         <div class="col-6 text-md-left">
                             <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?= $students->count() ?></span>
-                                Applicants
+                                <span class="badge bg-pink"><?=$total= $students->count() ?></span>
+                              {{Str::plural('Student', $total)}}
                             </h4>
                         </div>
                         <div class="col-6">

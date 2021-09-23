@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -59,3 +61,8 @@ Route::get('events', 'EventController@events')->name('events.index');
 
 // payment
 Route::get('payment/v/{payment}', 'PaymentController@paid')->name('payment.paid');
+
+// Errors
+Route::get('503', function (Request $request) {
+    return view('errors.503');
+})->name('503');

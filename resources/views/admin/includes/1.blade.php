@@ -1,28 +1,4 @@
- <li class="nav-item  @if ($segment == 'courses') menu-open @endif">
-     <a href="#" role="button" class="nav-link @if ($segment == 'courses') active @endif ">
-          <i class="fas fa-book-reader nav-icon"></i>
-         <p>
-            Courses
-             <i class="fas fa-angle-left right"></i>
-         </p>
-     </a>
-     <ul class="nav nav-treeview">
-         <li class="nav-item">
-             <a href="{{route('admin.courses')}}" class="nav-link @if ($route == 'courses') active @endif">
-                 <i class="fas fa-list nav-icon"></i>
-                 <p>
-                     Courses
-                 </p>
-             </a>
-         </li>
-         <li class="nav-item">
-             <a href="{{route('admin.courses.create')}}" class="nav-link @if ($route == 'courses.create') active @endif">
-                 <i class="fas fa-edit nav-icon"></i>
-                 <p>New Course</p>
-             </a>
-         </li>
-     </ul>
- </li>
+
   <li class="nav-item  @if ($segment == 'licences') menu-open @endif">
      <a href="#" role="button" class="nav-link @if ($segment == 'licences') active @endif ">
           <i class="fas fa-id-card nav-icon"></i>

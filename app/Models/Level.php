@@ -18,6 +18,6 @@ class Level extends Model
      */
     public function students()
     {
-        return $this->hasMany(Student::class, 'level_id', 'id');
+        return $this->hasMany(Student::class, 'level', 'id');
     }
 }

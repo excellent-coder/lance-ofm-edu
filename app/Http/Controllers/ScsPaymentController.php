@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ScsPayment;
+use App\Models\ScsProgram;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,6 +43,16 @@ class ScsPaymentController extends Controller
         $payment->transaction_id = $request->transaction_id;
         $payment->paid_at = date('Y-m-d H:i:s');
         $payment->save();
+
+        // update scs_program
+        if ($payment->status == 'successful') {
+            $sp =  ScsProgram::find($payment->scs_program_id);
+            $sp->payment_id = $payment->id;
+            $sp->save();
+
+            $request->session()->flash('paid.next_title', 'Dashboard');
+            $request->session()->flash('paid.next', route('scs'));
+        }
 
         return view('frontend.payments.member', compact('payment'));
     }
