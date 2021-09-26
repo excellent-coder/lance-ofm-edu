@@ -70,9 +70,11 @@ class EventCatController extends Controller
      * @param  \App\Models\EventCat  $eventCat
      * @return \Illuminate\Http\Response
      */
-    public function show(EventCat $eventCat)
+    public function show($slug)
     {
-        //
+        // return $slug;
+        $cat = EventCat::whereSlug($slug)->firstOrFail();
+        return view('frontend.events.category', compact('cat'));
     }
 
     /**

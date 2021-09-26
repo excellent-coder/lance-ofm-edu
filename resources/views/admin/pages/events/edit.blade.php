@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Price <b class="arial">{{$currency_symbol}}</b></label>
-                                            <input class="form-control required" type="text" inputmode="numeric"
+                                            <input class="form-control" type="text" inputmode="numeric"
                                                 pattern="([\d]+)(\.)?(\d{1,2})" value="{{$event->price}}" name="price"
                                                 autocomplete="off" placeholder="Initial Fee">
                                         </div>
@@ -78,19 +78,23 @@
                                     <hr class="order-2 col-12 bg-success">
                                     <div class="order-2 my-2 col-12">
                                         <div class="row">
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-md-6 col-12">
+                                                <label for="address">Address</label>
+                                                <input id="address" class="form-control required" value="{{$event->address}}" type="text" name="address" placeholder="address">
+                                            </div>
+                                            <div class="form-group col-md-6 col-12">
                                                 <label for="start_at">Start Time</label>
                                                 <input id="start_at" value="{{dt($event->start_at)}}"
                                                     class="form-control wtk required" type="datetime-local"
                                                     name="start_at">
                                             </div>
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-md-6 col-12">
                                                 <label for="end_at">End Time</label>
                                                 <input id="end_at" value="{{dt($event->end_at)}}"
                                                     class="form-control wtk required" type="datetime-local"
                                                     name="end_at">
                                             </div>
-                                            <div class="mt-4 form-group col-6">
+                                            <div class="mt-4 form-group col-md-6 col-12">
                                                 <div class="checkbox checkbox-primary p-t-0">
                                                     <input id="active" {{ $event->active ? 'checked':'' }}
                                                         type="checkbox" class="form-check-input form-control"

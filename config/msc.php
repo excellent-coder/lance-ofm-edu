@@ -12,4 +12,5 @@ return [
     */
     'contact_email' => 'email',
     'session' => env('ACTIVE_SESSION'),
+    'version' => 1, //Asset version for files like js, css
 ];

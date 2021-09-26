@@ -41,27 +41,21 @@ class LicenceController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        $valid = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|unique:licences,name',
-                'fee' => 'required|numeric',
-                'renewal' => 'required|numeric',
-                'duration' => 'required'
-            ]
-        );
-
-        if ($valid->fails()) {
-            return [
-                'message' => 'You have some errors',
-                'errors' => $valid->errors()->all()
-            ];
-        }
+        $request->validate([
+            'name' => 'required|unique:licences,name',
+            'code' => 'required|unique:licences,code',
+            'fee' => 'required|numeric',
+            'renewal' => 'required|numeric',
+            'duration' => 'required|numeric',
+            'image' => 'required|image'
+        ]);
 
         $l = new Licence();
         $l->name = $request->name;
-        $slug = Str::slug($request->name);
+        $l->code = $request->code;
+        $slug = Str::slug($request->code);
         $l->slug = $slug;
+
         $l->fee = $request->fee;
         $l->duration = $request->duration;
         $l->renewal = $request->renewal;
@@ -69,7 +63,6 @@ class LicenceController extends Controller
         $l->active = $request->filled('active');
 
         $l->description = $request->description;
-        $l->excerpt = $request->excerpt;
 
         // add featured image
         if ($request->hasFile('image')) {
@@ -85,7 +78,7 @@ class LicenceController extends Controller
         $l->save();
 
         return [
-            'message' => 'Licence Added successfully',
+            'message' => 'License Added successfully',
             'status' => 200,
             'to' => route('admin.licences'),
             'type' => 'success'
@@ -147,7 +140,9 @@ class LicenceController extends Controller
 
         $l = $licence;
         $l->name = $request->name;
-        $slug = Str::slug($request->name);
+        $l->code = $request->code;
+
+        $slug = Str::slug($request->code);
         $l->slug = $slug;
         $l->fee = $request->fee;
         $l->duration = $request->duration;

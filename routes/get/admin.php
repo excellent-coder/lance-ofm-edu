@@ -63,6 +63,21 @@ Route::prefix('post-cats')->name('post-cats')->group(function () {
     Route::get('children', 'PostCatController@children')->name('.children');
 });
 
+
+Route::prefix('publications')->name('pubs')->group(function () {
+    Route::get('/', 'PublicationController@index');
+    Route::get('create', 'PublicationController@create')->name('.create');
+    Route::get('edit/{publication}', 'PublicationController@edit')->name('.edit');
+    Route::get('categories', 'PublicationCatController@index')->name('.cats');
+    Route::get('tags', 'TagController@index')->name('.tags');
+
+    Route::get('{cat}', 'PublicationCatController@show')->name('.cat');
+});
+
+Route::prefix('Publication-cats')->name('Publication-cats')->group(function () {
+    Route::get('children', 'PublicationCatController@children')->name('.children');
+});
+
 Route::prefix('images')->name('images')->group(function () {
     Route::get('/', 'ImageController@index');
     Route::get('edit/{image}', 'ImageController@edit')->name('.edit');

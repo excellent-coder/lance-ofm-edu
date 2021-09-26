@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Payment;
 use App\Mail\EventGoer as EventMail;
+use App\Models\MemberPayment;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-
-
-
+use PhpParser\Node\Stmt\TryCatch;
 
 class EventGoerController extends Controller
 {
@@ -44,21 +44,13 @@ class EventGoerController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        return $request->all();
-        $valid = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required',
-                'email' => 'required',
-                'phone' => 'required'
-            ]
-        );
-        if ($valid->fails()) {
-            return [
-                'message' => 'Some required fields missing',
-                'errors' => $valid->errors()->all()
-            ];
-        }
+        // return $request->all();
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required'
+        ]);
+
         if (EventGoer::whereEmail($request->email)->whereEventId($event->id)->first()) {
             return [
                 'message' => 'You have already registered for this event',
@@ -66,22 +58,17 @@ class EventGoerController extends Controller
                 'status' => 200,
             ];
         }
+
+        $member = auth('mem')->user();
+
         $eg = new EventGoer();
         $eg->event_id = $event->id;
+        $eg->member_id = $member->id;
+
         $eg->name = $request->name;
         $eg->phone = $request->phone;
         $eg->email = $request->email;
-
-        $guards = ['scs' => "s_c_students", 'pgs' => 'students', 'mem' => 'members'];
-        foreach ($guards as $guard => $v) {
-            if ($id = auth($guard)->id()) {
-                $eg->goer_id = $id;
-                $eg->goer = $v;
-            } else {
-                $eg->goer = 'Guest';
-            }
-        }
-
+        $eg->save();
 
         $amount = $event->price;
         $code = 'EVENT';
@@ -99,22 +86,24 @@ class EventGoerController extends Controller
             ];
         }
 
-        $payment = new Payment();
-        $payment->user_id = $eg->id;
-        $payment->guard = 'event_goers';
+        $payment = new MemberPayment();
+        $payment->member_id = $member->id;
 
-        $payment->amount = $amount;
-        $payment->currency =  web_setting('general', 'currency');
+        $payment->amount = $event->price;
+        $payment->currency =  web_setting('general', 'currency', 'NGN');
         $payment->reason = "Register for $event->title Event";
+
         do {
             $ref = "ISAM-$code-" . Str::upper(Str::random(10));
-        } while (Payment::where('ref', $ref)->first());
+        } while (MemberPayment::where('ref', $ref)->first());
 
         $payment->ref = $ref;
         $payment->ip = $request->ip();
         $mac = exec('getmac');
         $payment->mac = strtok($mac, ' ');
-        $payment->device = $request->devce;
+
+        $payment->item = 'events';
+        $payment->item_id = $event->id;
 
         $payment->save();
 
@@ -124,17 +113,16 @@ class EventGoerController extends Controller
             'amount' => $payment->amount,
             'currency' => $payment->currency,
             'country' => config('msc.country', 'NG'),
-            'redirect' => route('payment.paid', $payment->id),
+            'redirect' => route('mem.event.paid', $payment->id),
             'meta' => [
-                'consumer_id' => $eg->id,
+                'consumer_id' => $member->id,
                 'consumer_mac' => $mac,
-                'customer_table' => 'event_goers',
             ],
             'customer' => [
                 'email' => $request->email,
                 'phone_number' => $request->phone,
                 'reason' => $payment->reason,
-                'user_id' => $eg->id,
+                'member_id' => $member->id,
                 'name' => "$request->name",
             ],
             'customization' => [
@@ -144,15 +132,16 @@ class EventGoerController extends Controller
             ],
         ];
 
-        $eg->payment_id = $payment->id;
-        $eg->save();
-
-        Mail::to($eg->email, $eg->name)->send(new EventMail($eg, $event));
+        try {
+            Mail::to($eg->email, $eg->name)->send(new EventMail($eg, $event));
+        } catch (Exception $e) {
+            //    return $e->getMessage()
+        }
 
         return [
             'status' => 200,
-            'message' => 'Your application has been submitted successfully',
-            'desc' => 'You will be contacted via email',
+            'message' => 'You have successfully applied for this event',
+            'desc' => "However you  need to pay $payment->currency $payment->amount bfore your application will be successful",
             'type' => 'success',
             'payment' => $p,
         ];

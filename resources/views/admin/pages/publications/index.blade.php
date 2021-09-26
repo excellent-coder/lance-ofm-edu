@@ -16,15 +16,16 @@
                     <div class="row">
                         <div class="col-6 text-md-left">
                             <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?=$events->count()?></span>
-                               Events
+                                <span class="badge bg-pink"><?=$total = $pubs->count()?></span>
+                               {{Str::plural('Publication', $total)}}
                             </h4>
                         </div>
                         <div class="col-6">
                             <button class="btn btn-danger bulk-action"
-                                title="Delete all selected events"
+                                title="Delete all selected posts"
                                 @click.prevent="destroy($event.target)"
-                                data-action="{{route('admin.events.destroy')}}"
+                                data-action="{{route('admin.pubs.destroy')}}"
+                                data-id=""
                                 >
                                 <i class="fas fa-trash-alt"></i> Bulk
                                  (<span class="total-selected">0</span>)
@@ -37,17 +38,17 @@
     </div>
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="Events">
-                <a href="{{route('admin.events.create')}}" class="text-white btn btn-success btn-sm">
-                    New Event
+            <x-admin-card-tool title="Publications - Journals - Magazins - Etc">
+                <a href="{{route('admin.pubs.create')}}" class="text-white btn btn-success btn-sm">
+                    New Publication
                 </a>
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
                     <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
-                            <a href="{{route('admin.events.create')}}" class="btn btn-success">
-                                New Event
+                            <a href="{{route('admin.pubs.create')}}" class="btn btn-success">
+                                New Publication
                             </a>
                         </div>
                     </div>
@@ -62,7 +63,11 @@
                                     <th>Title</th>
                                     <th>image</th>
                                     <th>category</th>
-                                    <th>views</th>
+                                    <th>document</th>
+                                    <th>volume</th>
+                                    <th>price ({{$currency}})</th>
+                                    <th>Featured</th>
+                                    <th>published</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -70,20 +75,20 @@
                                 <?php $i=1;?>
                                 @php
                                 $action = [
-                                    'destroy'=> route('admin.events.destroy'),
+                                    'destroy'=> route('admin.pubs.destroy'),
                                 ];
                                 @endphp
-                                @foreach ($events as $p)
+                                @foreach ($pubs as $p)
                                 <?php
                                 $action['id'] = $p->id;
-                                $action['route'] = route('admin.events.edit', $p->id);
+                                $action['route'] = route('admin.pubs.edit', $p->id);
                                 $action['rowid'] = "#tr-post-$p->id";
                                 ?>
                                 <tr id="tr-post-{{$p->id}}">
                                     <td><input type="checkbox" value="{{$p->id}}" class="checking"></td>
                                     <td>{{$i++}}</td>
                                     <td>
-                                        <a href="{{route('events.show', $p->slug)}}" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{route('posts.show', $p->slug)}}" target="_blank" rel="noopener noreferrer">
                                             {{ Str::limit($p->title, 100, '...')}}
                                         </a>
                                     </td>
@@ -95,15 +100,19 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($p->category)
-                                        <a href="{{route('event-cats.show', $p->category->slug)}}" target="_blank" rel="noopener noreferrer">
-                                            {{ $p->category->name }}
+                                        <a href="{{route('post-cats.show', $p->slug)}}" target="_blank" rel="noopener noreferrer">
+                                            {{ $p->category->name ?? 'N/A' }}
                                         </a>
-                                        @else
-                                          N/A
-                                        @endif
                                     </td>
-                                    <td>{{'views'}}</td>
+                                    <td>
+                                        <a href="/storage/{{$p->docs}}" target="_blank">
+                                            <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>{{$p->volume}}</td>
+                                    <td>{{$p->price}}</td>
+                                    <td>{{$p->featured}}</td>
+                                    <td>{{$p->published}}</td>
                                     <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
@@ -119,7 +128,11 @@
                                     <th>Title</th>
                                     <th>image</th>
                                     <th>category</th>
-                                    <th>views</th>
+                                    <th>document</th>
+                                    <th>volume</th>
+                                    <th>price ({{$currency}})</th>
+                                    <th>Featured</th>
+                                    <th>published</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

@@ -141,6 +141,34 @@ class MemberPaymentController extends Controller
         return view('frontend.payments.member', compact('payment'));
     }
 
+    public function eventPaid(Request $request, MemberPayment $payment)
+    {
+        // return $payment;
+        if ($payment->transaction_id) {
+            // this payment has been processes,
+            return redirect('/');
+        }
+        if ($request->tx_ref != $payment->ref) {
+            // something is wrong we will come to you later
+        }
+        $payment->status = $request->status;
+        $payment->transaction_id = $request->transaction_id;
+        $payment->paid_at = date('Y-m-d H:i:s');
+        $payment->save();
+
+        if ($payment->status !== 'sucessful') {
+            $goer =  $payment->eventGoer;
+            $goer->payment_id = $payment->id;
+            $goer->paid = 1;
+            $goer->save();
+
+            $request->session()->flash('paid.next_title', "Go to dashboard");
+            $request->session()->flash('paid.next', route('mem'));
+        }
+
+        return view('frontend.payments.member', compact('payment'));
+    }
+
     public function paid(Request $request, MemberPayment $payment)
     {
         return $payment;

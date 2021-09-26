@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMemberPaymentsTable extends Migration
+class CreatePublicationPurchasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMemberPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('member_payments', function (Blueprint $table) {
+        Schema::create('publication_purchases', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('member_id')->nullable()->unsigned();
-            $table->bigInteger('member_request_id')->nullable()->unsigned();
+            $table->bigInteger('member_id')->unsigned();
+            $table->bigInteger('publication_id')->unsigned();
 
             $table->string('currency');
             $table->decimal('amount', 10, 2)->unsigned();
@@ -24,12 +24,7 @@ class CreateMemberPaymentsTable extends Migration
             $table->string('reason');
 
             $table->string('mac')->nullable();
-            $table->text('device')->nullable();
             $table->ipAddress('ip')->nullable();
-            $table->string('tag', 100)->nullable();
-            $table->string('item')->nullable();
-            $table->bigInteger('item_id')->unsigned()->nullable();
-
 
             $table->string('transaction_id')
                 ->nullable()
@@ -41,11 +36,8 @@ class CreateMemberPaymentsTable extends Migration
             $table->dateTime('paid_at')->nullable();
             $table->timestamps();
 
-            // $table->foreign('member_id')->references('id')->on('members')
-            //     ->nullOnDelete()->cascadeOnUpdate();
-
-            // $table->foreign('member_request_id')->references('id')->on('member_requests')
-            //     ->nullOnDelete()->cascadeOnUpdate();
+            // $table->foreign('member_id')->references('id')->on('members')->cascadeOnUpdate();
+            // $table->foreign('publication_id')->references('id')->on('publications')->cascadeOnUpdate();
         });
     }
 
@@ -56,6 +48,6 @@ class CreateMemberPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member_payments');
+        Schema::dropIfExists('publication_purchases');
     }
 }

@@ -74,9 +74,9 @@
     <script src="/vendor/select2/select2.min.js"></script>
     {{-- add vue files --}}
 
-    <script src="/js/admin/manifest.js"></script>
-    <script src="/js/admin/vendor.js"></script>
-    <script src="/js/admin/app.js"></script>
+    <script src="/js/admin/manifest.js?v={{config('msc.version')}}"></script>
+    <script src="/js/admin/vendor.js?v={{config('msc.version')}}"></script>
+    <script src="/js/admin/app.js?v={{config('msc.version')}}"></script>
     @yield('js')
     <script src="/js/parts/tinymce.js"></script>
     <script>

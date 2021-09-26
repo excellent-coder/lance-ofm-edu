@@ -53,10 +53,10 @@ Route::prefix('blog')->group(function () {
     Route::get('tags/{tag}', 'TagController@show')->name('tags.show');
 });
 
+Route::get('events/category/{slug}', 'EventCatController@show')->name('event-cats.show');
+
 Route::get('pages/{slug}', 'PageController@show')->name('pages.show');
 Route::get('events/{slug}', 'EventController@show')->name('events.show');
-Route::get('events/register/{event}', 'EventController@register')->name('events.register');
-Route::post('events/register/{event}', 'EventGoerController@store')->name('events.register');
 Route::get('events', 'EventController@events')->name('events.index');
 
 // payment

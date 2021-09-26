@@ -108,6 +108,18 @@ Route::prefix('post-cats')->name('post-cats')->group(function () {
     Route::post('update/{cat}', 'PostCatController@update')->name('.update');
 });
 
+Route::prefix('publocations')->name('pubs')->group(function () {
+    Route::post('store', 'PublicationController@store')->name('.store');
+    Route::delete('destroy', 'PublicationController@destroy')->name('.destroy');
+    Route::post('update/{publication}', 'PublicationController@update')->name('.update');
+});
+
+Route::prefix('publication-cats')->name('pub-cats')->group(function () {
+    Route::post('store', 'PublicationCatController@store')->name('.store');
+    Route::delete('destroy', 'PublicationCatController@destroy')->name('.destroy');
+    Route::post('update/{cat}', 'PublicationCatController@update')->name('.update');
+});
+
 Route::prefix('tags')->name('tags')->group(function () {
     Route::post('store', 'TagController@store')->name('.store');
     Route::delete('destroy', 'TagController@destroy')->name('.destroy');

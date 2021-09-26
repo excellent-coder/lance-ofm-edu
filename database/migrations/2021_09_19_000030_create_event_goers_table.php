@@ -15,20 +15,17 @@ class CreateEventGoersTable extends Migration
     {
         Schema::create('event_goers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('event_id')->unsigned()->nullable();
-            // goer can be user, member, student or short course student
-            $table->bigInteger('goer_id')->nullable();
-            $table->string('goer')->nullable();
+            $table->bigInteger('event_id')->nullable();
+            $table->bigInteger('member_id')->unsigned();
 
             $table->string('name');
             $table->string('email');
             $table->string('phone')->nullable();
             $table->bigInteger('payment_id')->nullable();
-            $table->boolean('paid')->nullable()->default(false);
             $table->timestamps();
 
-            // $table->foreign('event_id')->references('id')->on('events')
-            //     ->nullOnDelete()->cascadeOnUpdate();
+            // $table->foreign('event_id')->references('id')->on('events')->cascadeOnUpdate();
+            // $table->foreign('member_id')->references('id')->on('members')->cascadeOnUpdate();
         });
     }
 

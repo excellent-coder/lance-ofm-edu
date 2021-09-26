@@ -625,7 +625,7 @@ const app = createApp({
                         errors = Object.values(data.errors);
                         description = '';
                         errors.forEach(e => {
-                            description += `* ${e}`;
+                            description += `<br> ${e}`;
                         });
                         break
                     default:

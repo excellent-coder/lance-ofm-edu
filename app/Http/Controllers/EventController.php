@@ -48,12 +48,13 @@ class EventController extends Controller
                 'description' => 'required',
                 'category' => 'required',
                 'price' => 'nullable|numeric',
+                'address' => 'required',
                 'start_at' => 'required',
                 'end_at' => 'required',
                 'image' => 'required|file|image'
 
             ],
-            ['image.required' => 'Preview Phot is required']
+            ['image.required' => 'Preview image is required']
         );
 
         if ($valid->fails()) {
@@ -79,6 +80,7 @@ class EventController extends Controller
         $e->description = $request->description;
         $e->event_cat_id = $request->category;
         $e->price = $request->price;
+        $e->address = $request->address;
 
         // add featured image
         if ($request->hasFile('image')) {
@@ -148,6 +150,7 @@ class EventController extends Controller
                 'description' => 'required',
                 'category' => 'required',
                 'price' => 'nullable|numeric',
+                'address' => 'required',
                 'start_at' => 'required',
                 'end_at' => 'required',
                 'image' => 'nullable|file|image'
@@ -172,6 +175,7 @@ class EventController extends Controller
         $e->description = $request->description;
         $e->event_cat_id = $request->category;
         $e->price = $request->price;
+        $e->address = $request->address;
 
         // add featured image
         if ($request->hasFile('image')) {
@@ -238,7 +242,7 @@ class EventController extends Controller
     public function register($slug)
     {
         $event = Event::whereSlug($slug)->firstOrFail();
-        return view('frontend.events.register', compact('event'));
+        return view('frontend.mem.events.register', compact('event'));
     }
     public function events()
     {

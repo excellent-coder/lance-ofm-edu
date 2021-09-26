@@ -18,4 +18,14 @@ class MemberPayment extends Model
     {
         return $this->belongsTo(MemberRequest::class, 'member_request_id', 'id');
     }
+
+    /**
+     * Get the eventGoer that owns the MemberPayment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function eventGoer()
+    {
+        return $this->belongsTo(EventGoer::class, 'item_id', 'id');
+    }
 }

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Licence;
 use App\Models\Member;
+use App\Models\MemberPayment;
 use App\Models\Membership;
+use App\Models\Publication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
@@ -74,6 +77,7 @@ class MemberController extends Controller
     public function license()
     {
         $licenses = Licence::all();
+        return $licenses;
         return view('frontend.mem.licenses.index', compact('licenses'));
     }
 
@@ -132,5 +136,29 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         //
+    }
+
+    public function publications()
+    {
+        $pubs = Publication::wherePublished(1)->get();
+        $paids = auth('mem')->user()->publications()->get(['id', 'publication_id']); ///->toArray();
+        $memPubs = [];
+        foreach ($paids as $item) {
+            $memPubs[$item->publication_id] = $item->id;
+        }
+        return view('frontend.mem.pubs.index', compact('pubs', 'memPubs'));
+    }
+
+
+    public function events()
+    {
+        $intrests = auth('mem')->user()->eventGoers;
+        return view('frontend.mem.events.intrested', compact('intrests'));
+    }
+
+    public function licenses()
+    {
+        $licenses = auth('mem')->user()->licenses;
+        return $licenses;
     }
 }

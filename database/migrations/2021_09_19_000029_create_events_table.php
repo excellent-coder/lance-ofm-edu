@@ -26,6 +26,7 @@ class CreateEventsTable extends Migration
             $table->dateTime('start_at');
             $table->dateTime('end_at');
             $table->bigInteger('event_cat_id')->unsigned()->nullable();
+            $table->string('address', 300);
             $table->boolean('active')->nullable()->default(1);
             $table->timestamps();
 

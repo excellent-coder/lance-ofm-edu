@@ -18,13 +18,24 @@
                             <div class="row">
                                 <div class="col-12 col-lg-8">
                                     <div class="form-group">
-                                        <label>Short Description</label>
-                                        <textarea placeholder="Short Description" class="form-control" name="excerpt"
-                                            rows="3"></textarea>
+                                        <label for="body">Description</label>
+                                        <textarea class="form-control tinymce required"
+                                            placeholder="Description about the license" name="description"
+                                            rows="12"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="body">Full Description</label>
-                                        <textarea class="form-control tinymce" name="description" rows="12"></textarea>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>Initial Fee</label>
+                                            <input class="form-control required" type="text" inputmode="numeric"
+                                                pattern="([\d]+)(\.)?(\d{1,2})" name="fee" autocomplete="off"
+                                                placeholder="Initial Fee">
+                                        </div>
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>Renewal Fee</label>
+                                            <input class="form-control required" type="text" inputmode="numeric"
+                                                pattern="([\d]+)(\.)?(\d{1,2})" name="renewal" autocomplete="off"
+                                                placeholder="Renewal Fee">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4">
@@ -34,24 +45,15 @@
                                             placeholder="Name">
                                     </div>
                                     <div class="form-group">
-                                        <label>Initial Fee</label>
-                                        <input class="form-control required" type="text"
-                                        inputmode="numeric"  pattern="([\d]+)(\.)?(\d{1,2})"  name="fee" autocomplete="off"
-                                            placeholder="Initial Fee">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Renewal Fee</label>
-                                        <input class="form-control required" type="text"
-                                        inputmode="numeric"  pattern="([\d]+)(\.)?(\d{1,2})"  name="renewal" autocomplete="off"
-                                            placeholder="Renewal Fee">
+                                        <label>Code</label>
+                                        <input class="form-control required" type="text" name="code" autocomplete="off"
+                                            placeholder="Unique Code">
                                     </div>
                                     <div class="form-group">
                                         <label>Duration (Years)</label>
-                                        <input class="form-control required" type="number"
-                                        inputmode="numeric"  name="duration" value="3"
-                                            placeholder="Duration in Years">
+                                        <input class="form-control required" type="number" inputmode="numeric"
+                                            name="duration" value="3" placeholder="Duration in Years">
                                     </div>
-
                                     <div class="checkbox checkbox-primary p-t-0">
                                         <input id="active" checked type="checkbox" class="form-check-input form-control"
                                             name="active" value="1">

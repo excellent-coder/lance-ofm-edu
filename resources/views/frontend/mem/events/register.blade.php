@@ -17,26 +17,34 @@
                     <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-user bottom-2"></i>
                     <div class="block ml-5 md:ml-9">
                         <label class="text-white">Full Name</label>
-                        <input placeholder="Name" type="text" required name="name" class="h-12 max-w-full p-4">
+                        <input placeholder="Name" type="text" value="{{$auth->name}}" required name="name" class="h-12 max-w-full p-4">
                     </div>
                 </div>
                 <div class="relative mb-4">
                     <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-envelope bottom-2"></i>
                     <div class="block ml-5 md:ml-9">
                         <label class="text-white">Email</label>
-                        <input placeholder="Email" type="text" required name="email" class="h-12 max-w-full p-4">
+                        <input placeholder="Email" type="text" value="{{$auth->email}}" required name="email" class="h-12 max-w-full p-4">
                     </div>
                 </div>
                 <div class="relative mb-4">
                     <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-phone bottom-2"></i>
                     <div class="block ml-5 md:ml-9">
                         <label class="text-white">Phone</label>
-                        <input placeholder="Phone" type="tel" required name="phone" class="h-12 max-w-full p-4">
+                        <input placeholder="Phone" type="tel" required value="{{$auth->phone}}" name="phone" class="h-12 max-w-full p-4">
                     </div>
                 </div>
                 <div class="relative mb-4 text-white">
-                    <label>This event cost {{$currency. ' '. number_format($event->price, 2) }}</label>
+                    <label class="block text-2xl font-black text-center text-indigo-200">This event cost {{$currency. ' '. number_format($event->price, 2) }}</label>
                     <small class="block ">You will be promted to make payment otherwise you wont be allowed to attenf this event</small>
+                </div>
+                <div class="relative mb-4 text-center text-white">
+                    <label class="block text-2xl font-black text-indigo-200">Hapenning On </label>
+                    <small class="block text-xl ">
+                        {{$event->start_at->format('Y-m-d')}}
+                        <span class="relative inline-block w-4 h-4 mx-2 bg-yellow-100 rounded-full top-1 "></span>
+                        {{$event->end_at->format('Y-m-d')}}
+                    </small>
                 </div>
 
                 <div class="text-center ">

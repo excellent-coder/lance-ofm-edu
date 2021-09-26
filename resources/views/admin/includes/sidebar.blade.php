@@ -13,8 +13,7 @@ $title = web_setting('general', 'title');
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img src="/storage/{{$logo}}" alt="{{$title}}" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
+        <img src="/storage/{{$logo}}" alt="{{$title}}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">{{$title}}</span>
     </a>
     <!-- Sidebar -->
@@ -80,19 +79,22 @@ $title = web_setting('general', 'title');
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('admin.students.approved')}}" class="nav-link @if ($route == 'students.approved') active @endif">
+                            <a href="{{route('admin.students.approved')}}"
+                                class="nav-link @if ($route == 'students.approved') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Approved</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.students.pending')}}" class="nav-link @if ($route == 'students.pending') active @endif">
+                            <a href="{{route('admin.students.pending')}}"
+                                class="nav-link @if ($route == 'students.pending') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pending</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.students.graduated')}}" class="nav-link @if ($route == 'students.graduated') active @endif">
+                            <a href="{{route('admin.students.graduated')}}"
+                                class="nav-link @if ($route == 'students.graduated') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Graduated</p>
                             </a>
@@ -109,17 +111,20 @@ $title = web_setting('general', 'title');
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('admin.members')}}" class="nav-link @if ($route == 'members') active @endif">
+                            <a href="{{route('admin.members')}}"
+                                class="nav-link @if ($route == 'members') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Active</p>
                             </a>
-                            <a href="{{route('admin.members.approved')}}" class="nav-link @if ($route == 'members.approved') active @endif">
+                            <a href="{{route('admin.members.approved')}}"
+                                class="nav-link @if ($route == 'members.approved') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Approved</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.members.pending')}}" class="nav-link @if ($route == 'members.pending') active @endif">
+                            <a href="{{route('admin.members.pending')}}"
+                                class="nav-link @if ($route == 'members.pending') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pending</p>
                             </a>
@@ -143,13 +148,15 @@ $title = web_setting('general', 'title');
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.scs.graduated')}}" class="nav-link @if ($route == 'scs.graduated') active @endif">
+                            <a href="{{route('admin.scs.graduated')}}"
+                                class="nav-link @if ($route == 'scs.graduated') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Graduated</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.scs.payments.pending')}}" class="nav-link @if ($route == 'scs.pending.payment') active @endif">
+                            <a href="{{route('admin.scs.payments.pending')}}"
+                                class="nav-link @if ($route == 'scs.pending.payment') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pending Payments</p>
                             </a>
@@ -164,7 +171,7 @@ $title = web_setting('general', 'title');
                     </a>
                 </li>
 
-                 <li class="nav-item  @if ($segment == 'settings') menu-open @endif">
+                <li class="nav-item  @if ($segment == 'settings') menu-open @endif">
                     <a href="#" class="nav-link @if ($segment == 'settings') active @endif ">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
@@ -186,7 +193,7 @@ $title = web_setting('general', 'title');
                                 class="nav-link @if ($url == $tag->slug) active @endif">
                                 @if ($tag->icon)
                                 <img src="/storage/{{$tag->icon}}" alt="{{$tag->tag}} icon" class="nav-icon">
-                                    @else
+                                @else
                                 <i class="fas fa-life-ring nav-icon"></i>
                                 @endif
                                 <p>{{$tag->tag}}</p>
@@ -196,7 +203,7 @@ $title = web_setting('general', 'title');
                     </ul>
                 </li>
 
-                 <li class="nav-item  @if ($segment == 'programs') menu-open @endif">
+                <li class="nav-item  @if ($segment == 'programs') menu-open @endif">
                     <a href="#" role="button" class="nav-link @if ($segment == 'programs') active @endif ">
                         <i class="nav-icon fas fa-school"></i>
                         <p>
@@ -229,33 +236,33 @@ $title = web_setting('general', 'title');
                     </a>
                 </li>
 
-                 <li class="nav-item  @if ($segment == 'courses') menu-open @endif">
-                     <a href="#" role="button" class="nav-link @if ($segment == 'courses') active @endif ">
-                         <i class="fas fa-book-reader nav-icon"></i>
-                         <p>
-                             Courses
-                             <i class="fas fa-angle-left right"></i>
-                         </p>
-                     </a>
-                     <ul class="nav nav-treeview">
-                         <li class="nav-item">
-                             <a href="{{route('admin.courses')}}"
-                                 class="nav-link @if ($route == 'courses') active @endif">
-                                 <i class="fas fa-list nav-icon"></i>
-                                 <p>
-                                     Courses
-                                 </p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="{{route('admin.courses.create')}}"
-                                 class="nav-link @if ($route == 'courses.create') active @endif">
-                                 <i class="fas fa-edit nav-icon"></i>
-                                 <p>New Course</p>
-                             </a>
-                         </li>
-                     </ul>
-                 </li>
+                <li class="nav-item  @if ($segment == 'courses') menu-open @endif">
+                    <a href="#" role="button" class="nav-link @if ($segment == 'courses') active @endif ">
+                        <i class="fas fa-book-reader nav-icon"></i>
+                        <p>
+                            Courses
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.courses')}}"
+                                class="nav-link @if ($route == 'courses') active @endif">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>
+                                    Courses
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.courses.create')}}"
+                                class="nav-link @if ($route == 'courses.create') active @endif">
+                                <i class="fas fa-edit nav-icon"></i>
+                                <p>New Course</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="nav-item  @if ($segment == 'lessons') menu-open @endif">
                     <a href="#" class="nav-link @if ($segment == 'lessons') active @endif ">
@@ -283,7 +290,7 @@ $title = web_setting('general', 'title');
                     </ul>
                 </li>
 
-                  <li class="nav-item  @if ($segment == 'memberships') menu-open @endif">
+                <li class="nav-item  @if ($segment == 'memberships') menu-open @endif">
                     <a href="#" role="button" class="nav-link @if ($segment == 'memberships') active @endif ">
                         <i class="nav-icon fas fa-user-friends"></i>
                         <p>
@@ -308,6 +315,96 @@ $title = web_setting('general', 'title');
                             </a>
                         </li>
                         @endforeach
+                    </ul>
+                </li>
+                <li class="nav-item  @if ($segment == 'publications') menu-open @endif">
+                    <a href="javascript:void(0)" role="button"
+                        class="nav-link @if ($segment == 'publications') active @endif ">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                        <p>
+                            Publications
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.pubs')}}" class="nav-link @if ($route == 'pubs') active @endif">
+                                <i class="fas fa-bars nav-icon"></i>
+                                <p>All</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.pubs.cats')}}"
+                                class="nav-link @if ($route == 'pubs.cats') active @endif">
+                                <i class="fas fa-screwdriver nav-icon"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.pubs.create')}}"
+                                class="nav-link @if ($route == 'pubs.create') active @endif">
+                                <i class="fas fa-pen-alt nav-icon"></i>
+                                <p>New</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item  @if ($segment == 'events') menu-open @endif">
+                    <a href="#" role="button" class="nav-link @if ($segment == 'events') active @endif ">
+                        <i class="fas fa-id-card nav-icon"></i>
+                        <p>
+                            Events
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.events')}}" class="nav-link @if ($route == 'events') active @endif">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>
+                                    Events
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.events.create')}}"
+                                class="nav-link @if ($route == 'events.create') active @endif">
+                                <i class="fas fa-edit nav-icon"></i>
+                                <p>New Event</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.events.categories')}}"
+                                class="nav-link @if ($route == 'events.categories') active @endif">
+                                <i class="fas fa-portrait nav-icon"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item  @if ($segment == 'licences') menu-open @endif">
+                    <a href="javascript:void()" role="button" class="nav-link @if ($segment == 'licences') active @endif ">
+                        <i class="fas fa-id-card nav-icon"></i>
+                        <p>
+                            Licences
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.licences')}}"
+                                class="nav-link @if ($route == 'licences') active @endif">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p> Licences </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.licences.create')}}"
+                                class="nav-link @if ($route == 'licences.create') active @endif">
+                                <i class="fas fa-edit nav-icon"></i>
+                                <p>New Licence</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

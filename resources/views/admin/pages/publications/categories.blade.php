@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('css')
-{{-- DataTables --}}
+<!-- DataTables -->
 <link rel="stylesheet" href="/vendor/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/vendor/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="/vendor/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -16,18 +16,16 @@
                     <div class="row">
                         <div class="col-6 text-md-left">
                             <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?=$events->count()?></span>
-                               Events
+                                <span class="badge bg-pink"><?=count($categories)?></span>
+                                Categories
                             </h4>
                         </div>
                         <div class="col-6">
-                            <button class="btn btn-danger bulk-action"
-                                title="Delete all selected events"
+                            <button class="btn btn-danger bulk-action" title="Delete all selected categories"
                                 @click.prevent="destroy($event.target)"
-                                data-action="{{route('admin.events.destroy')}}"
-                                >
+                                data-action="{{route('admin.pub-cats.destroy')}}" data-id="">
                                 <i class="fas fa-trash-alt"></i> Bulk
-                                 (<span class="total-selected">0</span>)
+                                (<span class="total-selected">0</span>)
                             </button>
                         </div>
                     </div>
@@ -37,18 +35,22 @@
     </div>
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="Events">
-                <a href="{{route('admin.events.create')}}" class="text-white btn btn-success btn-sm">
-                    New Event
-                </a>
+            <x-admin-card-tool title="Post Categories">
+                <button class="text-white btn btn-success btn-tool dropdown-toggle btn-sm" data-target="#general-modal"
+                    @click="modalEdit($event.target, true)" data-form="general-modal-form"
+                    data-store_route="{{route('admin.pub-cats.store')}}">
+                    New Category
+                </button>
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
                     <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
-                            <a href="{{route('admin.events.create')}}" class="btn btn-success">
-                                New Event
-                            </a>
+                            <button class="btn btn-success" data-target="#general-modal"
+                                @click="modalEdit($event.target, true)" data-form="general-modal-form"
+                                data-store_route="{{route('admin.pub-cats.store')}}">
+                                New Category
+                            </button>
                         </div>
                     </div>
                     <div class="col-12">
@@ -59,10 +61,8 @@
                                         <input type="checkbox" id="checkbox">
                                     </th>
                                     <th>#</th>
-                                    <th>Title</th>
-                                    <th>image</th>
-                                    <th>category</th>
-                                    <th>views</th>
+                                    <th>Name</th>
+                                    <th>Publications</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -70,40 +70,38 @@
                                 <?php $i=1;?>
                                 @php
                                 $action = [
-                                    'destroy'=> route('admin.events.destroy'),
+                                'modal'=>'general',
+                                'destroy'=> route('admin.pub-cats.destroy'),
+                                'form'=>'general-modal-form',
                                 ];
                                 @endphp
-                                @foreach ($events as $p)
+                                @foreach ($categories as $c)
                                 <?php
-                                $action['id'] = $p->id;
-                                $action['route'] = route('admin.events.edit', $p->id);
-                                $action['rowid'] = "#tr-post-$p->id";
+                                $action['id'] = $c->id;
+                                $action['update_route']= route("admin.pub-cats.update", $c->id);
+                                $action['rowid'] = "#tr$c->id";
+
+                                $action['item']= json_encode([
+                                    'name'=>$c->name,
+                                    'active'=>$c->active,
+                                    'parent_id'=>$c->parent_id
+                                    ]);
                                 ?>
-                                <tr id="tr-post-{{$p->id}}">
-                                    <td><input type="checkbox" value="{{$p->id}}" class="checking"></td>
+                                <tr id="tr{{$c->id}}">
+                                    <td><input type="checkbox" value="{{$c->id}}" class="checking"></td>
                                     <td>{{$i++}}</td>
+                                    <td>{{$c->name}}</td>
                                     <td>
-                                        <a href="{{route('events.show', $p->slug)}}" target="_blank" rel="noopener noreferrer">
-                                            {{ Str::limit($p->title, 100, '...')}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @if ($p->image)
-                                         <img src="/storage/{{$p->image}}" alt="">
-                                         @else
-                                         N/A
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($p->category)
-                                        <a href="{{route('event-cats.show', $p->category->slug)}}" target="_blank" rel="noopener noreferrer">
-                                            {{ $p->category->name }}
+                                        @if ($t = $c->publications->count())
+                                        <a href="{{route('admin.pubs.cat', $c->id)}}">
+                                            <button class="btn">
+                                                    <span class="badge badge-primary">{{$t}}</span>
+                                            </button>
                                         </a>
                                         @else
-                                          N/A
+                                            N/A
                                         @endif
                                     </td>
-                                    <td>{{'views'}}</td>
                                     <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
@@ -116,10 +114,8 @@
                                         <i class="fa fa-check-square" aria-hidden="true"></i>
                                     </th>
                                     <th>#</th>
-                                    <th>Title</th>
-                                    <th>image</th>
-                                    <th>category</th>
-                                    <th>views</th>
+                                    <th>Name</th>
+                                    <th>Publications</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -131,7 +127,17 @@
     </div>
 </div>
 <div>
-    <x-admin-modal title="Managing subjects">
+    <x-admin-modal title="Publication Categories">
+        <form action="{{route('admin.pub-cats.store')}}" autocomplete="off" @submit.prevent="submit($event)"
+            id="general-modal-form">
+            <div class="form-group">
+                <label>Category</label>
+                <input class="form-control required" autocomplete="off" placeholder="category" type="text" name="name" id="editing-name">
+            </div>
+            <div class="my-2 text-right form-group">
+                <button type="submit" class="btn btn-success">create</button>
+            </div>
+        </form>
     </x-admin-modal>
 </div>
 @endsection
@@ -143,6 +149,9 @@
 <script src="/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="/vendor/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/vendor/jszip/jszip.min.js"></script>
+<script src="/vendor/pdfmake/pdfmake.min.js"></script>
+<script src="/vendor/pdfmake/vfs_fonts.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/vendor/datatables-buttons/js/buttons.colVis.min.js"></script>

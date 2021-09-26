@@ -19,6 +19,11 @@ class LicensePaymentController extends Controller
         //
     }
 
+    public function all()
+    {
+        return Licence::all();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -153,5 +158,14 @@ class LicensePaymentController extends Controller
         $payment->save();
 
         return view('frontend.payments.member', compact('payment'));
+    }
+
+    public function expeired()
+    {
+        return 'comming soon';
+    }
+    public function payments()
+    {
+        return 'comming soon';
     }
 }

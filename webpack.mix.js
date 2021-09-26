@@ -10,7 +10,7 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-// mix.extract();
+mix.extract();
 
 /**
  * Mix all the core css required in every page together
@@ -34,8 +34,8 @@ const mix = require('laravel-mix');
      * Here we will build all the files needed for the user portal to function
      *
      */
-mix.js("resources/js/build/portal.js", "public/js/portal/app.js").vue()
-    .sass("resources/scss/portal.scss", "public/css/portal.css");
+// mix.js("resources/js/build/portal.js", "public/js/portal/app.js").vue()
+//     .sass("resources/scss/portal.scss", "public/css/portal.css");
 
 
     /**
@@ -54,8 +54,8 @@ mix.js("resources/js/build/portal.js", "public/js/portal/app.js").vue()
      |
      */
 
-    // mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
-    // .sass('resources/scss/admin.scss', 'public/css/admin/app.css')
+    mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
+    .sass('resources/scss/admin.scss', 'public/css/admin/app.css')
 
 // mix.js('resources/js/utils/tinymce.js', 'public/js/parts/tinymce.js');
 

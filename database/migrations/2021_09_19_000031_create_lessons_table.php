@@ -13,7 +13,6 @@ class CreateLessonsTable extends Migration
      */
     public function up()
     {
-        return;
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('course_id', false, true)->nullable();

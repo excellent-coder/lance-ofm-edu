@@ -24,39 +24,34 @@
                                     <div class="order-2 col-lg-7 col-12 order-lg-0">
                                         <div class="form-group">
                                             <label>Description</label>
-                                            <textarea class="form-control required tinymce" name="description"
-                                                rows="12"></textarea>
+                                            <textarea class="form-control required tinymce" name="description" placeholder="Brief description about the event" rows="12"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-5 order-lg-1 order-0">
                                         <div class="form-group">
                                             <label for="title">Title</label>
-                                            <input class="form-control required" type="text" name="title"
-                                                placeholder="title" autocomplete="on">
+                                            <input class="form-control required" type="text" name="title" placeholder="title" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label>Price</label>
-                                            <input class="form-control required" type="text" inputmode="numeric"
-                                                pattern="([\d]+)(\.)?(\d{1,2})" name="price" autocomplete="off"
-                                                placeholder="Initial Fee">
+                                            <input class="form-control" type="text" inputmode="numeric" pattern="([\d]+)(\.)?(\d{1,2})"
+                                                name="price" autocomplete="off" placeholder="Ticket Fee">
                                         </div>
                                         <div class="form-group">
-                                            <label for="cat">Type Of Event</label>
-                                            <select data-placeholder="Type Of Event" id="cat"
-                                                class="form-control select2" required name="category">
+                                            <label for="cat">Category</label>
+                                            <select data-placeholder="Category" id="cat" class="form-control select2" required name="category">
                                                 <option value=" ">-select-</option>
                                                 @foreach ($categories as $p)
-                                                <option value="{{$p->id}}">{{$p->name}}</option>
+                                                    <option value="{{$p->id}}">{{$p->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <h5 class="mb-3">preview photo</h5>
+                                            <h5 class="mb-3">preview Image</h5>
                                             <div class="form-group position-relative"
                                                 style="background-color:rgba(81, 32, 128, 0.787)">
-                                                <input @change.prevent="previewSelected($event, 'image', false)"
-                                                    id="image" class="form-control-file" type="file" name="image"
-                                                    accept="image/*">
+                                                <input @change.prevent="previewSelected($event, 'image', false)" id="image" class="form-control-file"
+                                                    type="file" name="image" accept="image/*">
                                                 <label for="image" class="text-center">
                                                     <i class="fas fa-plus deeppink"></i>
                                                 </label>
@@ -75,18 +70,22 @@
                                     <hr class="order-2 col-12 bg-success">
                                     <div class="order-2 my-2 col-12">
                                         <div class="row">
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-md-6 col-12">
+                                                <label for="address">Address</label>
+                                                <input id="address" class="form-control wtk required" type="text" name="address" placeholder="address">
+                                            </div>
+                                            <div class="form-group col-md-6 col-12">
                                                 <label for="start_at">Start Time</label>
                                                 <input id="start_at" class="form-control wtk required" type="datetime-local" name="start_at">
                                             </div>
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-md-6 col-12">
                                                 <label for="end_at">End Time</label>
                                                 <input id="end_at" class="form-control wtk required" type="datetime-local" name="end_at">
                                             </div>
                                             <div class="mt-4 form-group col-6">
                                                 <div class="checkbox checkbox-primary p-t-0">
                                                     <input id="active" type="checkbox"
-                                                        class="form-check-input form-control" name="active" value="1">
+                                                        class="form-check-input form-control" checked name="active" value="1">
                                                     <label for="active">
                                                         Active
                                                     </label>

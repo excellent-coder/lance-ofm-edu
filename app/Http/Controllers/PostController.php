@@ -88,7 +88,7 @@ class PostController extends Controller
             if ($file->isValid()) {
 
                 $name = $slug . "-" . time()
-                    . '.' . $file->extension();
+                    . '.' . $file->getClientOriginalExtension();
                 $post->image = $file->storeAs('blog/images', $name);
             }
         }
