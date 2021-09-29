@@ -18,7 +18,6 @@
 
 <body class="hold-transition {{$admin_theme}} sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper" id="adminApp">
-
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__wobble" src="/storage/{{web_setting('general', 'logo')}}" alt="web Logo" height="60"
@@ -83,9 +82,9 @@
         $(document).ready(function () {
             $('.select2').select2();
             // prevent auto-focus on select2 search input
-            $('select').on('select2:opening', function (e) {
-                $('.select2-search input').prop('focus', 1);
-            });
+            // $('select').on('select2:opening', function (e) {
+            //     $('.select2-search input').prop('focus', 1);
+            // });
 
             $('#checkbox').on('click', function () {
                 if (this.checked) {
@@ -99,7 +98,6 @@
                 }
                 totalSelected();
             });
-
 
             $(document).on('click', function (e) {
                 if (e.target.closest('#dataTable, .dataTable')) {

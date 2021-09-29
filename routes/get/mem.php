@@ -45,6 +45,9 @@ Route::prefix('events')->group(function () {
 Route::prefix('bills')->group(function () {
     Route::get('/', 'MemberBillController@bills')->name('mem.bills');
     Route::get('payments', 'MemberBillController@payments')->name('mem.bills.payments');
-    Route::get('paid', 'MemberBillController@pending')->name('mem.bills.paid');
+    Route::get('paid', 'MemberBillController@paid')->name('mem.bills.paid');
     Route::get('pending', 'MemberBillController@pending')->name('mem.bills.pending');
 });
+
+Route::post('passport', 'MemberController@updatePassport')->name('mem.passport');
+Route::post('pay/annual', 'MemberAnnualController@store')->name('mem.pay.annual');

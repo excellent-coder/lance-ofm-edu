@@ -161,4 +161,22 @@ class MemberController extends Controller
         $licenses = auth('mem')->user()->licenses;
         return $licenses;
     }
+
+    public function updatePassport(Request $request)
+    {
+        if ($request->hasFile('passport')) {
+            $file = $request->file('passport');
+            if ($file->isValid()) {
+                $student = auth('mem')->user();
+
+                $name = Str::random(10) . "-" . time()
+                    . '.' . $file->getClientOriginalExtension();
+                $student->passport = $file->storeAs('members/passports', $name);
+                $student->save();
+
+                return ['message' => "Your passport has been updated successfully", 'type' => 'success', 'status' => 200];
+            }
+        }
+        return ['message' => "Something went wrong", 'type' => 'error', 'status' => 200];
+    }
 }

@@ -109,7 +109,7 @@
             </a>
              <ul class="left-0 p-2 text-gray-900 bg-white sub-menu">
                 <a class="dropdown-item" href="{{route('login')}}">Membership</a>
-                <a class="dropdown-item" href="{{route('login')}}">Program</a>
+                <a class="dropdown-item" href="{{route('login')}}">Main Students</a>
                 <a class="dropdown-item" href="{{route('login')}}">Short Course</a>
             </ul>
         </li>

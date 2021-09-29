@@ -88,7 +88,7 @@
                                     <td>{{$c->matric_no}}</td>
                                     <td>{{$c->program->title }}</td>
                                     <td>{{$c->created_at}}</td>
-                                    <td>{{$c->session->year}}</td>
+                                    <td>{{$c->session->year??'N/A'}}</td>
                                     <td>
                                         <a href="{{route('admin.students.docs', $c->id)}}">
                                             <i class="fas fa-file-archive"></i>

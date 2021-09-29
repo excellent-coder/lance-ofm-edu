@@ -13,8 +13,10 @@ use App\Mail\AdminApplied;
 use App\Mail\Applied;
 use App\Mail\StudentVerifyEmail;
 use App\Models\Program;
+use App\Models\Session;
 use App\Models\StudentRequest;
 use Illuminate\Support\Facades\Mail;
+use PhpParser\Node\Expr\FuncCall;
 use stdClass;
 
 class StudentController extends Controller
@@ -124,10 +126,16 @@ class StudentController extends Controller
 
     public function docs(Student $student)
     {
-        $appDocs = $student->appRequest()
-            ->first(['documents', 'passport', 'certificates']);
-        // return $appDocs;
-        return $student;
+        $docs = $student->appRequest()->first(['documents', 'passport', 'certificates']);
+        $files  = [
+            'documents' => explode(',', $docs->documents),
+            'passport' => $docs->passport,
+            'certificates' => explode(',', $docs->certificates)
+        ];
+
+        // return $files;
+        $docs = $files;
+        return view('admin.pages.students.docs', compact('student', 'docs'));
     }
 
     /**
@@ -186,5 +194,30 @@ class StudentController extends Controller
         $lesson = Lesson::where('slug', $slug)->where('visibility', '!=', '3')
             ->firstOrFail();
         return view('frontend.pgs.lessons.study', compact('lesson'));
+    }
+
+
+
+    public function graduated(?Session $session)
+    {
+        return 'comming soon';
+    }
+
+    public function updatePassport(Request $request)
+    {
+        if ($request->hasFile('passport')) {
+            $file = $request->file('passport');
+            if ($file->isValid()) {
+                $student = auth('pgs')->user();
+
+                $name = Str::random(10) . "-" . time()
+                    . '.' . $file->getClientOriginalExtension();
+                $student->passport = $file->storeAs('students/passports', $name);
+                $student->save();
+
+                return ['message' => "Your passport has been updated successfully", 'type' => 'success', 'status' => 200];
+            }
+        }
+        return ['message' => "Something went wrong", 'type' => 'error', 'status' => 200];
     }
 }

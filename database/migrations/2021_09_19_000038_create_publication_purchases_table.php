@@ -13,30 +13,17 @@ class CreatePublicationPurchasesTable extends Migration
      */
     public function up()
     {
+        //38
+        Schema::dropIfExists('publication_purchases');
         Schema::create('publication_purchases', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('member_id')->unsigned();
             $table->bigInteger('publication_id')->unsigned();
-
-            $table->string('currency');
-            $table->decimal('amount', 10, 2)->unsigned();
-            $table->string('ref')->unique();
-            $table->string('reason');
-
-            $table->string('mac')->nullable();
-            $table->ipAddress('ip')->nullable();
-
-            $table->string('transaction_id')
-                ->nullable()
-                ->comment('from flutterwave');
-            $table->string('status')
-                ->comment('from flutterwave')
-                ->nullable()->default('pending');
-
-            $table->dateTime('paid_at')->nullable();
+            $table->bigInteger('payment_id')->unsigned();
             $table->timestamps();
 
             // $table->foreign('member_id')->references('id')->on('members')->cascadeOnUpdate();
+            // $table->foreign('payment_id')->references('id')->on('members')->cascadeOnUpdate();
             // $table->foreign('publication_id')->references('id')->on('publications')->cascadeOnUpdate();
         });
     }

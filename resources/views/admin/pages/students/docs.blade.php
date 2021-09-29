@@ -9,110 +9,49 @@
 
 @section('content')
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-6 text-md-left">
-                            <h4 class="m-0 text-dark">
-                                <span class="badge bg-pink"><?=count($students)?></span>
-                                students
-                            </h4>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-danger bulk-action"
-                                title="Delete all selected students"
-                                @click.prevent="destroy($event.target)"
-                                data-action="{{route('admin.students.destroy')}}"
-                                >
-                                <i class="fas fa-trash-alt"></i> Bulk
-                                 (<span class="total-selected">0</span>)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="students">
-                <div class=" dropdown-divider"></div>
-                <a href="{{route('admin.students.create')}}" class=" btn btn-success btn-sm">
-                    new Student
-                </a>
-            </x-admin-card-tool>
+            <x-admin-card-tool title="{{$student->name}}'s Documents"></x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="my-3 col-12" style="background-color: indigo;">
-                        <div class="row justify-content-end">
-                            <a href="{{route('admin.students.create')}}" class="btn btn-success">
-                                new Student
-                            </a>
-                        </div>
-                    </div>
                     <div class="col-12">
                         <table id="dataTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <input type="checkbox" id="checkbox">
-                                    </th>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Matric No</th>
-                                    <th>Program</th>
-                                    <th>Date Started</th>
-                                    <th>Session Admintted</th>
-                                    <th>Docs</th>
-                                    <th>Action</th>
+                                    <th>Document</th>
+                                    <th>File</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i=1;?>
-                                @php
-                                $action = [
-                                'destroy'=> route('admin.students.destroy'),
-                                ];
-                                @endphp
-                                @foreach ($students as $c)
-                                <?php
-                                $action['id'] = $c->id;
-                                $action['rowid'] = "#tr-$c->id";
-                                ?>
-                                <tr id="tr-{{$c->id}}">
-                                    <td><input type="checkbox" value="{{$c->id}}" class="checking"></td>
+                                @foreach ($docs as $k=>$v)
+                                @if (is_array($v))
+                                @foreach ($v as $f)
+                                <tr>
                                     <td>{{$i++}}</td>
-                                    <td>{{$c->name}}</td>
-                                    <td>{{$c->matric_no}}</td>
-                                    <td>{{$c->program->title }}</td>
-                                    <td>{{$c->created_at}}</td>
-                                    <td>{{$c->session->year}}</td>
+                                    <td>{{$k}}</td>
                                     <td>
-                                        <a href="{{route('admin.students.docs', $c->id)}}">
-                                            <i class="fas fa-file-archive"></i>
+                                        <a href="/storage/{{$f}}" target="_blank" rel="noopener noreferrer">
+                                            {{pathinfo($f, PATHINFO_EXTENSION)}}
                                         </a>
-                                    </td>
-                                    <td>
-                                        <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
                                 </tr>
                                 @endforeach
-                            </tbody>
-                            <tfoot>
+
+                                @else
                                 <tr>
-                                    <th>
-                                        <i class="fa fa-check-square" aria-hidden="true"></i>
-                                    </th>
-                                    <th>#</th>
-                                     <th>Name</th>
-                                     <th>Matric No</th>
-                                    <th>Programs</th>
-                                    <th>Date Approved</th>
-                                    <th>Action</th>
+                                    <td>{{$i++}}</td>
+                                    <td>{{$k}}</td>
+                                    <td>
+                                        <a href="/storage/{{$v}}" target="_blank" rel="noopener noreferrer">
+                                            {{pathinfo($v, PATHINFO_EXTENSION)}}
+                                        </a>
+                                    </td>
                                 </tr>
-                            </tfoot>
+                                @endif
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

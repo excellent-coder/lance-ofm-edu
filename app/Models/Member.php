@@ -49,4 +49,26 @@ class Member extends Authenticatable
     {
         return $this->hasMany(EventGoer::class, 'member_id', 'id')->wherePaid(1);
     }
+
+    /**
+     * Get the paidAnnual associated with the Member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function paidAnnual()
+    {
+        return $this->hasOne(MemberAnnual::class, 'member_id', 'id')
+            ->where('end_at', '>', 'now()');
+    }
+
+    /**
+     * Get all of the payments for the Member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments()
+    {
+        return $this->hasMany(MemberPayment::class, 'member_id', 'id');
+        // ->where('transaction_id', '!=', null);
+    }
 }

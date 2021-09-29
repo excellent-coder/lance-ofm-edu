@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\Session;
 use App\Models\StudentPayment;
 use Illuminate\Http\Request;
@@ -133,6 +134,13 @@ class StudentPaymentController extends Controller
                 } while ($len < 4);
             }
             $s->matric_no = "STU/" . $student->program->abbr . "/" . $year . "/" . $next;
+
+            // student level
+            $level = Level::orderBy('level', 'asc')->first();
+            if ($level) {
+                $s->level_id = $level->id;
+            }
+
             $s->save();
 
             // assign payment to student

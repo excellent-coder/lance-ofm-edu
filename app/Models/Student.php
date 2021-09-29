@@ -104,4 +104,14 @@ class Student extends Authenticatable
     {
         return $this->hasMany(StudentPayment::class, 'student_id', 'id');
     }
+
+    /**
+     * Get the level that owns the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function level()
+    {
+        return $this->belongsTo(Level::class, 'level_id', 'id');
+    }
 }

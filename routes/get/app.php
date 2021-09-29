@@ -13,10 +13,10 @@ Route::prefix('shop')->group(function () {
 });
 // Route::get('jo')
 
-Route::prefix('portal')->name('pgs.')->group(function () {
-    Route::get('profile/status', 'ProfileController@status')->name('profile.status');
-    Route::get('profile/edit', 'ProfileController@edit')->name('profile.edit');
-});
+// Route::prefix('portal')->name('pgs.')->group(function () {
+//     Route::get('profile/status', 'ProfileController@status')->name('profile.status');
+//     Route::get('profile/edit', 'ProfileController@edit')->name('profile.edit');
+// });
 
 Route::name('static-pages')->group(function () {
     Route::get('awards', 'PageController@static')->name('.awards');

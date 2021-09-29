@@ -9,8 +9,8 @@
 @section('content')
 <div class="flex w-full px-4 dashboard">
 <div class="w-full text-center md:text-left">
-    <img class="inline border-2 border-gray-600 profile-img md:w-52 md:h-52 w-28 h-28"
-        src="/storage/{{$auth->passport}}" alt="{{"$auth->name"}}">
+    <img class="inline border-2 border-gray-600 profile-img md:w-52 md:h-52 w-28 h-28" alt="{{"$auth->name"}}"
+        :src="form.passport ? form.passport: `{{asset('storage/'.($auth->passport))}}`">
     <h4 class="text-lg font-bold text-blue-700 md:text-xl ">
         {{"$auth->name"}}
     </h4>

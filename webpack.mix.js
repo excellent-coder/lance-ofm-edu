@@ -34,8 +34,8 @@ mix.extract();
      * Here we will build all the files needed for the user portal to function
      *
      */
-// mix.js("resources/js/build/portal.js", "public/js/portal/app.js").vue()
-//     .sass("resources/scss/portal.scss", "public/css/portal.css");
+mix.js("resources/js/build/portal.js", "public/js/portal/app.js").vue()
+    .sass("resources/scss/portal.scss", "public/css/portal.css");
 
 
     /**
@@ -54,8 +54,8 @@ mix.extract();
      |
      */
 
-    mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
-    .sass('resources/scss/admin.scss', 'public/css/admin/app.css')
+    // mix.js("resources/js/build/admin.js", "public/js/admin/app.js").vue()
+    // .sass('resources/scss/admin.scss', 'public/css/admin/app.css')
 
 // mix.js('resources/js/utils/tinymce.js', 'public/js/parts/tinymce.js');
 

@@ -1,16 +1,19 @@
 <div class="w-full">
-    <div class="flex flex-wrap justify-center pt-5 bg-indigo-800 pb-11 -mt-9 lg:-mt-0">
-        <img src="{{asset('storage/'.($auth->passport))}}" alt="{{$auth->name}}"
-            class="profile-img">
+    <div class="relative flex flex-wrap justify-center pt-5 bg-indigo-800 pb-11 -mt-9 lg:-mt-0">
+        <div class="relative w-full">
+            <input @change.prevent="updatePassport($event, '{{route('pgs.passport')}}')"
+                id="update-passport" class="hidden form-control-file" type="file" name="image" accept="image/*" title="Your Passport">
+            <img :src="form.passport ? form.passport: `{{asset('storage/'.($auth->passport))}}`" alt="{{$auth->name}}" class="profile-img">
+                <label for="update-passport" class="absolute bottom-0 text-white cursor-pointer right-1/3" title="Update Your Passport">
+                    <i class="text-white fa fa-camera" aria-hidden="true"></i>
+                </label>
+        </div>
         <div class="w-full text-center ">
             <p class="text-2xl font-bold text-center text-blue-300 cursor-pointer user-name">
                 {{$auth->name}}
                 <br>
-                <span class="mt-4 text-xl times-new-romans">LEVEL 1</span>
+                <span class="mt-4 text-xl times-new-romans">LEVEL {{$auth->level->name ?? '1'}}</span>
             </p>
-            <a href="{{route('pgs.profile.edit')}}" class="inline-block px-3 py-2 font-medium text-white border-2 border-opacity-75 shadow-md rounded-3xl mt-7 focus:bg-blue-700 focus:text-red-200 hover:bg-yellow-200 hover:text-green-800">
-                update profile
-            </a>
         </div>
     </div>
     <div class="flex flex-wrap w-full">

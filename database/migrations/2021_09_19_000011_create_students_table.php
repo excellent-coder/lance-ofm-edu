@@ -40,17 +40,14 @@ class CreateStudentsTable extends Migration
 
             // $table->foreign('program_id')
             //     ->references('id')->on('programs')
-            //     ->cascadeOnUpdate()
-            //     ->nullOnDelete();
+            //     ->cascadeOnUpdate();
 
             // $table->foreign('session_id')
             //     ->references('id')->on('sessions')
-            //     ->cascadeOnUpdate()
-            //     ->nullOnDelete();
+            //     ->cascadeOnUpdate();
 
             // $table->foreign('student_request_id')->references('id')
-            //     ->on('student_requests')
-            //     ->nullOnDelete()->cascadeOnDelete();
+            //     ->on('student_requests')->cascadeOnUpdate();
         });
     }
 

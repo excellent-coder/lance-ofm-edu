@@ -13,20 +13,13 @@ class CreateLicensePaymentsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('license_payments');
         Schema::create('license_payments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('member_id')->unsigned()->nullable();
+            $table->bigInteger('member_id')->unsigned();
+            $table->bigInteger('payment_id')->unsigned();
 
-            $table->string('currency');
-            $table->decimal('amount', 10, 2)->unsigned();
-            $table->string('ref')->unique();
-            $table->string('reason', 1000);
-            $table->string('mac')->nullable();
-
-            $table->ipAddress('ip')->nullable();
             $table->bigInteger('licence_id')->unsigned()->nullable();
-            // a common tag that can be used to group
-            // payments processed on this table
             $table->boolean('upgrade')->nullable()->default(false)
                 ->comment('true if the payment is for an upgrade and not the initial paymwnt');
 
@@ -36,21 +29,11 @@ class CreateLicensePaymentsTable extends Migration
             $table->tinyInteger('duration')
                 ->comment('number of years from the day of payment before next payment');
 
-            $table->string('transaction_id')
-                ->nullable()
-                ->comment('from flutterwave');
-            $table->string('status')
-                ->comment('from flutterwave')
-                ->nullable()->default('pending');
-
-            $table->dateTime('paid_at')->nullable();
             $table->timestamps();
 
-            // $table->foreign('member_id')->references('id')->on('members')
-            //     ->nullOnDelete()->cascadeOnUpdate();
-
-            // $table->foreign('licence_id')->references('id')->on('licences')
-            //     ->nullOnDelete()->cascadeOnUpdate();
+            // $table->foreign('member_id')->references('id')->on('members')->cascadeOnUpdate();
+            // $table->foreign('payment_id')->references('id')->on('member_payments')->cascadeOnUpdate();
+            // $table->foreign('licence_id')->references('id')->on('licences')->cascadeOnUpdate();
         });
     }
 

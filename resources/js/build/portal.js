@@ -12,6 +12,9 @@ import MultiSelect from '../npm/vue-multiselect/src';
 import { onMounted, ref, toRef } from "vue";
 // import axios from 'axios';
 import { makePayment } from '../utils/payment';
+import axios from '../../../node_modules/axios/index';
+import Modal from "../components/Auth/Modal.vue";
+
 
 
 const app = createApp({
@@ -150,6 +153,7 @@ const app = createApp({
     data() {
         return {
             item: '',
+            form:{}
         }
     },
     computed: {
@@ -290,6 +294,30 @@ const app = createApp({
 
             return
         },
+
+        updatePassport(event, url) {
+            let passport = event.target.files[0]
+            if (!passport) {
+                return;
+            }
+            this.form.passport = URL.createObjectURL(passport)
+            let data = new FormData();
+            data.append('passport', passport);
+            axios.post(url, data).then(res => {
+                return this.processResponse(res.data);
+            }).catch(err => {
+               console.log(err);
+                if (err.response && err.response.status<500) {
+                  return  this.processResponse(err.response.data);
+                }
+                notify({ title: 'something went wrong' }, { 'type': 'danger' });
+            });
+        },
+
+        memberPayment(bill) {
+            handleModal(`payment-modal`, true);
+            return;
+        }
     },
     mounted() {
         var treeNav = document.querySelector('#portal-sidebar')
@@ -320,6 +348,9 @@ treeNav.forEach(item => {
 });
 app.use(store);
 app.use(router);
+
+app.component('Modal', Modal);
+
 
 // router.afterEach((to, from, failure) => {
 //     store.dispatch('bindJQPkgs');
