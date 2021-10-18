@@ -69,7 +69,7 @@ class StudentActiveController extends Controller
             $fee = StudentFee::whereFee('tuition')->first();
         }
         if (!$fee) {
-            // return redirect()->route('pgs');
+            return redirect()->route('pgs');
         }
         // return $level;
         // return $fee;

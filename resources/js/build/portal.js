@@ -379,36 +379,7 @@ const app = createApp({
             });
 
 
-        },
-        tuitionFee(event, session, level, fee) {
-              Swal.fire({
-                title:`Payment for  ${level.name} Level ${session.name} Academic Session `,
-                icon: 'info',
-                  html: `<span>You will be prompted to make payment of <b> ${fee.currency} ${fee.amount} </b>
-                       Once you click continue, This payment is for <b>Tuition Fee</b> only</span>
-                        `,
-                showCancelButton: true,
-                focusConfirm: false,
-                confirmButtonText: 'Continue',
-            }).then(result => {
-                if (result.isConfirmed) {
-                    isLoading(1)
-                    let url = event.target.dataset.to
-                    axios.post(url).then(res => {
-                         return this.processResponse(res.data);
-                    }).catch(err => {
-                       console.log(err);
-                        if (err.response && err.response.status<500) {
-                          return  this.processResponse(err.response.data);
-                        }
-                        isLoading(false);
-                        notify({ title: 'something went wrong' }, { 'type': 'danger' });
-                    });
-                }
-            });
-
-
-        },
+        }
     },
     mounted() {
         var treeNav = document.querySelector('#portal-sidebar')

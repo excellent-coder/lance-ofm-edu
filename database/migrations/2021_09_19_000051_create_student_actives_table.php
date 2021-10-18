@@ -13,6 +13,7 @@ class CreateStudentActivesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('student_actives');
         Schema::create('student_actives', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('student_id')->unsigned();

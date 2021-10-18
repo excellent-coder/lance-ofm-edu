@@ -148,6 +148,7 @@ class StudentPaymentController extends Controller
 
             $sa = new StudentActive();
             $sa->student_id = $s->id;
+            $sa->program_id = $s->program_id;
             $sa->session_id = $session->id;
             $sa->level_id = $s->level_id ?? 1;
             $sa->payment_id = $payment->id;

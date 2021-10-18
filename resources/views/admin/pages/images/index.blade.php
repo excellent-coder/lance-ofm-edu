@@ -146,12 +146,20 @@
     <x-admin-modal title="Managing Images">
         <form action="{{route('admin.images.store')}}" autocomplete="off" @submit.prevent="submit($event, ['images'])"
             id="general-modal-form">
-            <div class="form-group hide-on-edit">
+            <div class="form-group">
                 <h5 class="mb-3">Select Images</h5>
-                <div class="form-group position-relative" style="background-color:rgba(81, 32, 128, 0.787)">
+                <div class="form-group position-relative hide-on-edit" style="background-color:rgba(81, 32, 128, 0.787)">
                     <input @change.prevent="previewSelected($event, 'images', '{{route('admin.images.store')}}')"
-                        id="images" class="form-control-file" type="file" name="images" accept="image/*" multiple>
+                        id="images" class="form-control-file single-on-edit" type="file" name="image" accept="image/*" multiple>
                     <label for="images" class="text-center">
+                        <i class="fas fa-plus deeppink"></i>
+                    </label>
+                </div>
+
+                <div class="form-group position-relative show-on-edit" style="background-color:rgba(81, 32, 128, 0.787)">
+                    <input @change.prevent="previewSelected($event, 'images', 0)"
+                        id="image" class="form-control-file single-on-edit" type="file" name="image" accept="image/*" multiple>
+                    <label for="image" class="text-center">
                         <i class="fas fa-plus deeppink"></i>
                     </label>
                 </div>
@@ -165,8 +173,8 @@
             </div>
             <div class="form-group">
                 <div class="checkbox checkbox-primary p-t-0">
-                    <input data-checked="true" id="editing-active" checked type="checkbox"
-                        class="form-check-input form-control" name="active" value="1">
+                    <input id="editing-active" data-checked="true" type="checkbox" class="form-check-input"
+                    name="active" value="1">
                     <label for="editing-active">
                         Active
                     </label>

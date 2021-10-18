@@ -1853,7 +1853,7 @@ window.addEventListener('scroll', function (e) {
   }
 
   var currentScrollPos = window.pageYOffset;
-  cdtop.style.display = 'none';
+  if (cdtop) cdtop.style.display = 'none';
 
   if (window.pageYOffset > 300) {
     cdtop.style.display = 'block';

@@ -94,7 +94,7 @@ const app = createApp({
                         this.file_parent_id = data.parent_id;
                     }
 
-                    if (files.length && this.files[files[0]] !== undefined) {
+                    if (files.length && this.files[files[0]] !== undefined && this.files[files[0]].url ) {
                         notify({
                             title: `Files are being uploaded, please don't leave this page`
                         }, {
@@ -493,9 +493,14 @@ const app = createApp({
                 form.reset();
                 oldValues(form);
                 $(form).find('.hide-on-edit').css('display', 'block');
+                $(form).find('.show-on-edit').css('display', 'none');
+                 $(form).find('.single-on-edit').attr('multiple', 'multiple');
                 return
             }
+
             $(form).find('.hide-on-edit').css('display', 'none');
+            $(form).find('.show-on-edit').css('display', 'block');
+            $(form).find('.single-on-edit').removeAttr('multiple');
             let updater = document.getElementById('form-updater');
             if (updater) {
                 updater.dataset.items = el.dataset.item;
@@ -557,6 +562,7 @@ const app = createApp({
 
             axios.post(route).then(res => {
                 if (res.data.add_class) {
+
                     if (res.data.toggle) {
                         $('.activate-btn').find('i')
                             .removeClass(res.data.add_class)

@@ -30,6 +30,13 @@ const oldValues = (form)=>{
             item.checked = true;
         }
     })
+
+    $(form).find('input[type=checkbox]').each((index, item) => {
+        let e = $(item);
+        if (e.data('checked')) {
+            item.checked = true;
+        }
+    })
 }
 
 const totalSelected= ()=>{

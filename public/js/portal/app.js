@@ -985,14 +985,10 @@ window.oldValues = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.oldValues;
 window.totalSelected = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.totalSelected;
 var forms = document.querySelectorAll('form');
 forms.forEach(function (el) {
-  el.querySelectorAll('input').forEach(function (i) {
-    if (!i.classList.contains('required') && !i.hasAttribute('required')) {
-      return;
-    }
-
+  el.querySelectorAll('input[required]').forEach(function (i) {
     var req = document.createElement('span');
     req.innerHTML = '* ';
-    req.classList.add('text-red-500', 'ml-2', 'text-danger');
+    req.classList.add('text-red-500', 'ml-2');
     var parent = i.closest('div');
 
     if (parent) {
@@ -1396,39 +1392,6 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
 
             if (err.response && err.response.status < 500) {
               return _this4.processResponse(err.response.data);
-            }
-
-            (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
-            notify({
-              title: 'something went wrong'
-            }, {
-              'type': 'danger'
-            });
-          });
-        }
-      });
-    },
-    tuitionFee: function tuitionFee(event, session, level, fee) {
-      var _this5 = this;
-
-      Swal.fire({
-        title: "Payment for  ".concat(level.name, " Level ").concat(session.name, " Academic Session "),
-        icon: 'info',
-        html: "<span>You will be prompted to make payment of <b> ".concat(fee.currency, " ").concat(fee.amount, " </b>\n                       Once you click continue, This payment is for <b>Tuition Fee</b> only</span>\n                        "),
-        showCancelButton: true,
-        focusConfirm: false,
-        confirmButtonText: 'Continue'
-      }).then(function (result) {
-        if (result.isConfirmed) {
-          (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(1);
-          var url = event.target.dataset.to;
-          _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7___default().post(url).then(function (res) {
-            return _this5.processResponse(res.data);
-          })["catch"](function (err) {
-            console.log(err);
-
-            if (err.response && err.response.status < 500) {
-              return _this5.processResponse(err.response.data);
             }
 
             (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);

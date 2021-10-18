@@ -120,7 +120,30 @@ class ImageController extends Controller
      */
     public function update(Request $request, Image $image)
     {
-        //
+        $request->validate(['part' => 'required']);
+        $img = $image;
+
+        $img->part_id = $request->part;
+        $img->active = $request->filled('active');
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if ($file->isValid()) {
+
+                if (file_exists(public_path("storage/$img->src")) && $img->src) {
+                    unlink(public_path("storage/$img->src"));
+                }
+                $part = ImagePart::find($img->part_id);
+                $name =  Str::random(5) . "-" . time() . '.' . $file->getClientOriginalExtension();
+                $img->src = $file->storeAs("images/$part->part", $name);
+            }
+        }
+        $img->save();
+        return [
+            'status' => 200,
+            'type' => 'success',
+            'message' => "update successful"
+        ];
     }
 
     /**

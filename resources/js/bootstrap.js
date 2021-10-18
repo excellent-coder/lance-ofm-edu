@@ -56,23 +56,15 @@ window.totalSelected = totalSelected;
 
 let forms = document.querySelectorAll('form');
 forms.forEach(el => {
-    let attr = el.querySelectorAll('[required]');
-    let cls = el.querySelectorAll('.required');
-
-    [...attr, ...cls].forEach(i => {
+    el.querySelectorAll('input[required]').forEach(i => {
+        let req = document.createElement('span');
+        req.innerHTML = '* ';
+        req.classList.add('text-red-500', 'ml-2');
         let parent = i.closest('div');
         if (parent) {
             let label = parent.querySelector('label');
-            console.log(label.innerText)
             if (label) {
-                if (label.querySelector('span')) {
-                    return;
-                }
-                let req = document.createElement('span');
-                req.innerHTML = '*';
-                req.classList.add('text-red-500', 'ml-1', 'text-danger');
                 label.appendChild(req);
-                return false;
             }
         }
 
