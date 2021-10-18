@@ -13,7 +13,6 @@ class CreateEventCatsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('event_cats');
         Schema::create('event_cats', function (Blueprint $table) {
             $table->id();
             $table->string('name');

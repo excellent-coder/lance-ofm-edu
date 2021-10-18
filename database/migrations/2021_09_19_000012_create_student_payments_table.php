@@ -16,6 +16,10 @@ class CreateStudentPaymentsTable extends Migration
         Schema::create('student_payments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('student_id')->unsigned()->nullable();
+            $table->bigInteger('session_id')->unsigned()->nullable();
+            $table->bigInteger('level_id')->unsigned()->nullable();
+            $table->bigInteger('program_id')->unsigned()->nullable();
+
             $table->bigInteger('student_request_id')->unsigned()->nullable();
 
             $table->string('currency');

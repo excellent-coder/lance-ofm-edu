@@ -68,7 +68,7 @@
         </ul>
     </div>
     <div class="w-full my-5">
-        <a class="relative p-3 text-white uppercase bg-transparent border-2 border-yellow-400 hover:text-black bg-scale-in"
+        <a @click.prevent="registerEvent($event, '{{auth('mem')->id()}}', {{$event}}, '{{$currency}}')" class="relative p-3 text-white uppercase bg-transparent border-2 border-yellow-400 hover:text-black bg-scale-in"
             href="{{route('events.register', $event->slug)}}">
             <span class="relative z-10 ">
                 Register For This Event

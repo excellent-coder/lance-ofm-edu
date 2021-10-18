@@ -1,9 +1,9 @@
-<footer class="w-screen py-4 text-white footer" style="background-color: #4c5a7d;">
+<footer class="w-screen footer">
     <div class="container">
         <div class="grid-cols-1 px-3 md:gap-3 md:grid md:grid-cols-3">
             <div class="w-full">
-                <h3 class="text-3xl font-black">About US</h3>
-                <p class="pb-3 text-sm text-left md:text-base">
+                <h3 class="text-3xl font-black text-white">About US</h3>
+                <p class="pb-3 text-sm text-left">
                     Institute of School Administration and Management is a professional and examining body
                     registered by Federal Government CAMA of 2021. The Institute is empowered to regulate the
                     training and practice of School Administration and Management.
@@ -33,7 +33,7 @@
             </div>
 
             <div class="w-full">
-                <h3  class="text-3xl font-black">Information Link</h3>
+                <h3  class="text-3xl font-black text-white">Information Link</h3>
                 <ul class="space-y-2 list-item">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="news.html">News</a></li>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="w-full">
-                <h3  class="text-3xl font-black">Contact Details</h3>
+                <h3  class="text-3xl font-black text-white">Contact Details</h3>
                 <ul class="space-y-2 list-item">
                     <li><a href="mailto:isam.org.ng@gmail.com">info@isam.org.ng, isam.org.ng@gmail.com</a></li>
                     <li><a href="www.isam.org.ng">www.isam.org.ng</a></li>
@@ -57,7 +57,7 @@
     </div>
 </footer>
 
-<div class="p-5 text-center text-green-100" style="background-color: #1f1f1f;">
+<div class="p-5 text-center" style="background-color: #1f1f1f; color:#666;">
     <p class="text-base ">
         All Rights Reserved. © 2020 - {{date('Y')}} Institute of School Administration
         and Management

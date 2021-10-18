@@ -1,4 +1,5 @@
 <div class="w-full py-10 bg-gray-200 lg:py-20">
+    @if ($coursePage)
     <div class="flex flex-wrap justify-center w-full mb-8">
         <div class="w-full text-center lg:w-1/2">
             <h1 class="my-3 text-3xl font-semibold text-center text-gray-800">Courses</h1>
@@ -7,6 +8,7 @@
             </div>
         </div>
     </div>
+    @endif
     <div class="flex justify-center w-full ">
         <div class=" lg:w-5/6">
             <div class="timeline">

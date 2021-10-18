@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\Event;
 use App\Models\EventGoer as ModelsEventGoer;
+use App\Models\Member;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,7 +22,7 @@ class EventGoer extends Mailable
     public $goer;
     public $event;
 
-    public function __construct(ModelsEventGoer $goer, Event $event)
+    public function __construct(Member $goer, Event $event)
     {
         $this->goer = $goer;
         $this->event = $event;

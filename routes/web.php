@@ -34,6 +34,10 @@ Route::get('l', function () {
     }
 });
 
+Route::get('/a', function () {
+    return activeSession();
+});
+
 Route::get('/psw', function () {
     return password_hash('ofemco', PASSWORD_BCRYPT);
 });

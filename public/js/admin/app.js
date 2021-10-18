@@ -631,6 +631,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mosha_vue_toastify_dist_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mosha-vue-toastify/dist/style.css */ "./node_modules/mosha-vue-toastify/dist/style.css");
 /* harmony import */ var _utils_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/validate */ "./resources/js/utils/validate.js");
 /* harmony import */ var _utils_elements__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/elements */ "./resources/js/utils/elements.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -687,6 +699,31 @@ window.handleModal = _utils_validate__WEBPACK_IMPORTED_MODULE_3__.handleModal;
 window.toggleDisabled = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.toggleDisabled;
 window.oldValues = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.oldValues;
 window.totalSelected = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.totalSelected;
+var forms = document.querySelectorAll('form');
+forms.forEach(function (el) {
+  var attr = el.querySelectorAll('[required]');
+  var cls = el.querySelectorAll('.required');
+  [].concat(_toConsumableArray(attr), _toConsumableArray(cls)).forEach(function (i) {
+    var parent = i.closest('div');
+
+    if (parent) {
+      var label = parent.querySelector('label');
+      console.log(label.innerText);
+
+      if (label) {
+        if (label.querySelector('span')) {
+          return;
+        }
+
+        var req = document.createElement('span');
+        req.innerHTML = '*';
+        req.classList.add('text-red-500', 'ml-1', 'text-danger');
+        label.appendChild(req);
+        return false;
+      }
+    }
+  });
+});
 
 /***/ }),
 
@@ -1177,8 +1214,12 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
             return;
           }
 
-          var before = "<span class=\"badge badge-info\">".concat(id.replace('_', ' '), "</span><br/>");
-          tag.before(before);
+          if (!tag.closest('div').hasClass('s')) {
+            tag.closest('div').addClass('s');
+            var before = "<label class=\"badge badge-info\">".concat(id.replace('_', ' '), "</label><br/>");
+            tag.before(before);
+          }
+
           tag.html(_item[id]);
         });
 

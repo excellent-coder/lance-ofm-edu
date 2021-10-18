@@ -65,7 +65,6 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Level</th>
-                                    <th>Students</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -96,17 +95,6 @@
                                     <td>{{$c->name}}</td>
                                     <td>{{$c->level}}</td>
                                     <td>
-                                        @if ($c->students->count())
-                                        <a href="{{'admin.levels.students', $c->id}}" class="btn">
-                                            <span class="badge badge-primary">
-                                                 {{$c->students->count()}}
-                                            </span>
-                                        </a>
-                                        @else
-                                           <i class="fa fa-battery-empty" aria-hidden="true"></i>
-                                        @endif
-                                    </td>
-                                    <td>
                                         <x-data-table-action :action="$action"></x-data-table-action>
                                     </td>
                                 </tr>
@@ -120,7 +108,6 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Level</th>
-                                    <th>Students</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

@@ -54,4 +54,15 @@ class Scs extends Authenticatable
         return $this->hasMany(ScsPayment::class, 'scs_id', 'id')
             ->where('status', 'successful');
     }
+
+
+    /**
+     * Get all of the results for the Scs
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function results()
+    {
+        return $this->hasMany(ScsResult::class, 'scs_id', 'id');
+    }
 }

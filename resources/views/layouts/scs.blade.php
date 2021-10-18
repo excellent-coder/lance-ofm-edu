@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     @include('includes.meta')
-        <link rel="stylesheet" href="{{ asset('css/portal.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/portal.css') }}?v={{$js_version}}">
     @yield('css')
 </head>
 <body class="w-full h-full min-h-screen overflow-x-hidden bg-white">
@@ -20,9 +20,9 @@
         </div>
     </div>
 
-    <script src="{{asset('js/portal/manifest.js')}}"></script>
-    <script src="{{asset('js/portal/vendor.js')}}"></script>
-    <script src="{{asset('js/portal/app.js')}}"></script>
+    <script src="{{asset('js/portal/manifest.js')}}?v={{$js_version}}"></script>
+    <script src="{{asset('js/portal/vendor.js')}}?v={{$js_version}}"></script>
+    <script src="{{asset('js/portal/app.js')}}?v={{$js_version}}"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     @yield('js')
 </body>

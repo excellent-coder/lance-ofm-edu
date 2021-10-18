@@ -139,38 +139,35 @@ class SCStudentController extends Controller
     public function applyProgram()
     {
         $userPrograms = ScsProgram::where('scs_id', auth('scs')->id())
+            ->where('payment_id', '!=', null)
             ->pluck('program_id');
-        $programs = Program::where('active', 1)
+        // return $userPrograms;
+        $scPrograms = Program::where('active', 1)
             ->where('is_program', 1)
             ->where('visibility', '!=', 2)
             ->whereNotIn('id', $userPrograms)
             ->get();
-        // return $programs;
-        return view('frontend.scs.programs.register', compact('programs'));
+        // return $scPrograms;
+        return view('frontend.scs.programs.register', compact('scPrograms'));
     }
 
     public function updateProgram(Request $request)
     {
-        return ['message' => 'Work in progress'];
-        $valid = Validator::make(
-            $request->all(),
-            ['program' => 'required'],
-            ['program.required' => 'Please choose a program']
+        // return ['message' => 'Work in progress'];
+        $request->validate(
+            [
+                'program' => 'required',
+                'program.required' => 'Please choose a program'
+            ]
         );
-
-        if ($valid->fails()) {
-            return [
-                'message' => 'Please choose a program',
-                'errors' => $valid->errors()->all()
-            ];
-        }
 
         $p = $request->program;
         if (ScsProgram::where('scs_id', auth('scs')->id())
             ->whereProgramId($p)->first()
         ) {
-            //
+            return ['message' => 'You already applied for this program', 'status' => 200, 'type' => 'sucess'];
         }
+
         $s = new ScsProgram();
         $s->program_id = $p;
         $s->s_c_student_id = auth('scs')->id();

@@ -74,7 +74,7 @@
     transition: all 1s linear;
     width: 600px;
     left: 215px;
-    max-height: (100vw - 300px);
+    max-height: calc(100vw - 300px);
 }
 
 #side-box:hover {

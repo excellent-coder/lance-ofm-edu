@@ -13,7 +13,6 @@ class CreateScsProgramsTable extends Migration
      */
     public function up()
     {
-        return;
         Schema::create('scs_programs', function (Blueprint $table) {
             $table->id();
             // This student

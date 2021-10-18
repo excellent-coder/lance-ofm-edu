@@ -85,8 +85,7 @@
                         </div>
                         <div class="relative mb-4">
                             <label for="" class="font-semibold text-white">Date of birth</label>
-                            <input placeholder="Date of Birth" type="date" min="{{ date('Y')-55 . '-01-01'}}"
-                                max="{{date('Y')-13 .'-01-01'}}" required name="dob" class="h-12 p-4 wtk">
+                            <input placeholder="Date of Birth" type="date" required name="dob" class="h-12 p-4 wtk">
                         </div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Upload Your Recent Photograph</label>

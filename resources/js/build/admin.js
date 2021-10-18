@@ -473,8 +473,11 @@ const app = createApp({
                     if (!tag) {
                         return
                     }
-                    let before = `<span class="badge badge-info">${id.replace('_', ' ')}</span><br/>`;
-                    tag.before(before);
+                    if (!tag.closest('div').hasClass('s')) {
+                        tag.closest('div').addClass('s');
+                        let before = `<label class="badge badge-info">${id.replace('_', ' ')}</label><br/>`;
+                        tag.before(before);
+                    }
                     tag.html(item[id]);
                 })
 
@@ -554,7 +557,6 @@ const app = createApp({
 
             axios.post(route).then(res => {
                 if (res.data.add_class) {
-
                     if (res.data.toggle) {
                         $('.activate-btn').find('i')
                             .removeClass(res.data.add_class)

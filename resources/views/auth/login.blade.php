@@ -15,7 +15,7 @@
                      <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-user-graduate bottom-2"></i>
                     <div class="block ml-5 md:ml-9">
                     <label class="font-semibold text-white">Login As</label>
-                        <input type="hidden" name="login_as" :value="form.m.v" autocomplete="off" v-if="form.m" />
+                        <input type="hidden" name="login_as" :value="form.m.v" required autocomplete="off" v-if="form.m" />
                     <multi-select v-model="form.m" :options='[{v:"Member", k:"Member"}, {v:"Scs",k:"Short Course Student"}, {v:"Student",k:"Main Student"}]'
                         :show-labels="false" label="k" track-by="v" autocomplete="off"
                         :clear-on-select="false" placeholder="Who Are You" required :close-on-select="true"
@@ -46,6 +46,7 @@
                 <div class="relative mb-4 password">
                     <i class="absolute left-0 text-lg text-white lg:text-2xl fas fa-lock bottom-3"></i>
                     <div class="ml-5 md:ml-9">
+                        <label class="font-semibold text-white times-new-romans">Password</label>
                         <input id="admin-login-password" placeholder="password" type="password" required name="password"
                             class="h-12 max-w-full p-4 password">
                         <span class="absolute right-0 text-lg text-gray-500 cursor-pointer opacity-70 bottom-2"

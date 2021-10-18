@@ -24,6 +24,7 @@ class MemberPaymentController extends Controller
 
     public function induction(MemberRequest $member)
     {
+        // return $member;
         if (!$member->approved_at || $member->paidInduction) {
             return view('errors.404');
         }

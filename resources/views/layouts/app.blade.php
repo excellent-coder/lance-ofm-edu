@@ -4,7 +4,7 @@
 <head>
     @include('includes.meta')
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1">
     @yield('css')
 </head>
 
@@ -28,7 +28,7 @@
     </div>
     <script src="{{asset('js/manifest.js')}}"></script>
     <script src="{{asset('js/vendor.js')}}"></script>
-    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/app.js')}}?v=1"></script>
     <script src="{{asset('vendor/intersection-observer/main.js')}}"></script>
     <script src="{{asset('js/interset.js')}}"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>

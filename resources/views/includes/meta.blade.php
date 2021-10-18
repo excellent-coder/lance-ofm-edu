@@ -4,6 +4,6 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="shortcut icon" href="/{{web_setting('general', 'favicon')}}" type="image/x-icon">
 <link rel="stylesheet" href="/vendor/fontawesome/all.min.css">
-<link rel="stylesheet" href="{{asset('css/all.css')}}">
+<link rel="stylesheet" href="{{asset('css/all.css')}}?v={{$js_version}}">
 <title>{{ web_setting('general', 'title', 'Default Title') }} @yield('title') </title>
 

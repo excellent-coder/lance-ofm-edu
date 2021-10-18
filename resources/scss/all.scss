@@ -9,7 +9,7 @@ body {
     font-family: "Rubik", sans-serif;
     line-height: 1.80857;
 }
-$yellow: #e9ae0a;
+$yellow: #eea412;
 
 input,
 textarea {
@@ -29,3 +29,12 @@ textarea {
 @import "./frontend/partials/preload";
 @import "./frontend/partials/variables";
 @import "./frontend/partials/animations";
+
+// footer
+//
+
+footer {
+    padding: 90px 0 80px !important;
+    color: #cccccc;
+    background: #4c5a7d url(/storage/static/world-map.png) no-repeat center;
+}

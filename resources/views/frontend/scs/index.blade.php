@@ -7,7 +7,7 @@
         {{Str::ucfirst($auth->first_name)}}
     </h1>
     <p>Welcome to Isam Short Course Learning Center</p>
-    <div class="grid grid-cols-1 mt-8 md:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-1 mt-8 md:grid-cols-2 lg:grid-cols-4 gap-4">
         @foreach ($userPrograms as $p)
         <div>
             <div class="w-full h-48 ">

@@ -61,10 +61,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Application Fee Pay</th>
-                                    <th>View</th>
-                                    <th>Matric No</th>
-                                    <th>Date Approved</th>
+                                    <th>Details</th>
+                                    <th>Date Joined</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -85,45 +83,19 @@
                                     <td>{{$i++}}</td>
                                     <td>{{$c->first_name}}</td>
                                     <td>
-                                        <a  title="view payment details"
-                                            href="{{route('scs.payments.show', $c->appFee->id )}}"
-                                            target="_blank">
-                                            {{$c->appFee->status}}
-                                        </a>
+                                         <a href="{{route('admin.scs.show', $c->id)}}#update" target="_blank">
+                                                <i class="fas fa-eye" aria-hidden="true"></i>
+                                            </a>
                                     </td>
-                                    <td>
-                                        <a title="view student details"
-                                            href="{{route('admin.scs.show', $c->id)}}"
-                                            target="_blank">
-                                            <i class="fa fa-eye text-success" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td>{{$c->matric_no}}</td>
-                                    <td>{{$c->approved_at}}</td>
+                                    <td>{{$c->created_at}}</td>
                                     <td>
                                         <x-data-table-action :action="$action">
-                                            <a href="{{route('admin.scs.show', $c->id)}}#update" target="_blank">
-                                                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                            </a>
+
                                         </x-data-table-action>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>
-                                        <i class="fa fa-check-square" aria-hidden="true"></i>
-                                    </th>
-                                    <th>#</th>
-                                     <th>Name</th>
-                                     <th>Application Fee Pay</th>
-                                     <th>View</th>
-                                     <th>Matric No</th>
-                                    <th>Date Approved</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

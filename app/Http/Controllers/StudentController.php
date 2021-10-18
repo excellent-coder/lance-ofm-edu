@@ -76,6 +76,8 @@ class StudentController extends Controller
     public function dashboard()
     {
         // return auth('pgs')->user(); //->program;
+        // return activeSession();
+        // return auth('pgs')->user()->activeSession;
         return view('frontend.pgs.index');
     }
 

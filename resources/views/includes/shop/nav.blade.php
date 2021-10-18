@@ -4,22 +4,22 @@
             <button>
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="absolute w-auto h-auto shadow-sm z-10 box pl-3 py-3 bg-gray-100" id="side-box">
+            <div class="absolute z-10 w-auto h-auto py-3 pl-3 bg-gray-100 shadow-sm box" id="side-box">
                 @include('includes.shop.sidebar')
             </div>
         </div>
         <a href="{{route('home')}}" class="w-40 text-center logo">
-            <img class="inline-block" src="/storage/web/logo.png" style="height: 30px" />
+            <img class="inline-block" src="/storage/{{web_setting('general', 'logo')}}" style="height: 30px" />
         </a>
         <form action="" @submit.prevent class="w-1/2">
             <div class="flex flex-wrap nav-search">
-                <i class="fa fa-search absolute left-icon" aria-hidden="true"></i>
+                <i class="absolute fa fa-search left-icon" aria-hidden="true"></i>
                 <input type="search" class="nav-search-input" placeholder="search products, brands and categories">
-                <button class="w-1/7 bg-blue-700 text-white" type="submit">SEARCH</button>
+                <button class="text-white bg-blue-700 w-1/7" type="submit">SEARCH</button>
             </div>
         </form>
-        <ul class="flex flex-wrap justify-evenly w-1/4">
-            <li class="nav-item relative">
+        <ul class="flex flex-wrap w-1/4 justify-evenly">
+            <li class="relative nav-item">
                 <button>
                     <i class="fas fa-user-graduate"></i>
                     Account
@@ -27,33 +27,28 @@
                     <i class="fas fa-angle-up"></i>
 
                 </button>
-                <ul class="nav-sub grid grid-cols-1 bg-gray-100 z-50 w-60 absolute top-10 left-0">
-                    <a class="
-                        text-center
-                        block hover:bg-yellow-600
-                        transition-all bg-yellow-500
-                        text-white my-3 mx-3 text-lg
-                        font-semibold" href="#">
+                <ul class="absolute left-0 z-50 grid grid-cols-1 bg-gray-100 nav-sub w-60 top-10">
+                    <a class="block mx-3 my-3 text-lg font-semibold text-center text-white transition-all bg-yellow-500 hover:bg-yellow-600" href="#">
                             SIGN IN
                     </a>
                     <hr class="w-full bg-gray-700">
                     <a class="block px-3" href="#">
-                        <i class="fas fa-user-graduate mr-4" aria-hidden="true"></i>
+                        <i class="mr-4 fas fa-user-graduate" aria-hidden="true"></i>
                         My Account
                     </a>
                     <a class="block px-3" href="#">
-                        <i class="far fa-calendar mr-4" aria-hidden="true"></i>
+                        <i class="mr-4 far fa-calendar" aria-hidden="true"></i>
                         Orders
                     </a>
                     <a class="block px-3" href="#">
-                        <i class="far fa-heart mr-4"></i>
+                        <i class="mr-4 far fa-heart"></i>
                         Saved Items
                     </a>
                 </ul>
             </li>
             <li class="nav-item">
                 <a href="#" @click.prevent>
-                    <i class="far fa-question-circle    "></i>
+                    <i class="far fa-question-circle "></i>
                     Help
                     <i class="fas fa-angle-down"></i>
                     <i class="fas fa-angle-up"></i>

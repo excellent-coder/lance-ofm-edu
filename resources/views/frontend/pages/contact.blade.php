@@ -25,8 +25,8 @@
                 Email: isam.org.ng@gmail.com, info@isam.org.ng
             </p>
         </div>
-        <div class="grid grid-cols-1 p-10 lg:grid-cols-2 lg:gap-4">
-            <div class="p-8 text-lg text-gray-700 bg-gray-700">
+        <div class="grid grid-cols-1 md:p-10 lg:grid-cols-2 lg:gap-4">
+            <div class="p-4 text-lg text-gray-700 bg-gray-700 lg:p-8">
                 <form action="{{route('contact.store')}}" @submit.prevent="submit($event)">
                     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
                         <div>

@@ -69,7 +69,9 @@
                             the Institute Bank Account.</p>
                     </div>
                     <div class="h-8 px-4 border-green-600 border-r-1 border-b-1 border-l-1">
-                        Click Here to Download Application Form
+                        <a href="{{route('mem.license')}}">
+                            Click Here to apply For this license
+                        </a>
                     </div>
                 </div>
             </div>

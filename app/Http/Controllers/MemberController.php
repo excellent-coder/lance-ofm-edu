@@ -146,6 +146,8 @@ class MemberController extends Controller
         foreach ($paids as $item) {
             $memPubs[$item->publication_id] = $item->id;
         }
+        // return $pubs;
+        // return $memPubs;
         return view('frontend.mem.pubs.index', compact('pubs', 'memPubs'));
     }
 

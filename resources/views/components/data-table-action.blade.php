@@ -9,12 +9,13 @@
         data-item="{{$item->item}}"
         data-target="#{{$item->modal}}-modal"
         data-update_route="{{$item->update_route}}"
+        title="Quick Edit"
         >
         <i class="fas fa-{{$item->icon??'pencil-alt'}}"></i>
         </button>
         @endisset
         @isset($item->route)
-    <a href="{{$item->route}}" class="text-primary">
+    <a href="{{$item->route}}" class="text-primary" title="edit">
         <i class="fas fa-{{$item->icon??'pencil-alt'}}"></i>
     </a>
     @endisset
@@ -28,7 +29,7 @@
     {{-- load extra buttons --}}
     @isset ($item->destroy)
         <button class="btn action-btn" data-action="{{$item->destroy}}"
-        data-id="{{$item->id}}" data-rowid="{{$item->rowid}}">
+        data-id="{{$item->id}}" data-rowid="{{$item->rowid}}" title="permanently delete">
             <i class="fas fa-trash-alt text-danger"></i>
         </button>
     @endisset

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Env;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -58,7 +59,7 @@ class SessionController extends Controller
                 'add_class' => 'fa-check',
                 'remove_class' => 'fa-times',
                 'timeout' => 10000,
-                'toogle' => true
+                'toggle' => true
             ];
         } else {
             return [

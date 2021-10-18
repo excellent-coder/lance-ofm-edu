@@ -20,7 +20,7 @@ class CreateProgramsTable extends Migration
             $table->string('slug')->unique();
             $table->string('image', 300)->nullable();
             $table->longText('description')->nullable();
-            // $table->integer('max_level')->nullable();
+
             $table->longText('excerpt');
             $table->boolean('active')->nullable()->default(true);
             $table->boolean('is_program')->nullable()->default(true)->comment("if it is a program, students can apply for it");

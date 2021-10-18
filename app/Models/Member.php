@@ -37,18 +37,49 @@ class Member extends Authenticatable
      */
     public function publications()
     {
-        return $this->hasMany(PublicationPurchase::class, 'member_id', 'id')->where('status', 'successful');
+        return $this->hasMany(MemberPub::class, 'member_id', 'id');
+    }
+
+    // /**
+    //  * Get all of the events for the Member
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    //  */
+    // public function events()
+    // {
+    //     return $this->hasMany(Event::class, 'member_id', 'id')->wherePaid(1);
+    // }
+
+    /**
+     * The events that belong to the Member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'member_events', 'member_id', 'event_id');
     }
 
     /**
-     * Get all of the events for the Member
+     * The events that belong to the Member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function licences()
+    {
+        return $this->belongsToMany(Licence::class, 'member_licenses', 'member_id', 'licence_id');
+    }
+
+    /**
+     * Get all of the mlicence for the Member
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function eventGoers()
+    public function mlicences()
     {
-        return $this->hasMany(EventGoer::class, 'member_id', 'id')->wherePaid(1);
+        return $this->hasMany(MemberLicense::class, 'licence_id', 'id');
     }
+
 
     /**
      * Get the paidAnnual associated with the Member

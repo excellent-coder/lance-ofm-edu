@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <div class="card">
             <x-admin-card-tool title="Shop Categories">
-                <button class="btn  btn-success btn-tool dropdown-toggle btn-sm text-white" data-target="#general-modal"
+                <button class="text-white btn btn-success btn-tool dropdown-toggle btn-sm" data-target="#general-modal"
                     @click="modalEdit($event.target, true)" data-form="general-modal-form"
                     data-store_route="{{route('admin.deliveries.store')}}">
                     new Delivery Method
@@ -20,9 +20,9 @@
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-12 my-3" style="background-color: indigo;">
+                    <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
-                            <button class="btn  btn-success" data-target="#general-modal"
+                            <button class="btn btn-success" data-target="#general-modal"
                                 @click="modalEdit($event.target, true); form={}" data-form="general-modal-form"
                                 data-store_route="{{route('admin.deliveries.store')}}">
                                 new Delibery Method
@@ -106,17 +106,19 @@
                 <label for="description">Description</label>
                 <textarea id="editing-description" class="form-control tinymce required" name="description" rows="2"></textarea>
             </div>
-            <div class="form-group text-right my-2">
+            <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>
             </div>
         </form>
-        <button id="form-updater" class="d-none" @click.prevent="updateForm($event)"
-        data-items='{}'></button>
+        <button id="form-updater" class="d-none" @click.prevent="updateForm($event)" data-items='{}'></button>
     </x-admin-modal>
     <x-admin-modal title="Delivery Method" id="preview-modal">
-        <h3 id="preview-title"></h3>
+        <div>
+            <h3 id="preview-title"></h3>
+        </div>
         <hr class="btn-success"/>
-        <div class="col-12" id="preview-description">
+        <div>
+            <div class="col-12" id="preview-description"></div>
         </div>
     </x-admin-modal>
 </div>

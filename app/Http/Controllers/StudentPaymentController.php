@@ -7,6 +7,8 @@ use App\Models\Session;
 use App\Models\StudentPayment;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\StudentActive;
+use App\Models\StudentFee;
 use App\Models\StudentRequest;
 use Illuminate\Support\Str;
 
@@ -99,7 +101,7 @@ class StudentPaymentController extends Controller
         // return $payment->studentRequest;
         if ($payment->transaction_id) {
             // this payment has been processes,
-            // return redirect('/');
+            return redirect('/');
         }
         if ($request->tx_ref != $payment->ref) {
             // something is wrong we will come to you later
@@ -119,8 +121,9 @@ class StudentPaymentController extends Controller
             $s->phone = $student->phone;
             $s->program_id = $student->program_id;
             $s->passport = $student->passport;
-            $session = Session::whereActive(1)->first();
-            $year = $session->year ?? date('Y');
+            $session = activeSession();
+            $year = $session->year;
+
             $next = (int) Student::where('session_id', $session->id)
                 ->where('program_id', $student->program_id)
                 ->count() + 1;
@@ -142,6 +145,13 @@ class StudentPaymentController extends Controller
             }
 
             $s->save();
+
+            $sa = new StudentActive();
+            $sa->student_id = $s->id;
+            $sa->session_id = $session->id;
+            $sa->level_id = $s->level_id ?? 1;
+            $sa->payment_id = $payment->id;
+            $sa->save();
 
             // assign payment to student
             $payment->student_id = $s->id;
@@ -169,6 +179,11 @@ class StudentPaymentController extends Controller
         $payment->save();
 
         return view('frontend.payments.member', compact('payment'));
+    }
+
+    function paidFee(Request $request, StudentFee $fee)
+    {
+        return $request->all();
     }
 
     public function test(StudentRequest $student)

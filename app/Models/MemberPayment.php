@@ -20,12 +20,12 @@ class MemberPayment extends Model
     }
 
     /**
-     * Get the eventGoer that owns the MemberPayment
+     * Get the licence that owns the MemberPayment
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function eventGoer()
+    public function licence()
     {
-        return $this->belongsTo(EventGoer::class, 'item_id', 'id');
+        return $this->belongsTo(Licence::class, 'item_id', 'id');
     }
 }

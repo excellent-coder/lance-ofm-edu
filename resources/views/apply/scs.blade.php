@@ -41,11 +41,10 @@
                     </div>
                     <div class="relative mb-4">
                         <label for="" class="font-semibold text-white">Date of birth</label>
-                        <input placeholder="Date of Birth" type="date" min="{{ date('Y')-55 . '-01-01'}}"
-                            max="{{date('Y')-13 .'-01-01'}}" required name="dob" class="h-12 p-4 wtk">
+                        <input placeholder="Date of Birth" type="date" required name="dob" class="h-12 p-4 wtk">
                     </div>
                     <div class="relative mb-4 password">
-                        <label for="" class="font-semibold text-white">Password</label>
+                        <label class="font-semibold text-white">Password</label>
                         <input id="g-password" placeholder="password" type="password" required name="password"
                             class="h-12 p-4 password">
                         <span class="absolute right-0 text-lg text-gray-500 cursor-pointer opacity-70 bottom-2"
@@ -56,7 +55,7 @@
                     </div>
                     <div class="relative mb-4">
                         <label class="font-semibold text-white">Passport</label>
-                        <input accept="image/*" type="file" name="passport" class="relative h-12 p-4 bg-white">
+                        <input accept="image/*" type="file" required name="passport" class="relative h-12 p-4 bg-white">
                     </div>
                     <div class="relative mb-4" v-if="form.m && parseInt(form.m.scs_app_fee)">
                         <label class="font-semibold text-white">Course Fee <b>{{$currency}}</b> </label>
@@ -71,7 +70,7 @@
                             <label for="terms" class="after-white">
                                 <span class="relative -top-1">
                                     Agree to
-                                    <a href="/terms" class="text-green-400 hover:text-yellow-300">terms</a>
+                                    <a href="{{route('terms')}}" target="_blank" class="text-green-400 hover:text-yellow-300">terms</a>
                                 </span>
                             </label>
                         </div>

@@ -176,6 +176,23 @@ Route::prefix('students')->name('students')->group(function () {
     Route::get('documents/{student}', 'StudentController@docs')->name('.docs');
 
     Route::get('graduated/{session?}', 'StudentController@graduated')->name('.graduated');
+
+    Route::prefix('results')->group(function () {
+        Route::get('/', 'StudentResultController@index')->name('.results');
+        Route::get('sort/{year}', 'StudentResultController@index')->name('.results.year');
+        Route::get('create', 'StudentResultController@create')->name('.results.create');
+        Route::get('/edit/{result}', 'StudentResultController@edit')->name('.results.edit');
+        Route::get('json', 'StudentResultController@json')->name('.results.json');
+    });
+
+    Route::get('grades', 'StudentActiveController@index')->name('.grades');
+    Route::get('grades/edit/{student}', 'StudentActiveController@edit')->name('.grades.edit');
+
+
+    // fees
+    Route::prefix('fees')->group(function () {
+        Route::get('/', 'StudentFeeController@index')->name('.fees');
+    });
 });
 
 Route::prefix('scs')->name('scs')->group(function () {
@@ -184,13 +201,27 @@ Route::prefix('scs')->name('scs')->group(function () {
     Route::get('edit/{event}', 'SCStudentController@edit')->name('.edit');
     Route::get('categories', 'SCStudentCatController@index')->name('.categories');
 
-    Route::get('{student}', 'SCStudentController@show')->name('.show');
+    Route::get('detail/{student}', 'ScsController@show')->name('.show');
 
     Route::get('programs/{app}', 'ScsProgramController@show')->name('.app');
 
 
     Route::get('sort/graduated', 'ScsController@graduated')->name('.graduated');
     Route::get('payments/pending', 'ScsPaymentController@pending')->name('.payments.pending');
+
+    Route::prefix('results')->group(function () {
+        Route::get('/', 'ScsResultController@index')->name('.results');
+        Route::get('sort/{year}', 'ScsResultController@index')->name('.results.year');
+        Route::get('create', 'ScsResultController@create')->name('.results.create');
+    });
+});
+
+Route::prefix('scs-r')->group(function () {
+    Route::get('json', 'ScsResultController@json')->name('scs-r.json');
+});
+
+Route::prefix('student-r')->group(function () {
+    Route::get('json', 'StudentResultController@json')->name('student.json');
 });
 
 Route::prefix('journals')->name('journals')->group(function () {
@@ -203,4 +234,8 @@ Route::prefix('journals')->name('journals')->group(function () {
 Route::prefix('profile')->name('profile')->group(function () {
     Route::get('/', 'AdminProfileController@index');
     Route::get('edit', 'AdminProfileController@edit')->name('.edit');
+});
+
+Route::prefix('exam-centers')->name('exam-c')->group(function () {
+    Route::get('/', 'ExamCenterController@index');
 });

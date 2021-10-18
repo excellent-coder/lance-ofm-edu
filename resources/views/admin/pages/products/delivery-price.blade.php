@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <div class="card">
             <x-admin-card-tool title="Shop Categories">
-                <button class="btn  btn-success btn-tool dropdown-toggle btn-sm text-white" data-target="#general-modal"
+                <button class="text-white btn btn-success btn-tool dropdown-toggle btn-sm" data-target="#general-modal"
                     @click="modalEdit($event.target, true)" data-form="general-modal-form"
                     data-store_route="{{route('admin.d-prices.store')}}">
                     new Delivery Price
@@ -20,9 +20,9 @@
             </x-admin-card-tool>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-12 my-3" style="background-color: indigo;">
+                    <div class="my-3 col-12" style="background-color: indigo;">
                         <div class="row justify-content-end">
-                            <button class="btn  btn-success" data-target="#general-modal"
+                            <button class="btn btn-success" data-target="#general-modal"
                                 @click="modalEdit($event.target, true); form={}" data-form="general-modal-form"
                                 data-store_route="{{route('admin.d-prices.store')}}">
                                 new Delibery Price
@@ -65,13 +65,13 @@
                                     <td>{{$i++}}</td>
                                     <td>{{$c->title}}</td>
                                     <td>
-                                        <button class="btn btn-sidebar btn-sm preview modal-edit-btn"
+                                        {{-- <button class="btn btn-sidebar btn-sm preview modal-edit-btn"
                                           data-target="#preview-modal" type="button" data-item="{{$c}}">
                                         <i class="fas fa-eye"></i>
-                                        </button>
+                                        </button> --}}
                                     </td>
                                     <td>
-                                        <x-data-table-action :action="$action"></x-data-table-action>
+                                        {{-- <x-data-table-action :action="$action"></x-data-table-action> --}}
                                     </td>
                                 </tr>
                                 @endforeach
@@ -99,7 +99,7 @@
         <form action="{{route('admin.product-cats.store')}}" autocomplete="off" @submit.prevent="submit($event)"
             id="general-modal-form">
             <div class="form-group">
-                <input type="hidden" name="super_parent_id" :value="form.super_parent_id" autocomplete="off" />
+                <input type="hidden" name="cat_super_parent" :value="form.super_parent_id" autocomplete="off" />
                 <label>Super Category</label>
                 <multi-select v-model="form.super_cat" :options="{{$supers}}" :show-labels="false" label="name"
                     track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Super Category"
@@ -108,7 +108,7 @@
                     @remove="removeShopCat('super')" />
             </div>
             <div class="form-group">
-                <input type="hidden" name="parent_id" :value="form.parent_id" autocomplete="off" />
+                <input type="hidden" name="cat_parent" :value="form.parent_id" autocomplete="off" />
                 <label>Parent Category</label>
                 <multi-select v-model="form.parent_cat" :options="parentShopCats" :show-labels="false" label="name"
                     track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Parent Category"
@@ -117,7 +117,7 @@
                     @remove="removeShopCat('parent')" />
             </div>
             <div class="form-group">
-                <input type="hidden" name="product_cat_id" :value="form.product_cat_id" autocomplete="off" />
+                <input type="hidden" name="product_cat" :value="form.product_cat_id" autocomplete="off" />
                 <label>Category</label>
                 <multi-select v-model="form.product_cat" :options="shopCats" :show-labels="false" label="name"
                     track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Category"
@@ -126,7 +126,7 @@
                      @remove="removeShopCat('product_cat')" />
             </div>
             <div class="form-group">
-                <input type="hidden" name="product_id" :value="form.product_id" autocomplete="off" />
+                <input type="hidden" name="product" :value="form.product_id" autocomplete="off" />
                 <label>Product</label>
                 <multi-select v-model="form.product" :options="products" :show-labels="false" label="title"
                     track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Specific Product"
@@ -136,10 +136,10 @@
                      />
             </div>
             <div class="form-group">
-                <input type="hidden" name="delivery_method_id" :value="form.delivery_method_id" autocomplete="off" />
                 <label>Shipping Method</label>
+                <input type="hidden" name="delivery_method" class=" required" :value="form.delivery_method_id" autocomplete="off" />
                 <multi-select v-model="form.delivery_method" :options="{{$methods}}" :show-labels="false" label="title"
-                    track-by="id" autocomplete="off" class="required" required :clear-on-select="false" placeholder="Delivery Method"
+                    track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Delivery Method"
                     :close-on-select="true"
                      @select="($event) => (form.delivery_method_id = $event.id)"
                      @remove="($event) => (form.delivery_method_id = '')"
@@ -147,14 +147,23 @@
             </div>
             <div class="form-group">
                 <label>Price</label>
-                <input  class="form-control" placeholder="delivery price" type="number" name="price">
+                <input  class="form-control required" placeholder="delivery price" type="number" name="price">
             </div>
 
-            <div class="form-group text-right my-2">
+            <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>
             </div>
         </form>
         <button id="form-updater" class="d-none" @click.prevent="updateForm($event)" data-items='{}'></button>
+    </x-admin-modal>
+        <x-admin-modal title="Delivery Price" id="preview-modal">
+        <div>
+            <h3 id="price"></h3>
+        </div>
+        <hr class="btn-success"/>
+        <div>
+            <div class="col-12" id="preview-description"></div>
+        </div>
     </x-admin-modal>
 </div>
 @endsection

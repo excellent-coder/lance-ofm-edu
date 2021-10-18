@@ -13,7 +13,7 @@
                     <div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Program of study Type</label>
-                            <input type="hidden" name="program" :value="form.m.id" autocomplete="off" v-if="form.m" />
+                            <input type="hidden" name="program" :value="form.m.id" required autocomplete="off" v-if="form.m" />
                             <multi-select v-model="form.m" :options="{{$programs}}" :show-labels="false" label="title"
                                 track-by="id" autocomplete="off" :clear-on-select="false" placeholder="Program Of Study"
                                 required :close-on-select="true"/>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Certificates</label>
-                            <input accept=".pdf,.docx" type="file" name="certificates[]" multiple
+                            <input accept=".pdf,.docx" type="file" required name="certificates[]" multiple
                                 class="relative h-12 p-4 bg-white">
                         </div>
 
@@ -40,7 +40,7 @@
                     <div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Phone</label>
-                            <input placeholder="Phone" type="tel" inputmode="numeric" required name="phone"
+                            <input placeholder="Phone" type="tel" required name="phone"
                                 class="h-12 p-4">
                         </div>
                         <div class="relative mb-4">
@@ -49,22 +49,16 @@
                         </div>
                         <div class="relative mb-4">
                             <label for="" class="font-semibold text-white">Date of birth</label>
-                            <input placeholder="Date of Birth" type="date" min="{{ date('Y')-55 . '-01-01'}}"
-                                max="{{date('Y')-13 .'-01-01'}}" required name="dob" class="h-12 p-4 wtk">
+                            <input placeholder="Date of Birth" type="date" required name="dob" class="h-12 p-4 wtk">
                         </div>
                         <div class="relative mb-4">
                             <label class="font-semibold text-white">Upload Your reccent photograph</label>
-                            <input type="file" accept="image/*"  name="passport"
-                                class="relative h-12 p-4 bg-white">
+                            <input type="file" required accept="image/*"  name="passport" class="relative h-12 p-4 bg-white">
                         </div>
                         <div class="relative mb-4">
-                            <label class="font-semibold text-white">
-                                Upload Documents
-                            </label>
-                            <input type="file" accept=".pdf,.docx" multiple name="documents[]"
-                                class="relative h-12 p-4 bg-white">
+                            <label class="font-semibold text-white">Upload Documents</label>
+                            <input type="file" accept=".pdf,.docx" multiple name="documents[]" class="relative h-12 p-4 bg-white">
                         </div>
-
                     </div>
                 </div>
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">

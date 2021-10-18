@@ -18,4 +18,14 @@ class StudentPayment extends Model
     {
         return $this->belongsTo(StudentRequest::class, 'student_request_id', 'id');
     }
+
+    /**
+     * Get the fee that owns the StudentPayment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function fee()
+    {
+        return $this->belongsTo(StudentFee::class, 'item_id', 'id');
+    }
 }

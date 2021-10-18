@@ -16,6 +16,8 @@ import CarouselSlide from '../components/utils/CarouselSlide.vue';
 import { makePayment } from '../utils/payment';
 
 import MultiSelect from '../npm/vue-multiselect/src';
+import axios from '../../../node_modules/axios/index';
+import Swal from 'sweetalert2';
 
 
 const app = createApp({
@@ -33,12 +35,13 @@ const app = createApp({
     },
     methods: {
         toggleNav(id) {
-                let nav = document.getElementById(id);
-            if(nav.classList.contains('show')){
-                nav.classList.remove('show');
-            } else{
-                nav.classList.add('show');
-            }
+            document.getElementById(id).classList.toggle('show');
+        },
+        domClickToggle() {
+            document.addEventListener('click', function (e) {
+                if(!e.target.closest('#main-nav'))
+                    document.getElementById('navbar').classList.remove('show');
+            })
         },
 
         submit(event) {
@@ -175,8 +178,42 @@ const app = createApp({
             axios.get(`/json/memberships/${id}`).then((res) => {
                 this.form.memberships = res.data;
             })
+        },
+        registerEvent(event, memberId, data, currency) {
+            if (!memberId) {
+                window.location.href = event.target.href;
+                return;
+            }
+              Swal.fire({
+                title:`Register for ${data.title}`,
+                icon: 'info',
+                  html: `<span>You will be prompted to make payment of <b> ${currency} ${data.price} </b>
+                       Once you click, This is
+                        the price for the event</span>`,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: 'Continue',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post(`/member/events/register/${data.id}`).then(res => {
+                         return this.processResponse(res.data);
+                    }).catch(err => {
+                       console.log(err);
+                        if (err.response && err.response.status<500) {
+                          return  this.processResponse(err.response.data);
+                        }
+                        isLoading(false);
+                        notify({ title: 'something went wrong' }, { 'type': 'danger' });
+                    });
+                }
+            });
+
+
         }
-    }
+    },
+    mounted() {
+        this.domClickToggle();
+    },
 });
 app.use(store);
 app.use(router);
@@ -189,6 +226,8 @@ const vm = app.mount('#app')
 isLoading(false);
 
 var prevScrollpos = window.pageYOffset;
+var mouseOnNav = false;
+
 var cdtop = document.getElementById('scroll-to-top');
 
 
@@ -199,9 +238,20 @@ var cdtop = document.getElementById('scroll-to-top');
 //     pauseOnHover: false,
 // }).mount();
 
-if(cdtop){
+    document.addEventListener('mouseover', (e) => {
+        let x = e.clientX;
+        let y = e.clientY;
+       let ele = document.elementFromPoint(x, y);
+        if (document.getElementById('main-nav').contains(ele)) {
+         return   mouseOnNav = true;
+        }
+        return mouseOnNav = false;
+    });
 
-    window.addEventListener('scroll', () => {
+window.addEventListener('scroll', (e) => {
+    if (mouseOnNav) {
+        return;
+    }
         var currentScrollPos = window.pageYOffset;
         cdtop.style.display = 'none';
 
@@ -218,6 +268,7 @@ if(cdtop){
     prevScrollpos = currentScrollPos;
     });
 
+    if (cdtop) {
     cdtop.addEventListener('click', () => {
         return window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     });

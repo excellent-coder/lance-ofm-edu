@@ -91,36 +91,10 @@ class PublicationPurchaseController extends Controller
         ];
     }
 
-    public function paid(Request $request, PublicationPurchase $payment)
-    {
-        return $payment;
-        if ($payment->transaction_id) {
-            // this payment has been processes,
-            // return redirect('/');
-        }
-        if ($request->tx_ref != $payment->ref) {
-            // something is wrong we will come to you later
-        }
-        $payment->status = $request->status;
-        $payment->transaction_id = $request->transaction_id;
-        $payment->paid_at = date('Y-m-d H:i:s');
-        $payment->save();
-
-        if ($payment->status == 'successful') {
-            $request->session()->flash('paid.next_title', 'DOWNLOAD NOW  <i class="fas fa-download "></i>');
-            $request->session()->flash('paid.next', route('mem.pubs.paid-download', $payment->id));
-        }
-
-        return view('frontend.payments.member', compact('payment'));
-    }
 
 
-    public function download(PublicationPurchase $purchase)
-    {
-        $pub = $purchase->publication;
-        $name = Str::upper($pub->slug . '-' . time()) . '.' . pathinfo($pub->docs, PATHINFO_EXTENSION);
-        return response()->download(public_path("storage/$pub->docs"), $name);
-    }
+
+
 
     /**
      * Display the specified resource.

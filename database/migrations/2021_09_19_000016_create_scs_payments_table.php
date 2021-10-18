@@ -13,7 +13,6 @@ class CreateScsPaymentsTable extends Migration
      */
     public function up()
     {
-        return;
         Schema::create('scs_payments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('scs_id')->unsigned()->nullable();

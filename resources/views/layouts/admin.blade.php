@@ -82,9 +82,9 @@
         $(document).ready(function () {
             $('.select2').select2();
             // prevent auto-focus on select2 search input
-            // $('select').on('select2:opening', function (e) {
-            //     $('.select2-search input').prop('focus', 1);
-            // });
+            $('select').on('select2:opening', function (e) {
+                $('.select2-search input').prop('focus', 1);
+            });
 
             $('#checkbox').on('click', function () {
                 if (this.checked) {
@@ -128,10 +128,10 @@
                 }
             })
 
-            $('form').find('.required')
-                .closest('div')
-                .find('label')
-                .append('<span class="text-danger">*</span>');
+            // $('form').find('.required')
+            //     .closest('div')
+            //     .find('label')
+            //     .append('<span class="text-danger">*</span>');
         });
 
     </script>

@@ -1,4 +1,4 @@
-<nav class="z-50 flex items-center justify-between p-3 bg-gray-800 md:pr-10 main-nav" id="main-nav">
+<nav class="z-50 flex items-center justify-between p-3 md:pr-10 main-nav" id="main-nav">
     <a href="{{route('home')}}">
         <img class="w-11/12" src="/storage/{{web_setting('general', 'logo')}}" />
     </a>
@@ -12,8 +12,8 @@
             </svg>
         </button>
     </div>
-    <div class="w-full bg-gray-800 lg:flex lg:justify-end" id="navbar">
-        <span class="absolute text-white cursor-pointer left-4 hover:text-yellow-500 top-2 lg:hidden" @click.prevent="toggleNav('navbar')">
+    <div class="w-full lg:flex lg:justify-end" id="navbar">
+        <span class="absolute hidden text-white cursor-pointer left-4 hover:text-yellow-500 top-2" @click.prevent="toggleNav('navbar')">
             <i class="fas fa-times"></i>
             <span class="sr-only">Hide Menu</span>
         </span>

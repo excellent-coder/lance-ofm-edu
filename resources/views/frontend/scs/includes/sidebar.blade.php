@@ -73,7 +73,13 @@
                         @endforeach
                     </ul>
                 </li>
-                 <li class="sidebar-item">
+                <li class="sidebar-item">
+                    <a href="{{route('scs.results')}}" class="sidebar-link" title="logout">
+                        <i class="text-green-500 sidebar-icon fas fa-book-dead"></i>
+                        <p>Results</p>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a href="{{route('logout')}}" class="sidebar-link" title="logout">
                         <i class="text-red-500 sidebar-icon fas fa-power-off"></i>
                         <p><i class="fas fa-sign-out-alt "></i>

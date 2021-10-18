@@ -39,7 +39,7 @@
                  <a class="relative p-3 text-white uppercase bg-transparent border-2 border-yellow-400 hover:text-black bg-scale-in"
                      href="{{session('paid.next', '/')}}">
                      <span class="relative z-10 ">
-                         {{session('paid.next_title', 'Home')}}
+                         {!! session('paid.next_title', 'Home') !!}
                      </span>
                      </a>
             </p>

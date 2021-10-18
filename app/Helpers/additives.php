@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Session;
 use App\Models\Setting;
 use App\Models\SettingTag;
 use Symfony\Component\VarDumper\Cloner\Data;
@@ -29,4 +30,14 @@ function bv($title, $upper = 1)
 function dt($dt)
 {
     return date('Y-m-d\TH:i', strtotime($dt));
+}
+
+/**
+ * @brief returning false will stop the wesite from functioning
+ * @return object|false current active session or false
+ *
+ */
+function activeSession()
+{
+    return Session::whereActive('1')->first() ?? false;
 }

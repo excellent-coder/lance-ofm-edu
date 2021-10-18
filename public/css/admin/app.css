@@ -799,3 +799,7 @@ input.wtk::-webkit-calendar-picker-indicator {
   font-size: 1.2rem;
   font-family: "Times New Roman", Times, serif;
 }
+
+table .fa-times {
+  color: red !important;
+}

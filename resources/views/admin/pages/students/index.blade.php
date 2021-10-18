@@ -106,10 +106,12 @@
                                         <i class="fa fa-check-square" aria-hidden="true"></i>
                                     </th>
                                     <th>#</th>
-                                     <th>Name</th>
-                                     <th>Matric No</th>
-                                    <th>Programs</th>
-                                    <th>Date Approved</th>
+                                    <th>Name</th>
+                                    <th>Matric No</th>
+                                    <th>Program</th>
+                                    <th>Date Started</th>
+                                    <th>Session Admintted</th>
+                                    <th>Docs</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

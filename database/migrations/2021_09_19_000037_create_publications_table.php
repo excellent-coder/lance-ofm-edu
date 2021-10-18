@@ -13,7 +13,6 @@ class CreatePublicationsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('publications');
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
             $table->string('title', 225);

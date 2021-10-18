@@ -77,7 +77,7 @@ class PageController extends Controller
             if ($file->isValid()) {
 
                 $name = $slug . "-" . time()
-                    . '.' . $file->extension();
+                    . '.' . $file->getClientOriginalExtension();
                 $page->image = $file->storeAs('pages', $name);
             }
         }

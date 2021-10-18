@@ -99,6 +99,27 @@ $title = web_setting('general', 'title');
                                 <p>Graduated</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.results')}}"
+                                class="nav-link @if ($route == 'students.results') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Results</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.grades')}}"
+                                class="nav-link @if ($route == 'students.results') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Grading</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.fees')}}"
+                                class="nav-link @if ($route == 'students.fees') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fees</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item  @if ($segment == 'members') menu-open @endif">
@@ -159,6 +180,20 @@ $title = web_setting('general', 'title');
                                 class="nav-link @if ($route == 'scs.pending.payment') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pending Payments</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.scs.results')}}"
+                                class="nav-link @if ($route == 'scs.results') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Results</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.scs.payments.pending')}}"
+                                class="nav-link @if ($route == 'scs.pending.payment') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Upload Results</p>
                             </a>
                         </li>
                     </ul>
@@ -406,6 +441,12 @@ $title = web_setting('general', 'title');
                             </a>
                         </li>
                     </ul>
+                </li>
+                 <li class="nav-item">
+                    <a href="{{route('admin.exam-c')}}" class="nav-link @if ($route == 'exam-c') active @endif">
+                        <i class="fas fa-home nav-icon" aria-hidden="true"></i>
+                        <p>Exam Centers</p>
+                    </a>
                 </li>
 
                 <li class="nav-item  @if ($segment == 'products') menu-open @endif">

@@ -107,7 +107,7 @@
                                     <td>{{$c->students->count()}}</td>
                                     <td>
                                         <x-data-table-action :action="$action">
-                                            <a href="{{route('admin.courses.edit', $c->id)}}" style="color:rgb(255, 0, 212)">
+                                            <a href="{{route('admin.courses.edit', $c->id)}}" style="color:rgb(255, 0, 212)" title="full edit">
                                                 <i class="fa fa-edit" aria-hidden="true"></i>
                                             </a>
                                         </x-data-table-action>

@@ -16,9 +16,9 @@ class ActiveSession
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->id() || auth()->user()->ceo !== 1) {
-            if (!in_array($request->path(), ['503', 'comming-soon'])) {
-                if (!config('msc.session')) {
+        if (!activeSession()) {
+            if (!auth()->id() || auth()->user()->ceo !== 1) {
+                if (!in_array($request->path(), ['/', '503', 'comming-soon'])) {
                     return redirect()->route('503');
                 }
             }

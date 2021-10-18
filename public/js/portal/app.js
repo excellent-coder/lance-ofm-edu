@@ -983,6 +983,27 @@ window.handleModal = _utils_validate__WEBPACK_IMPORTED_MODULE_3__.handleModal;
 window.toggleDisabled = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.toggleDisabled;
 window.oldValues = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.oldValues;
 window.totalSelected = _utils_elements__WEBPACK_IMPORTED_MODULE_4__.totalSelected;
+var forms = document.querySelectorAll('form');
+forms.forEach(function (el) {
+  el.querySelectorAll('input').forEach(function (i) {
+    if (!i.classList.contains('required') && !i.hasAttribute('required')) {
+      return;
+    }
+
+    var req = document.createElement('span');
+    req.innerHTML = '* ';
+    req.classList.add('text-red-500', 'ml-2', 'text-danger');
+    var parent = i.closest('div');
+
+    if (parent) {
+      var label = parent.querySelector('label');
+
+      if (label) {
+        label.appendChild(req);
+      }
+    }
+  });
+});
 
 /***/ }),
 
@@ -1004,6 +1025,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../node_modules/axios/index */ "./node_modules/axios/index.js");
 /* harmony import */ var _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _components_Auth_Modal_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Auth/Modal.vue */ "./resources/js/components/Auth/Modal.vue");
+/* harmony import */ var _utils_validate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/validate */ "./resources/js/utils/validate.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
@@ -1016,6 +1038,7 @@ __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
 
 
  // import axios from 'axios';
+
 
 
 
@@ -1188,7 +1211,7 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
       // }
       // start loading animation
 
-      isLoading();
+      (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)();
       var formData = new FormData(form); // upload formdata using axios
       // show upload progress
 
@@ -1197,7 +1220,7 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     axiosSubmit: function axiosSubmit(url, formData) {
       var _this = this;
 
-      isLoading();
+      (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)();
       _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7___default().post(url, formData).then(function (res) {
         return _this.processResponse(res.data);
       })["catch"](function (err) {
@@ -1207,7 +1230,7 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
           return _this.processResponse(err.response.data);
         }
 
-        isLoading(false);
+        (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
         notify({
           title: 'something went wrong'
         }, {
@@ -1216,7 +1239,7 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
       });
     },
     processResponse: function processResponse(data) {
-      isLoading(false);
+      (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
       var type = data.type;
       var title = data.message;
       var description = data.desc;
@@ -1320,6 +1343,103 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     memberPayment: function memberPayment(bill) {
       handleModal("payment-modal", true);
       return;
+    },
+    purchaseLicense: function purchaseLicense(event, data, currency) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: "Apply For ".concat(data.name, " License"),
+        icon: 'info',
+        html: "<span>You will be prompted to make payment of <b> ".concat(currency, " ").concat(data.fee, " </b>\n                       Once you click continue, This is\n                        the price for this license</span>\n                        <p><b>Duration: </b>").concat(data.duration, " Year").concat(data.duration > 1 ? 's' : '', "</p>\n                        <p><b>Renewal Fee after ").concat(data.duration, " Year").concat(data.duration > 1 ? 's' : '', ": </b> ").concat(currency, " ").concat(data.renewal, "</p>\n                        "),
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Continue'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(1);
+          _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7___default().post(event.target.href).then(function (res) {
+            return _this3.processResponse(res.data);
+          })["catch"](function (err) {
+            console.log(err);
+
+            if (err.response && err.response.status < 500) {
+              return _this3.processResponse(err.response.data);
+            }
+
+            (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
+            notify({
+              title: 'something went wrong'
+            }, {
+              'type': 'danger'
+            });
+          });
+        }
+      });
+    },
+    scsProgram: function scsProgram(event, data, currency) {
+      var _this4 = this;
+
+      Swal.fire({
+        title: "Apply For ".concat(data.title, " program"),
+        icon: 'info',
+        html: "<span>You will be prompted to make payment of <b> ".concat(currency, " ").concat(data.scs_app_fee, " </b>\n                       Once you click continue, This is\n                        the price for this Program</span>\n                        "),
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Continue'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(1);
+          _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7___default().post(event.target.href).then(function (res) {
+            return _this4.processResponse(res.data);
+          })["catch"](function (err) {
+            console.log(err);
+
+            if (err.response && err.response.status < 500) {
+              return _this4.processResponse(err.response.data);
+            }
+
+            (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
+            notify({
+              title: 'something went wrong'
+            }, {
+              'type': 'danger'
+            });
+          });
+        }
+      });
+    },
+    tuitionFee: function tuitionFee(event, session, level, fee) {
+      var _this5 = this;
+
+      Swal.fire({
+        title: "Payment for  ".concat(level.name, " Level ").concat(session.name, " Academic Session "),
+        icon: 'info',
+        html: "<span>You will be prompted to make payment of <b> ".concat(fee.currency, " ").concat(fee.amount, " </b>\n                       Once you click continue, This payment is for <b>Tuition Fee</b> only</span>\n                        "),
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Continue'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(1);
+          var url = event.target.dataset.to;
+          _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_7___default().post(url).then(function (res) {
+            return _this5.processResponse(res.data);
+          })["catch"](function (err) {
+            console.log(err);
+
+            if (err.response && err.response.status < 500) {
+              return _this5.processResponse(err.response.data);
+            }
+
+            (0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
+            notify({
+              title: 'something went wrong'
+            }, {
+              'type': 'danger'
+            });
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -1354,7 +1474,7 @@ app.component('Modal', _components_Auth_Modal_vue__WEBPACK_IMPORTED_MODULE_8__.d
 
 window.Vm = app;
 app.mount('#portal');
-isLoading(false);
+(0,_utils_validate__WEBPACK_IMPORTED_MODULE_9__.isLoading)(false);
 
 /***/ }),
 

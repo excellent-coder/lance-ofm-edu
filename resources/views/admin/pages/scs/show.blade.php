@@ -100,58 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="card collapsed-card" id="update">
-            <x-admin-card-tool title="Update {{$student->first_name}}">
-            </x-admin-card-tool>
-            <div class="card-body ">
-                <div class="row">
-                    <div class="mt-5 col-12">
-                        <div class="text-center bg-gradient-primary">
-                            <h4 class="p-2 mb-4 ">Update The user Below</h4>
-                        </div>
-                        <form @submit.prevent="submit($event)" action="{{route('admin.scs.update', $student->id)}}" method="post">
-                        @csrf
-                        <div class="row justify-evenly">
-                            <div class="checkbox checkbox-primary col-12 col-md-4">
-                                <input id="active" {{$student->active?'checked':''}} type="checkbox"
-                                    class="form-check-input form-control" name="active" value="1">
-                                <label for="active">
-                                    Activate
-                                </label>
-                            </div>
-                            @if (!$student->approved_at)
-                                <div class="checkbox checkbox-primary col-12 col-md-4">
-                                    <input id="approved" type="checkbox"
-                                        class="form-check-input form-control" name="approved" value="1">
-                                    <label for="approved">
-                                        Approve
-                                    </label>
-                                </div>
-                            @endif
-                        </div>
-                        @if (!$student->matric_no)
-                            <div class="form-group col-12 col-md-6">
-                                <label>MATRIC NUMBER</label>
-                                <input type="text" placeholder="matric number" class="form-control" name="matric_no">
-                                <label class="mt-2">
-                                    LAST MATRIC NO IS
-                                    <span class=" text-danger">
-                                        {{$last_matric??'NOT-DEFINED'}}
-                                    </span>
-                                </label>
-                            </div>
-                        @endif
-                        <div class="text-right ">
-                            <button type="submit" class=" btn btn-primary">
-                                update
-                            </button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card collapsed-card">
+        {{-- <div class="card collapsed-card">
             <x-admin-card-tool title="{{$student->first_name .' '. $student->last_name}}'s Programs">
                 <div class="dropdown-divider"></div>
                 <a href="{{route('admin.scs.create')}}" class=" btn btn-success btn-sm">
@@ -238,7 +187,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection

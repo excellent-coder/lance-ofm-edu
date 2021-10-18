@@ -114,4 +114,34 @@ class Student extends Authenticatable
     {
         return $this->belongsTo(Level::class, 'level_id', 'id');
     }
+
+    /**
+     * Get the active associated with the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function activeSession()
+    {
+        return $this->hasOne(StudentActive::class, 'student_id', 'id')->where('session_id', activeSession()->id);
+    }
+
+    /**
+     * Get all of the activeSessions for the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function studentActives()
+    {
+        return $this->hasMany(StudentActive::class, 'student_id', 'id');
+    }
+
+    /**
+     * Get all of the results for the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function results()
+    {
+        return $this->hasMany(StudentResult::class, 'student_id', 'id');
+    }
 }

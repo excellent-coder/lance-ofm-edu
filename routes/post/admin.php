@@ -222,6 +222,16 @@ Route::prefix('students')->name('students')->group(function () {
     Route::post('update/{event}', 'StudentController@update')->name('.update');
     Route::delete('destroy', 'StudentController@destroy')->name('.destroy');
     Route::post('activate/{post}', 'StudentController@activate')->name('.activate');
+
+    Route::post('results/store', 'StudentResultController@store')->name('.results.store');
+    Route::post('results/update/{result}', 'StudentResultController@update')->name('.results.update');
+    Route::post('results/destroy', 'StudentResultController@destroy')->name('.results.destroy');
+
+    Route::post('grades/update/{student}', 'StudentActiveController@update')->name('.grades.update');
+
+    Route::post('fees', 'StudentFeeController@store')->name('.fees.store');
+    Route::post('fees/{fee}', 'StudentFeeController@update')->name('.fees.update');
+    Route::post('fees/destroy', 'StudentFeeController@destroy')->name('.fees.destroy');
 });
 
 Route::prefix('student-r')->name('student-r')->group(function () {
@@ -239,6 +249,16 @@ Route::prefix('scs')->name('scs')->group(function () {
     Route::post('program/{app}', 'ScsProgramController@update')->name('.program.approve');
 });
 
+// short course students results
+Route::prefix('scs-r')->name('scs-r')->group(function () {
+    Route::post('store', 'ScsResultController@store')->name('.store');
+    Route::post('update/{student}', 'SCStudentController@update')->name('.update');
+    Route::delete('destroy', 'SCStudentController@destroy')->name('.destroy');
+    Route::post('activate/{student}', 'SCStudentController@activate')->name('.activate');
+
+    Route::post('program/{app}', 'ScsProgramController@update')->name('.program.approve');
+});
+
 Route::prefix('journals')->name('journals')->group(function () {
     Route::post('store', 'JournalController@store')->name('.store');
     Route::post('update/{event}', 'JournalController@update')->name('.update');
@@ -248,4 +268,12 @@ Route::prefix('journals')->name('journals')->group(function () {
 
 Route::prefix('profile')->name('profile')->group(function () {
     Route::post('update', 'AdminProfileController@update')->name('.update');
+});
+
+
+Route::prefix('exam-c')->name('exam-c')->group(function () {
+    Route::post('store', 'ExamCenterController@store')->name('.store');
+    Route::post('update/{center}', 'ExamCenterController@update')->name('.update');
+    Route::delete('destroy', 'ExamCenterController@destroy')->name('.destroy');
+    Route::post('activate/{post}', 'ExamCenterController@activate')->name('.activate');
 });

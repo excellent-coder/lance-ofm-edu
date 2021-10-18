@@ -52,6 +52,7 @@ textarea:focus {
   opacity: 1;
   transition: all 0.4s linear;
   top: 0;
+  background-color: #4c5a7d !important;
 }
 .main-nav.hide {
   transition: all 0.4s linear;
@@ -69,6 +70,7 @@ textarea:focus {
 .nav-item a {
   display: inline;
   text-transform: uppercase;
+  position: relative;
   color: #fff;
 }
 .nav-item a:hover {
@@ -77,11 +79,12 @@ textarea:focus {
 .nav-item .sub-menu {
   display: none;
   position: relative;
+  max-height: 90vh;
 }
 .nav-item .sub-menu::before {
   content: "";
   position: absolute;
-  right: 5px;
+  left: 10px;
   top: -19px;
   border: 10px solid;
   border-color: transparent transparent white;
@@ -104,6 +107,9 @@ textarea:focus {
 .nav-item .dropdown-item:hover {
   background-color: #d6a609;
   color: #fff;
+}
+.nav-item .dropdown-item:last-child {
+  margin-bottom: 2rem;
 }
 .nav-item:focus .sub-menu, .nav-item:hover .sub-menu {
   display: block;
@@ -130,53 +136,49 @@ textarea:focus {
     background-color: blue;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   #navbar {
     position: fixed;
     top: 0;
-    right: -340px;
-    width: 300px;
-    max-height: 90vh;
+    left: -340px;
+    width: 360px;
+    max-width: 83vw;
+    max-height: 98vh;
     overflow: auto;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
     opacity: 0;
     transition: all 0.2s linear;
+    background-color: #4c5a7d;
   }
   #navbar.show {
-    transition: all 0.25 linear;
-    right: 0;
+    transition: all 0.5s ease-in;
+    left: 0;
     opacity: 1;
+    top: -2rem;
+    -webkit-transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
   }
 }
-@media (min-width: 768px) {
-  .nav-item {
-    display: inline-block;
-    margin-top: 0;
-    margin-right: 1rem;
-  }
-}
-@media (min-width: 991px) {
-  .nav-item {
+@media (min-width: 1024px) {
+  .main-nav .nav-item {
     position: relative;
     padding: 0.5rem;
     font-size: 1.15rem;
     font-weight: 300;
   }
-  .nav-item a {
+  .main-nav .nav-item a {
     display: inline;
     text-transform: uppercase;
   }
-  .nav-item .sub-menu {
+  .main-nav .nav-item .sub-menu {
     display: none;
     position: absolute;
     top: 50px;
   }
-  .nav-item .sub-menu::before {
-    left: 15px;
-    right: unset;
-  }
-  .nav-item .dropdown-item {
+  .main-nav .nav-item .dropdown-item {
     display: block;
     text-transform: capitalize;
     width: 100%;
@@ -189,12 +191,85 @@ textarea:focus {
     background-color: transparent;
     border: 0;
   }
-  .nav-item .dropdown-item:hover {
+  .main-nav .nav-item .dropdown-item:hover {
     background-color: #d6a609;
     color: #fff;
   }
-  .nav-item:focus .sub-menu, .nav-item:hover .sub-menu {
+  .main-nav .nav-item:focus .sub-menu, .main-nav .nav-item:hover .sub-menu {
     display: block;
+  }
+
+  .nav-item a::before {
+    position: absolute;
+    content: "";
+    left: 0%;
+    bottom: auto;
+    top: -4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50px;
+    opacity: 0;
+    margin-left: -10px;
+    background-color: #ffffff;
+    transform: translateY(0px);
+    transition: all 900ms ease;
+    -webkit-transition: all 900ms ease;
+    -ms-transition: all 900ms ease;
+    -o-transition: all 900ms ease;
+    -moz-transition: all 900ms ease;
+  }
+  .nav-item a::after {
+    position: absolute;
+    content: "";
+    right: 0%;
+    left: auto;
+    bottom: auto;
+    top: -4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50px;
+    border: none !important;
+    opacity: 0;
+    margin-right: -11px;
+    background-color: #ffffff;
+    transition: all 900ms ease;
+    -webkit-transition: all 900ms ease;
+    -ms-transition: all 900ms ease;
+    -o-transition: all 900ms ease;
+    -moz-transition: all 900ms ease;
+  }
+  .nav-item a:hover {
+    color: #e9ae0a;
+  }
+  .nav-item a:hover::before {
+    opacity: 1;
+    left: 40%;
+  }
+  .nav-item a:hover::after {
+    opacity: 1;
+    right: 40%;
+  }
+  .nav-item::after {
+    position: absolute;
+    content: "";
+    left: 50%;
+    bottom: auto;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    opacity: 0;
+    margin-left: -3px;
+    background-color: #ffffff;
+    border-radius: 50px;
+    transform: translateY(0px);
+    transition: all 900ms ease;
+    -webkit-transition: all 900ms ease;
+    -ms-transition: all 900ms ease;
+    -o-transition: all 900ms ease;
+    -moz-transition: all 900ms ease;
+  }
+  .nav-item:hover::after {
+    opacity: 1;
   }
 }
 /* toogle checkbox  switch*/
@@ -537,4 +612,9 @@ input.wtk::-webkit-calendar-picker-indicator {
   to {
     transform: translateY(0);
   }
+}
+footer {
+  padding: 90px 0 80px !important;
+  color: #cccccc;
+  background: #4c5a7d url(/storage/static/world-map.png) no-repeat center;
 }

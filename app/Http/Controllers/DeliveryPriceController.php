@@ -45,7 +45,26 @@ class DeliveryPriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $request->validate(['delivery_method' => 'required']);
+        $dp = new DeliveryPrice();
+        $dp->delivery_method_id = $request->delivery_method;
+        $dp->product_cat_id = $request->product_at;
+        $dp->product_id = $request->product;
+
+        $dp->city_id = $request->city;
+        $dp->state_id = $request->sate;
+        $dp->price = $request->price;
+
+        $dp->save();
+
+        // $to = $request->modal ? false : route('admin.courses');
+        return [
+            'message' => "Delivery Price Added successfuly",
+            'status' => 200,
+            'type' => 'success',
+            // 'to' =>
+        ];
     }
 
     /**

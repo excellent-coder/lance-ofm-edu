@@ -13,9 +13,11 @@ Route::post('profile', 'MemberProfileController@updateProfile');
 
 
 Route::prefix('licenses')->group(function () {
-    Route::get('/', 'MemberController@license')->name('mem.license');
+    Route::get('/', 'MemberLicenseController@all')->name('mem.license');
+    Route::post('purchase/{licence}', 'MemberLicenseController@store')->name('mem.license.purchase');
+    Route::get('paid/{payment}', 'MemberLicenseController@paid')->name('mem.license.paid');
 
-    Route::get('all', 'LicensePaymentController@all')->name('mem.license.all');
+    Route::get('my-licenses', 'MemberLicenseController@mine')->name('mem.license.mine');
     Route::get('expeired', 'LicensePaymentController@expeired')->name('mem.license.expeired');
     Route::get('payments', 'LicensePaymentController@payments')->name('mem.license.payments');
 
@@ -30,16 +32,16 @@ Route::prefix('publications')->group(function () {
     Route::get('{slug}', 'PublicationController@show')->name('mem.pubs.show');
     Route::get('download/{pub}', 'PublicationController@download')->name('mem.pubs.download');
 
-    Route::post('purchase/{pub}', 'PublicationPurchaseController@store')->name('mem.pubs.purchase');
-    Route::get('payment/{purchase}', 'PublicationPurchaseController@paid')->name('mem.pubs.paid');
-    Route::get('premium-download/{purchase}', 'PublicationPurchaseController@download')->name('mem.pubs.paid-download');
+    Route::post('purchase/{pub}', 'MemberPubController@store')->name('mem.pubs.purchase');
+    Route::get('payment/{payment}', 'MemberPubController@paid')->name('mem.pubs.paid');
+    Route::get('premium-download/{mpub}', 'MemberPubController@download')->name('mem.pubs.paid-download');
 });
 
 Route::prefix('events')->group(function () {
-    Route::get('/', 'MemberController@events')->name('mem.events');
+    Route::get('/', 'MemberEventController@events')->name('mem.events');
     Route::get('register/{event}', 'EventController@register')->name('events.register');
-    Route::post('register/{event}', 'EventGoerController@store');
-    Route::get('paid/{payment}', 'MemberPaymentController@eventPaid')->name('mem.event.paid');
+    Route::post('register/{event}', 'MemberEventController@store');
+    Route::get('paid/{payment}', 'MemberEventController@paid')->name('mem.event.paid');
 });
 
 Route::prefix('bills')->group(function () {

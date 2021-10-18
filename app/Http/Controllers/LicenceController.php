@@ -95,9 +95,9 @@ class LicenceController extends Controller
     {
         $licence = Licence::where('slug', $slug)->firstOrFail();
         if (view()->exists("frontend.pages.licenses.$slug")) {
-            return view("frontend.pages.licenses.$slug");
+            return view("frontend.pages.licenses.$slug", compact('licence'));
         }
-        return $licence;
+        return view('frontend.pages.licenses.index', compact('licence'));
     }
 
     /**

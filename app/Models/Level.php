@@ -20,4 +20,15 @@ class Level extends Model
     {
         return $this->hasMany(Student::class, 'level', 'id');
     }
+
+
+    /**
+     * Get all of the results for the Level
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function results($studentId)
+    {
+        return $this->hasMany(StudentResult::class, 'level_id', 'id')->where('student_id', $studentId);
+    }
 }

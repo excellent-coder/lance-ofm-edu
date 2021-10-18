@@ -6,11 +6,14 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('terms', 'FrontendController@terms')->name('terms');
+
 Route::prefix('shop')->group(function () {
     Route::get('/', 'ProductController@shop')->name('shop');
     Route::get('{slug}', 'ProductController@show')->name('shop.product');
     Route::get('category/{slug}', 'ProductCatController@show')->name('shop.cat.show');
 });
+
 // Route::get('jo')
 
 // Route::prefix('portal')->name('pgs.')->group(function () {

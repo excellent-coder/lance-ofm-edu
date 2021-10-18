@@ -15,4 +15,10 @@ class FrontendController extends Controller
         }
         return redirect(route('login'));
     }
+
+
+    public function terms()
+    {
+        return view('frontend.pages.terms');
+    }
 }

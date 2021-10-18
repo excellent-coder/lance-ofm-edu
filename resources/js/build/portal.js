@@ -14,6 +14,7 @@ import { onMounted, ref, toRef } from "vue";
 import { makePayment } from '../utils/payment';
 import axios from '../../../node_modules/axios/index';
 import Modal from "../components/Auth/Modal.vue";
+import { isLoading } from '../utils/validate';
 
 
 
@@ -317,7 +318,97 @@ const app = createApp({
         memberPayment(bill) {
             handleModal(`payment-modal`, true);
             return;
-        }
+        },
+
+        purchaseLicense(event, data, currency) {
+              Swal.fire({
+                title:`Apply For ${data.name} License`,
+                icon: 'info',
+                  html: `<span>You will be prompted to make payment of <b> ${currency} ${data.fee} </b>
+                       Once you click continue, This is
+                        the price for this license</span>
+                        <p><b>Duration: </b>${data.duration} Year${data.duration>1?'s':''}</p>
+                        <p><b>Renewal Fee after ${data.duration} Year${data.duration>1?'s':''}: </b> ${currency} ${data.renewal}</p>
+                        `,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: 'Continue',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    isLoading(1)
+                    axios.post(event.target.href).then(res => {
+                         return this.processResponse(res.data);
+                    }).catch(err => {
+                       console.log(err);
+                        if (err.response && err.response.status<500) {
+                          return  this.processResponse(err.response.data);
+                        }
+                        isLoading(false);
+                        notify({ title: 'something went wrong' }, { 'type': 'danger' });
+                    });
+                }
+            });
+
+
+        },
+        scsProgram(event, data, currency) {
+              Swal.fire({
+                title:`Apply For ${data.title} program`,
+                icon: 'info',
+                  html: `<span>You will be prompted to make payment of <b> ${currency} ${data.scs_app_fee} </b>
+                       Once you click continue, This is
+                        the price for this Program</span>
+                        `,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: 'Continue',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    isLoading(1)
+                    axios.post(event.target.href).then(res => {
+                         return this.processResponse(res.data);
+                    }).catch(err => {
+                       console.log(err);
+                        if (err.response && err.response.status<500) {
+                          return  this.processResponse(err.response.data);
+                        }
+                        isLoading(false);
+                        notify({ title: 'something went wrong' }, { 'type': 'danger' });
+                    });
+                }
+            });
+
+
+        },
+        tuitionFee(event, session, level, fee) {
+              Swal.fire({
+                title:`Payment for  ${level.name} Level ${session.name} Academic Session `,
+                icon: 'info',
+                  html: `<span>You will be prompted to make payment of <b> ${fee.currency} ${fee.amount} </b>
+                       Once you click continue, This payment is for <b>Tuition Fee</b> only</span>
+                        `,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: 'Continue',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    isLoading(1)
+                    let url = event.target.dataset.to
+                    axios.post(url).then(res => {
+                         return this.processResponse(res.data);
+                    }).catch(err => {
+                       console.log(err);
+                        if (err.response && err.response.status<500) {
+                          return  this.processResponse(err.response.data);
+                        }
+                        isLoading(false);
+                        notify({ title: 'something went wrong' }, { 'type': 'danger' });
+                    });
+                }
+            });
+
+
+        },
     },
     mounted() {
         var treeNav = document.querySelector('#portal-sidebar')

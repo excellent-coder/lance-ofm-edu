@@ -33,12 +33,12 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a href="{{route('dashboard')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
                         <p>Change Membership</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-item">
                     <a href="{{route('mem.pubs')}}" class="sidebar-link">
                         <i class="sidebar-icon fas fa-tachometer-alt"></i>
@@ -86,29 +86,23 @@
                     </a>
                     <ul class="mt-3 nav-children">
                         <li class="nav-item">
-                            <a href="{{route('mem.license')}}" class="sidebar-link">
+                            <a href="{{route('mem.license.mine')}}" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>My License</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('mem.license.all')}}" class="sidebar-link">
+                            <a href="{{route('mem.license')}}" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>Buy License</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{route('mem.license.expeired')}}" class="sidebar-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>Experied License</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('mem.license.payments')}}" class="sidebar-link">
-                                <i class="fa fa-circle nav-icon"></i>
-                                <p>Transactions</p>
-                            </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 <li class="sidebar-item">
