@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="Adding A new Course">
+            <x-admin-card-tool title="Adding New Result">
             </x-admin-card-tool>
             <div class="card-body">
                 <div class="row">
@@ -128,13 +128,17 @@
         }).catch(err => {
               isLoading(0)
             if (err.response) {
-                let data = err.response.data;
-                errors = Object.values(data.errors);
+               let data = err.response.data;
+                let errors;
                 let description = '';
                 let title = data.message
+
+                if(data.errors){
+                    errors = Object.values(data.errors);
                 errors.forEach(e => {
                     description += `<br> ${e}`;
                 });
+            }
                 notify({title,description}, {type:'error',timeout:5000});
             }
         })

@@ -55,7 +55,8 @@ class StudentResultController extends Controller
             'program' => 'required',
             'level' => 'required',
             'course' => 'required',
-            'score' => 'required'
+            'score' => 'required',
+            'student' => 'required'
         ]);
         // return $request->all();
         $sr = new StudentResult();
@@ -130,6 +131,7 @@ class StudentResultController extends Controller
             'program' => 'required',
             'level' => 'required',
             'course' => 'required',
+            'student' => 'required',
             'score' => 'required'
         ]);
         // return $request->all();

@@ -330,4 +330,9 @@ class ScsController extends Controller
             'to' => $to
         ];
     }
+
+    public function graduated()
+    {
+        return 'comming soon';
+    }
 }

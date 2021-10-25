@@ -92,13 +92,13 @@ $title = web_setting('general', 'title');
                                 <p>Pending</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{route('admin.students.graduated')}}"
                                 class="nav-link @if ($route == 'students.graduated') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Graduated</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{route('admin.students.results')}}"
                                 class="nav-link @if ($route == 'students.results') active @endif">
@@ -108,7 +108,7 @@ $title = web_setting('general', 'title');
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.students.grades')}}"
-                                class="nav-link @if ($route == 'students.results') active @endif">
+                                class="nav-link @if ($route == 'students.grades') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Grading</p>
                             </a>
@@ -168,13 +168,13 @@ $title = web_setting('general', 'title');
                                 <p>Active</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{route('admin.scs.graduated')}}"
                                 class="nav-link @if ($route == 'scs.graduated') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Graduated</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{route('admin.scs.payments.pending')}}"
                                 class="nav-link @if ($route == 'scs.pending.payment') active @endif">
@@ -190,7 +190,7 @@ $title = web_setting('general', 'title');
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.scs.payments.pending')}}"
+                            <a href="{{route('admin.scs.results.create')}}"
                                 class="nav-link @if ($route == 'scs.pending.payment') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Upload Results</p>
@@ -561,14 +561,6 @@ $title = web_setting('general', 'title');
                         @endforeach
                     </ul>
                 </li>
-
-                <li class="nav-item">
-                    <a href="{{route('admin.levels')}}" class="nav-link @if ($segment == 'levels') active @endif">
-                        <i class="fas fa-level-up-alt nav-icon"></i>
-                        <p>Levels</p>
-                    </a>
-                </li>
-
                 @include('admin.includes.1')
                 @include('admin.includes.dirty-sidebar')
                 <li class="mb-5 nav-item"></li>

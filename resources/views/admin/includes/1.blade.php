@@ -33,27 +33,3 @@
         </li>
     </ul>
 </li>
-<li class="nav-item">
-    <a href="javascript:void()" role="button" class="nav-link @if ($segment == 'journals') active @endif ">
-        <i class="fas fa-journal-whills nav-icon"></i>
-        <p>
-            Journals
-            <i class="fas fa-angle-left right"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{route('admin.journals')}}" class="nav-link @if ($route == 'journals') active @endif">
-                <i class="fas fa-journal-whills nav-icon"></i>
-                <p>Journals</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{route('admin.journals.create')}}"
-                class="nav-link @if ($route == 'journals.create') active @endif">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Journal</p>
-            </a>
-        </li>
-    </ul>
-</li>

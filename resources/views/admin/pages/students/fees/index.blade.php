@@ -111,12 +111,10 @@
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="session">Session</label>
-                <select id="editing-session" class="form-control select2" name="session" data-placeholder="Session">
+                <select id="editing-session" data-value="{{activeSession()->id??''}}" class="form-control select2" name="session" data-placeholder="Session">
                     <option value=" ">Select</option>
                     @foreach ($sessions as $s)
-                    <option {{$s->active?'data-value="'.$s->id.'"':''}} value="{{$s->id}}">
-                        {{$s->name}}
-                    </option>
+                    <option value="{{$s->id}}">{{$s->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -148,7 +146,7 @@
             </div>
             <div class="form-group col-sm-6">
                 <label>Currency</label>
-                <input class=" form-control required text-uppercase" minlength="3" maxlength="3" placeholder="Currency"
+                <input class=" form-control required text-uppercase" data-value="{{$currency}}" minlength="3" maxlength="3" placeholder="Currency"
                 type="text"  name="currency" id="editing-currency">
             </div>
             <div class="form-group col-sm-6">

@@ -199,7 +199,7 @@ class StudentRequestController extends Controller
     public function approve(Request $request, StudentRequest $student)
     {
         $valid = Validator::make($request->all(), [
-            'reject_reason' => 'required_if:reject,1',
+            'reject_reason' => 'required_if:reject,true',
         ]);
 
         if ($valid->fails()) {

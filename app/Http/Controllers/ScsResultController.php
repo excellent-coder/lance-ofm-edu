@@ -23,7 +23,7 @@ class ScsResultController extends Controller
             $year = date('Y');
         }
         $results = ScsResult::whereRaw("year(`created_at`) = '$year'")->get();
-        // return $results;
+        // return $results[0];
         return view('admin.pages.scs.results.index', compact('results', 'year'));
     }
 

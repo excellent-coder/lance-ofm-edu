@@ -123,11 +123,11 @@
     </div>
 </div>
 <div>
-    <x-admin-modal title="Managing subjects">
+    <x-admin-modal title="Post Categories">
         <form action="{{route('admin.user-categories.store')}}" autocomplete="off" @submit.prevent="submit($event)"
             id="general-modal-form">
             <div class="form-group">
-                <label for="editing-parent_id">User Group</label>
+                <label for="editing-parent_id">Category</label>
                 <select data-placeholder="parent category" name="parent_id" id="editing-parent_id"
                     class=" form-control select2">
                     <option value=" " selected>-select-</option>

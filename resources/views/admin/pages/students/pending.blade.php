@@ -248,7 +248,7 @@
                         </div>
                         <div class="checkbox checkbox-primary p-t-0 col-12 col-md-6 col-lg-4">
                             <input id="editing-rejected_at" v-model="form.rejected" :disabled="form.approved"
-                                type="checkbox" class="form-check-input form-control" name="reject" value="1">
+                                type="checkbox" class="form-check-input form-control" name="reject" value="true">
                             <label for="editing-rejected_at">
                                 Reject
                             </label>
@@ -262,7 +262,7 @@
                         </div>
                         <div class="form-group col-12 col-md-6" v-if="form.rejected">
                             <label>Reason For Rejection</label>
-                            <textarea id="editing-reject_reason" class="form-control required" rows="4"></textarea>
+                            <textarea id="editing-reject_reason" name="reject_reason" class="form-control required" rows="4"></textarea>
                         </div>
                     </div>
 

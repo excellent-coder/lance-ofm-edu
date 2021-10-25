@@ -83,16 +83,16 @@
                                 <tr id="tr-{{$c->id}}">
                                     <td><input type="checkbox" value="{{$c->id}}" class="checking"></td>
                                     <td>{{$i++}}</td>
-                                    <td>{{$c->first_name}}</td>
-                                    <td>
-                                         <a href="{{route('admin.scs.show', $c->id)}}#update" target="_blank">
-                                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                            </a>
-                                    </td>
+                                    <td>{{$c->student->name??'N/A'}}</td>
+                                    <td>{{$c->program->abbr??'N/A'}}</td>
+                                    <td>{{$c->course->name??'N/A'}}</td>
+                                    <td>{{$c->score}}</td>
                                     <td>{{$c->created_at}}</td>
                                     <td>
                                         <x-data-table-action :action="$action">
-
+                                            <a title="view student details" href="{{route('admin.scs.show', $c->id)}}#update" target="_blank">
+                                                   <i class="fas fa-eye" aria-hidden="true"></i>
+                                               </a>
                                         </x-data-table-action>
                                     </td>
                                 </tr>

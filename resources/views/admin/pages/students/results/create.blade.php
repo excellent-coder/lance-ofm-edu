@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <x-admin-card-tool title="Adding A new Course">
+            <x-admin-card-tool title="Adding A new Result">
             </x-admin-card-tool>
             <div class="card-body">
                 <div class="row">
@@ -46,13 +46,13 @@
 
                                     <div class="form-group col-12 col-md-6 col-lg-4">
                                         <label for="course">Course</label>
-                                        <select data-placeholder="Course" id="course" class="form-control select2" name="course">
+                                        <select data-placeholder="Course" id="course" class="form-control select2 required" requiredname="course">
                                             <option value=" " disabled>-select course-</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-12 col-md-6 col-lg-4">
                                         <label for="student">Student</label>
-                                        <select data-placeholder="Short Course Student" id="student" class="form-control select2" name="student">
+                                        <select data-placeholder="Short Course Student" id="student" class="form-control select2 required" required name="student">
                                             <option value=" " disabled>-select student-</option>
                                         </select>
                                     </div>
@@ -161,12 +161,16 @@ function fetchData(ele){
               isLoading(0)
             if (err.response) {
                 let data = err.response.data;
-                errors = Object.values(data.errors);
+                let errors;
                 let description = '';
                 let title = data.message
+
+                if(data.errors){
+                    errors = Object.values(data.errors);
                 errors.forEach(e => {
                     description += `<br> ${e}`;
                 });
+            }
                 notify({title,description}, {type:'error',timeout:5000});
             }
         })
