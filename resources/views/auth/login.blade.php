@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 @section('content')
-<div class="flex flex-wrap justify-center w-full h-screen bg-yellow-100">
+<div class="flex flex-wrap justify-center w-full h-screen bg-yellow-100 bg-center bg-no-repeat bg-cover" style="background-image:url(/storage/static/slider-01.jpg);">
     <div class="items-center self-center w-full text-white bg-red-400 md:w-1/3 sm:w-3/4">
         <div class="p-4 bg-gray-800 shadow-2xl">
             <h1 class="text-lg font-black text-center">

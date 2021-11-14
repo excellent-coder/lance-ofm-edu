@@ -236,4 +236,14 @@ class AuthController extends Controller
         }
         return redirect('/');
     }
+
+    public function passwordPage()
+    {
+        return view('auth.password');
+    }
+
+    public function password(Request $request)
+    {
+        return ['status' => 200, 'to' => '/'];
+    }
 }

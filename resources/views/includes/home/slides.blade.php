@@ -1,4 +1,4 @@
-  <carousel-slide id="1" style="height:98vh;">
+  <carousel-slide id="1" style="height:98vh;" auto="4000">
       <div class="bg-black slider-item" role="option" style="background-image:url(/storage/static/slider-01.jpg);">
           <div class="flex flex-col justify-center px-5 text-center slider-caption md:px-10 lg:px-20">
               <h1 class="w-full mb-3 text-2xl font-semibold text-right text-white lg:text-6xl md:text-3xl">

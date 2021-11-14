@@ -25,7 +25,8 @@ Route::post('main-student/apply', 'StudentRequestController@store');
 
 
 
-Route::post('password', 'AuthController@password')->name('password');
+Route::get('password', 'AuthController@passwordPage')->name('password');
+Route::post('password', 'AuthController@password');
 
 Route::middleware(['guest:scs', 'guest:pgs', 'guest:mem'])->group(function () {
 

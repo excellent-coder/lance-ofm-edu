@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 @section('title', '| Short Course Studies Application')
 @section('content')
-<div class="flex justify-center w-full bg-yellow-100">
+<div class="relative flex justify-center w-full bg-yellow-100 bg-center bg-cover" style="background-image:url(/storage/static/slider-01.jpg);">
     <div class="w-full md:w-11/12 lg:w-3/4">
         <div class="p-4 bg-gray-700 shadow-2xl">
             <h1 class="text-lg font-black text-center text-white md:text-3xl lg:text-4xl">
