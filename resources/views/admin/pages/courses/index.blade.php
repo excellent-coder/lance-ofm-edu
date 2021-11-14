@@ -72,6 +72,7 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>Active</th>
                                     <th>Program</th>
                                     <th>Level</th>
                                     <th>Total Students</th>
@@ -102,6 +103,7 @@
                                     <td><input type="checkbox" value="{{$c->id}}" class="checking"></td>
                                     <td>{{$i++}}</td>
                                     <td>{{$c->name}}</td>
+                                    <td>{{bv($c->active)}}</td>
                                     <td>{{$c->program->title ??'false'}}</td>
                                     <td>{{$c->level->name ??'false'}}</td>
                                     <td>{{$c->students->count()}}</td>
@@ -122,6 +124,7 @@
                                     </th>
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>Active</th>
                                     <th>Program</th>
                                     <th>Level</th>
                                     <th>Total Students</th>
@@ -180,6 +183,14 @@
                     this
                     program
                 </small>
+            </div>
+            <div class="form-group">
+                <div class="checkbox checkbox-primary p-t-0">
+                    <input id="editing-active" type="checkbox" data-checked="true" name="active" value="1">
+                    <label for="editing-active">
+                        Active
+                    </label>
+                </div>
             </div>
             <div class="my-2 text-right form-group">
                 <button type="submit" class="btn btn-success">create</button>

@@ -51,6 +51,7 @@ const app = createApp({
             price: '',
             highPrice: '',
             perDiscount: 0,
+            afile:''
         }
     },
     components: {
@@ -92,24 +93,27 @@ const app = createApp({
 
                     if (data.parent_id) {
                         this.file_parent_id = data.parent_id;
-                    }
 
-                    if (files.length && this.files[files[0]] !== undefined && this.files[files[0]].url ) {
-                        notify({
-                            title: `Files are being uploaded, please don't leave this page`
-                        }, {
-                            type: 'info',
-                            timeout: 999999
-                        });
+                        this.afile = this.files[files[0]][0].url;
 
-                        if (data.to) {
-                            this.redirect_after_file = data.to;
+                        if (files.length && this.files[files[0]] !== undefined && this.files[files[0]][0].url ) {
+                            notify({
+                                title: `Files are being uploaded, please don't leave this page`
+                            }, {
+                                type: 'info',
+                                timeout: 999999
+                            });
+
+                            if (data.to) {
+                                this.redirect_after_file = data.to;
+                            }
+
+                            this.uploading = files;
+                            this.uploadFile(files[0], 0);
+                            return;
                         }
-
-                        this.uploading = files;
-                        this.uploadFile(files[0], 0);
-                        return;
                     }
+
 
                     if (type == 'success') {
                         form.reset();

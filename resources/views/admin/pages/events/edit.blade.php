@@ -96,8 +96,7 @@
                                             </div>
                                             <div class="mt-4 form-group col-md-6 col-12">
                                                 <div class="checkbox checkbox-primary p-t-0">
-                                                    <input id="active" {{ $event->active ? 'checked':'' }}
-                                                        type="checkbox" class="form-check-input form-control"
+                                                    <input id="active" {{ $event->active ? 'checked':'' }} type="checkbox"
                                                         name="active" value="1">
                                                     <label for="active">
                                                         Active

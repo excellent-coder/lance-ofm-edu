@@ -65,7 +65,7 @@
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">
                     <div>
                         <div class="text-white checkbox">
-                            <input id="terms" type="checkbox" class="form-check-input form-control filled-in"
+                            <input id="terms" type="checkbox" class="filled-in"
                                 name="terms" value="1">
                             <label for="terms" class="after-white">
                                 <span class="relative -top-1">

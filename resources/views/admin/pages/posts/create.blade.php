@@ -107,8 +107,7 @@
                                         <div class="row">
                                             <div class="form-group col-6 col-lg-3">
                                                 <div class="checkbox checkbox-primary p-t-0">
-                                                    <input id="featured" type="checkbox"
-                                                        class="form-check-input form-control" name="featured" value="1">
+                                                    <input id="featured" type="checkbox" name="featured" value="1">
                                                     <label for="featured">
                                                         Featured
                                                     </label>
@@ -116,9 +115,7 @@
                                             </div>
                                             <div class="form-group col-6 col-lg-3">
                                                 <div class="checkbox checkbox-primary p-t-0">
-                                                    <input id="published" type="checkbox"
-                                                        class="form-check-input form-control" name="published"
-                                                        value="1">
+                                                    <input id="published" type="checkbox" name="published" value="1">
                                                     <label for="published">
                                                         Published
                                                     </label>

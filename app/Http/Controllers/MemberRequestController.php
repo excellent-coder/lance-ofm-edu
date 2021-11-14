@@ -120,7 +120,8 @@ class MemberRequestController extends Controller
             $mem_id = $request->sub_membership;
         }
 
-        $app->dob = $request->dob;
+        $app->dob = date('Y-m-d', strtotime($request->dob));
+
         $app->phone = $request->phone;
         $app->email = $request->email;
         $app->membership_id = $mem_id;

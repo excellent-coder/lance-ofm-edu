@@ -117,7 +117,7 @@ class StudentRequestController extends Controller
         $app->first_name = $request->first_name;
         $app->last_name = $request->last_name;
         $app->middle_name = $request->middle_name;
-        $app->dob = $request->dob;
+        $app->dob = date('Y-m-d', strtotime($request->dob));
         $app->phone = $request->phone;
         $app->email = $request->email;
         $app->program_id = $request->program;

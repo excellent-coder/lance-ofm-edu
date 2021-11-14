@@ -110,7 +110,6 @@
                                             <div class="form-group">
                                                 <div class="checkbox checkbox-primary p-t-0">
                                                     <input id="featured" type="checkbox"
-                                                        class="form-check-input form-control"
                                                         {{$post->featured?'checked':''}} name="featured" value="1">
                                                     <label for="featured">
                                                         Featured
@@ -119,9 +118,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="checkbox checkbox-primary p-t-0">
-                                                    <input id="published" type="checkbox"
-                                                        class="form-check-input form-control"
-                                                        {{$post->published?'checked':''}} name="published" value="1">
+                                                    <input id="published" type="checkbox" {{$post->published?'checked':''}}
+                                                    name="published" value="1">
                                                     <label for="published">
                                                         Published
                                                     </label>
@@ -130,8 +128,7 @@
                                             <div class="form-group">
                                                 <div class="checkbox checkbox-primary p-t-0">
                                                     <input id="remove_image" type="checkbox"
-                                                        class="form-check-input form-control" {!!
-                                                        $post->image?'v-model="form.remove_image"':'disabled' !!}
+                                                        {!! $post->image ? 'v-model="form.remove_image"':'disabled' !!}
                                                     name="remove_image" value="1">
                                                     <label for="remove_image">
                                                         Remove old featured image

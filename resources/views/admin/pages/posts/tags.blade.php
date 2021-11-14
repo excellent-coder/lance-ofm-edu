@@ -134,7 +134,7 @@
             </div>
             <div class="form-group">
                 <div class="checkbox checkbox-primary p-t-0">
-                    <input data-checked="true" id="editing-active" checked type="checkbox" class="form-check-input form-control" name="active" value="1">
+                    <input id="editing-active" data-checked="true"  checked type="checkbox" name="active" value="1">
                     <label for="editing-active">
                        Active
                     </label>

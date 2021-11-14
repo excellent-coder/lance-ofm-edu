@@ -39,8 +39,7 @@
                                             placeholder="course">
                                     </div>
                                     <div class="checkbox checkbox-primary p-t-0">
-                                        <input id="active" type="checkbox" class="form-check-input form-control"
-                                            name="active" value="1">
+                                        <input id="active" type="checkbox" name="active" value="1">
                                         <label for="active">
                                             Active
                                         </label>

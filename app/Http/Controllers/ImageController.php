@@ -53,11 +53,15 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->parent_id) {
+            $request->validate(['part' => 'required']);
+        }
+
         if ($request->part) {
             $request->session()->put('images.store', $request->all());
             return [
                 'status' => 200,
-                'parent_id' => 1,
+                'parent_id' => $request->part,
                 'to' => route('admin.images'),
                 'type' => 'success'
             ];

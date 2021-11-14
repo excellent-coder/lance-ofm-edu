@@ -41,8 +41,7 @@
                                             value="{{$course->code}}" placeholder="course">
                                     </div>
                                     <div class="checkbox checkbox-primary p-t-0">
-                                        <input id="active" {{$course->active?'checked':''}} type="checkbox"
-                                            class="form-check-input form-control" name="active" value="1">
+                                        <input id="active" {{$course->active?'checked':''}} type="checkbox" name="active" value="1">
                                         <label for="active">
                                             Active
                                         </label>
@@ -74,9 +73,7 @@
                                     @if ($course->image)
                                     <div class="form-group">
                                         <div class="checkbox checkbox-primary p-t-0">
-                                            <input id="remove_image" type="checkbox"
-                                                class="form-check-input form-control" v-model="form.remove_image"
-                                                name="remove_image" value="1">
+                                            <input id="remove_image" type="checkbox" v-model="form.remove_image" name="remove_image" value="1">
                                             <label for="remove_image">
                                                 Remove old featured image
                                             </label>

@@ -763,7 +763,7 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     }, _defineProperty(_ref, "slug", ""), _defineProperty(_ref, "imageFile", ""), _defineProperty(_ref, "hide_modal", false), _defineProperty(_ref, "form", {
       type: 'text',
       categories: []
-    }), _defineProperty(_ref, "parentShopCats", []), _defineProperty(_ref, "shopCats", []), _defineProperty(_ref, "products", []), _defineProperty(_ref, "categories", []), _defineProperty(_ref, "price", ''), _defineProperty(_ref, "highPrice", ''), _defineProperty(_ref, "perDiscount", 0), _ref;
+    }), _defineProperty(_ref, "parentShopCats", []), _defineProperty(_ref, "shopCats", []), _defineProperty(_ref, "products", []), _defineProperty(_ref, "categories", []), _defineProperty(_ref, "price", ''), _defineProperty(_ref, "highPrice", ''), _defineProperty(_ref, "perDiscount", 0), _defineProperty(_ref, "afile", ''), _ref;
   },
   components: {
     MultiSelect: _npm_vue_multiselect_src__WEBPACK_IMPORTED_MODULE_4__.default
@@ -805,25 +805,26 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
 
           if (data.parent_id) {
             _this.file_parent_id = data.parent_id;
-          }
+            _this.afile = _this.files[files[0]][0].url;
 
-          if (files.length && _this.files[files[0]] !== undefined && _this.files[files[0]].url) {
-            notify({
-              title: "Files are being uploaded, please don't leave this page"
-            }, {
-              type: 'info',
-              timeout: 999999
-            });
+            if (files.length && _this.files[files[0]] !== undefined && _this.files[files[0]][0].url) {
+              notify({
+                title: "Files are being uploaded, please don't leave this page"
+              }, {
+                type: 'info',
+                timeout: 999999
+              });
 
-            if (data.to) {
-              _this.redirect_after_file = data.to;
+              if (data.to) {
+                _this.redirect_after_file = data.to;
+              }
+
+              _this.uploading = files;
+
+              _this.uploadFile(files[0], 0);
+
+              return;
             }
-
-            _this.uploading = files;
-
-            _this.uploadFile(files[0], 0);
-
-            return;
           }
 
           if (type == 'success') {

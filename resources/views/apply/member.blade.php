@@ -103,7 +103,7 @@
                 <div class="grid w-full grid-cols-2 mb-8 text-sm md:font-extrabold">
                     <div>
                         <div class="text-white checkbox">
-                            <input id="terms" type="checkbox" class="form-check-input form-control filled-in" name="terms"
+                            <input id="terms" type="checkbox" class="filled-in" name="terms"
                                 value="1">
                             <label for="terms" class="after-white">
                                 <span class="relative -top-1">
@@ -113,7 +113,7 @@
                             </label>
                         </div>
                         {{-- <div class="text-white checkbox bounce-in" v-if="parseInt(form.fee)">
-                            <input id="pay" type="checkbox" class="form-check-input form-control filled-in"
+                            <input id="pay" type="checkbox" class="filled-in"
                                 name="pay" value="1">
                             <label for="pay" class="after-white">
                                 <span class="relative -top-1">

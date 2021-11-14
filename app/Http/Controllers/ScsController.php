@@ -84,7 +84,7 @@ class ScsController extends Controller
         $s->name = "$s->last_name $s->firts_name $s->middle_name";
 
         $s->phone = $request->phone;
-        $s->dob = $request->dob;
+        $s->dob = date('Y-m-d', strtotime($request->dob));
 
         $program = Program::findOrFail($request->program);
         $s->password = bcrypt($request->password);

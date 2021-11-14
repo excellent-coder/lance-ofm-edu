@@ -84,8 +84,7 @@
                                             </div>
                                             <div class="mt-4 form-group col-6">
                                                 <div class="checkbox checkbox-primary p-t-0">
-                                                    <input id="active" type="checkbox"
-                                                        class="form-check-input form-control" checked name="active" value="1">
+                                                    <input id="active" type="checkbox" checked name="active" value="1">
                                                     <label for="active">
                                                         Active
                                                     </label>
